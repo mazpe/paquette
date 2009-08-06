@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Sabor Espanol - Authentic Spanish Food from Spain</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex">
+    <meta name="keywords" content="alimentos espaanoles, alimentos tipicos espanoles, comprar alimentos espanoles, tienda de productos espanoles, alimentos, espanoles, alimentos tipicos, tipicos espanoles, comprar alimentos, comprar, tienda, tienda de productos, tienda alimentos, tienda comida espanola, gourmet, gastronomia, gastronomia espanola, productos tipicos, productos espanoles, delicatessen, exquisiteces, productos delicatessen, conservas, quesos, jamones, original spain, spain, vinos, venta de vinos de calidad, venta de productos delicatessen, venta de embutidos ibericos, tiendas gourmet, jamon Serrano, serrano, jamon iberico">
+    <meta name="description" content="We bring you one step closer to Spain by delivering the best variety of the Spanish food and products to your home including the exquisite Black Hoof (pata negra) Ham. Una gran variedad de los mejores productos espanoles de maxima calidad llevados a tu hogar a los majores precios del Mercado.">
+    <link href="[% c.uri_for('/static/css/style.css') %]" rel="stylesheet" 
+        type="text/css" />
+</head>
+<body>
+  <div id="wrapper">
+      <div id="inner">
+          <div id="header">
+              <h1>
+                <img src="[% c.uri_for('/static/images/logo.gif') %]" 
+                  width="452" height="63" alt="A step closer to Spain" />
+              </h1>
+              <div id="nav">
+                <a href="[% c.uri_for(
+                    c.controller('Customers').action_for('register')
+                ) %]">your account</a> |
+                <a href="
+                  [% c.uri_for(c.controller('Cart').action_for('view')) %]
+                ">view cart 
+                ([% IF cart_size > 0 %] [% cart_size %] [% ELSE %] 0 [% END %])
+                </a> | 
+                <a href="[% c.uri_for('/store') %]">help</a>
+              </div><!-- end nav -->
+              <a href="/">
+                <img src="[% c.uri_for('/static/images/header_1.jpg') %]" 
+                width="744" height="144" 
+                alt="Fresh and Authentic Spanish Food" />
+              </a>
+              <a href="/">
+                <img src="[% c.uri_for('/static/images/header_2.jpg') %]" 
+                width="744" height="48" 
+                alt="" />
+              </a>
+          </div><!-- end header -->
+          <dl id="browse">
+              <dt>Search Your Favourite Products</dt>
+              <dd class="searchform">
+                <form action="?" method="get">
+                    <div><select name="cat">
+                        <option value="" selected="selected">CATEGORIES</option>
+                        [% FOREACH category IN categories %]
+                        <option value="[% category.id %]">
+                          [% category.name %]
+                        </option>
+                        [% END %]
+                    </select></div>
+                    <div>
+                    <input name="q" type="text" value="Products" class="text" />
+                    </div>
+                    <div class="softright">
+                    <input type="image" 
+                    src="[% c.uri_for('/static/images/btn_search.gif') %]" />
+                    </div>
+                </form>
+              </dd>
+
+              <dt>Full Category Lists</dt>
+[% i = 0 %]
+[% FOREACH category IN categories %]
+
+  [% i = i + 1 %]
+    <dd [% IF (i == 1) %] class="first" [% END %] >
+    <dd [% IF (loop.last) %] class="last" [% END %] >
+      <a href="[% c.uri_for(
+        c.controller('Store').action_for('subcategories'), category.url_name
+      ) %] ">
+        [% category.name FILTER upper %]
+      </a>
+    </dd>
+  [% IF category_id == category.id %]
+    [% FOREACH subcategory IN subcategories %]
+      [% i = i + 1 %]
+        <dd [% IF (i == 1) %] class="first" [% END %] >                                   <a href="[% c.uri_for(
+              c.controller('Store').action_for('products'),
+              [category_url_name,subcategory.url_name]
+          ) %]">
+           - [% subcategory.name %]
+          </a>
+        </dd>
+    [% END %]
+  [% END %]
+
+[% END %]
+          </dl>
+          
+          <div id="body">
+              <div class="inner">
+
+    [%# Status and error messages %]
+    <span class="message">[% status_msg %]</span>
+
+    [%# This is where TT will stick all of your template's contents. -%]
+    [% content %]
+                  
+              </div><!-- end .inner -->
+          </div><!-- end body -->
+          
+          <div class="clear"></div>
+          <div id="footer">
+              Web Development by gbRND
+<div id="footnav">
+          <a href="/legal">Legal</a> | <a href="/privacy">Privacy Policy</a>
+        </div><!-- end footnav -->
+              
+        </div><!-- end footer -->
+      </div><!-- end inner -->
+  </div><!-- end wrapper -->
+</body>
+</html>
+

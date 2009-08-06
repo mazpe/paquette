@@ -1,0 +1,35 @@
+[% META title = 'List Items' -%]
+
+<div id="item_block">
+
+  <div class="itemleft">
+      <img width="200" height="200" alt="[% items.name %]" class="left"
+        src="[% c.uri_for(
+                '/static/item_photos/' _ items.url_name _ '.jpg
+            ') %]"
+/>
+
+  </div>
+  <div class="itemright">
+    <h4>[% items.name %]</h4>
+    <h2>[% items.brief_description %]</h2>
+    <p><b>SKU:</b> [% items.sku %]</p>
+    <p><b>Price:</b> $[% items.price %]</p>
+    <form method="post" action="[% c.uri_for(
+        c.controller('Cart').action_for('add_item')
+    )  %]">
+    <input type="hidden" name="sku" value="[% items.sku %]">
+    <p>
+      <input type="text" name="qty" size="5">
+      <input type="image" name="submit"
+        src="[% c.uri_for('/static/images/add_to_cart.gif') %]">
+    </p>
+    </form>
+    <p>[% items.description FILTER html_para %]</p>
+  </div><!-- end .leftbox -->
+  
+  <div class="clear br"></div>
+
+
+</div><!-- end items_block -->
+

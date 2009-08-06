@@ -1,0 +1,81 @@
+<script language="JavaScript">
+function submitForm()
+{
+    document.recalculate.submit();
+}
+</script>
+<form method="post" name="recalculate" action="[% c.uri_for(
+    c.controller('Cart').action_for('update')
+)  %]">
+
+<table width="500">
+<thead>
+  <tr>
+    <th scope="col">Remove</th> 
+    <th scope="col">SKU</th>
+    <th scope="col">Product Name</th>
+    <th scope="col" align="center">Quantity</th>
+    <th scope="col" align="center">Price</th>
+    <th scope="col" align="center">Total</th>
+  </tr>
+</thead>
+<tbody>
+[% FOREACH items IN cart_items %]
+[% item = items.values.0 %]
+[% subtotal = item.qty * item.price %]
+[% total = total + subtotal %]
+  <tr>
+    <td>
+      <input type="checkbox" name="remove" 
+        onClick="window.location='[% 
+            c.uri_for(c.controller('Cart').action_for('remove_item'),[item.sku])
+         %]'" >
+    </td>
+    <td>[% item.sku %]</td>
+    <td>[% item.name %]</td>
+    <td align="center">
+      <input type="text" size="2" name="[% item.sku %]" value="[% item.qty %]">
+    </td>
+    <td align="right">$[% item.price %]</td>
+    <td align="right">$[% subtotal %]</td>
+  </tr>
+[% END %]
+</tbody>
+<tfoot>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>SUBTOTAL</td>
+    <td align="right">$[% total %]</td>
+</tfoor>
+</table>
+</form>
+
+<table width="500">
+<tr>
+    <td>
+      <input type="button" name="continue" value="Continue Shopping" 
+        onClick="window.location='[%
+          c.uri_for(c.controller('Store').action_for('index'))
+         %]'" >
+    </td>
+    <td>
+      <input type="button" name="clear" value="Clear Cart"
+        onClick="window.location='[%
+            c.uri_for(c.controller('Cart').action_for('clear'))
+         %]'" >
+    </td>
+    <td>
+      <input type="button" name="recalculate" value="Recalculate"
+        onClick="submitForm()" >
+    </td>
+    <td>
+      <input type="button" name="clear" value="Checkout"
+        onClick="window.location='[%
+            c.uri_for(c.controller('Checkout').action_for('view_cart'))
+         %]'" >
+    </td>
+
+</tr>
+</table>

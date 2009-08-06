@@ -1,0 +1,96 @@
+[% META title = 'Edit Item' -%]
+
+<form method="post" 
+      action="[% c.uri_for(c.controller.action_for('edit'),[product.id]) %]"
+      enctype="multipart/form-data"
+>
+
+[% IF product.photo == 1 %] 
+    <input type="hidden" name="has_photo" value="1">
+[% END %]
+
+<table>
+  <tr>
+    <th>Category</th>
+    <td>
+      <select name="category_id">
+        <option value="NULL">Select One</option>
+        [% FOREACH cats IN categories %]
+        <option
+        [% IF cats.id == product.category_id %] selected [% END %]
+        value="[% cats.id %]">
+        [% IF cats.parent_id > 0 %] - [% END %]    [% cats.name %]
+        </option>
+        [% END %]
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th>SKU</th>
+    <td><input type="text" size="50" name="sku" value="[% product.sku %]"></td>
+  </tr>
+  <tr>
+    <th>Name</th>
+    <td>
+        <input type="text" size="50" name="name" value="[% product.name %]">
+    </td>
+  </tr>
+  <tr>
+    <th>URL Name</th>
+    <td>
+        <input type="text" size="50" name="url_name" 
+            value="[% product.url_name %]">
+    </td>
+  </tr>
+
+  <tr>
+    <th>Brief Description</th>
+    <td>
+        <input type="text" size="50" name="brief_description"
+            value="[% product.brief_description %]"
+        >
+    </td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td>
+      <textarea name="description"
+        cols="50" rows="10">[%- product.description -%]</textarea>
+    </td>
+  <tr>
+  <tr>
+    <th>Price</th>
+    <td><input type="text" name="price" value="[% product.price %]"></td>
+  </tr>
+  <tr>
+    <th>Photo</th>
+    <td>
+        <input type="file" name="item_photo" id="item_photo" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+    [% IF product.photo == 1 %]
+        <img width="150" height="150" 
+            src="[% c.uri_for(
+                '/static/item_photos/' _ product.url_name _ '.jpg
+            ') %]">
+    [% ELSE %]
+        <img width="150" height="150"
+            src="[% c.uri_for('/static/item_photos/no_photo.jpg') %]">
+    [% END %]
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <input type="submit" name="submit" value="Submit">
+      <input type="button" name="delete" value="Delete"
+      onclick="return confirmDelete('[% c.uri_for(
+        c.controller.action_for('delete'), [product.id]) %]');"
+      />
+    </td>
+  </tr>
+</table>
+
+</form>

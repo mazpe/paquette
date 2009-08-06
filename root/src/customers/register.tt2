@@ -1,0 +1,280 @@
+<script language="JavaScript">
+<!--
+function copyFields() {
+    if(self.document.infocollect.same_as.checked==true) {
+        self.document.infocollect.ship_first_name.value 
+            = self.document.infocollect.bill_first_name.value;
+        self.document.infocollect.ship_last_name.value
+            = self.document.infocollect.bill_last_name.value;
+        self.document.infocollect.ship_company.value
+            = self.document.infocollect.bill_company.value;
+        self.document.infocollect.ship_address1.value
+            = self.document.infocollect.bill_address1.value;
+        self.document.infocollect.ship_address2.value 
+            = self.document.infocollect.bill_address2.value;
+        self.document.infocollect.ship_city.value 
+            = self.document.infocollect.bill_city.value;
+        self.document.infocollect.ship_state.value 
+            = self.document.infocollect.bill_state.value;
+        self.document.infocollect.ship_country.value 
+            = self.document.infocollect.bill_country.value;
+        self.document.infocollect.ship_zip_code.value 
+            = self.document.infocollect.bill_zip_code.value;
+        self.document.infocollect.ship_phone.value 
+            = self.document.infocollect.bill_phone.value;
+        
+        // Verify address with QAS.
+        verifyShippingAddress();
+    }
+}
+
+function updateShipping() {
+    //retrieve the selected value
+    shipselect = document.infocollect.addressbk;
+    chosenaddress = shipselect.options[shipselect.selectedIndex].value;
+
+    self.document.infocollect.ship_first_name.value 
+        = addressbook[chosenaddress][0];
+    self.document.infocollect.ship_last_name.value 
+        = addressbook[chosenaddress][1];
+    self.document.infocollect.ship_company.value 
+        = addressbook[chosenaddress][2];
+    self.document.infocollect.ship_address1.value 
+        = addressbook[chosenaddress][3];
+    self.document.infocollect.ship_address2.value
+        = addressbook[chosenaddress][4];
+    self.document.infocollect.ship_city.value
+        = addressbook[chosenaddress][5];
+    self.document.infocollect.ship_state.value 
+        = addressbook[chosenaddress][6];
+    self.document.infocollect.ship_country.value 
+        = addressbook[chosenaddress][7];
+    self.document.infocollect.ship_zip_code.value 
+        = addressbook[chosenaddress][8];
+    self.document.infocollect.ship_phone.value 
+        = addressbook[chosenaddress][9];
+
+    // Verify address with QAS.
+    verifyShippingAddress();
+}
+function submitForm()
+{
+    document.infocollect.submit();
+}
+
+//-->
+</script>
+
+<form method="post" action="[% c.uri_for(
+    c.controller('Customers').action_for('register_do')
+) %]" name="infocollect">
+<table width='585' cellpadding='0' cellspacing='5' valign='top' align='left' 
+  border='0'>
+<tr>
+  <td colspan='2' class='breadcrumbs'>
+    &nbsp;CHECKOUT PROCESS: &nbsp;&nbsp; 
+    <font color='#990000'><b>1 ENTER INFO</b></font>&nbsp;&nbsp; 
+    2 CHOOSE SHIPPING&nbsp;&nbsp; 
+    3 ENTER PAYMENT&nbsp;&nbsp; 
+    4 CONFIRMATION
+  </td>
+</tr>
+<tr>
+  <td colspan=2>
+    <br><font class='error'>You did not submit a valid billing State/Province 
+    for the billing country selected.</font><br>&nbsp;
+  </td>
+</tr>
+<tr>
+  <td valign='top'>
+    <img src='/images/titleinginfo.gif' width='280' height='20' border='0' alt='Bill To Information'><br>
+Items with an <font color='#990000'>*</font> are required.
+  </td>
+  <td valign='top'>
+    <img src='/images/title_shippinginfo.gif' width='280' height='20' border='0'
+      alt='Ship To Information'><br>
+    <div align=right>
+      <input type="submit" name="continue" value="Continue Checkout"
+        onClick="submitForm()"  >
+    </div>
+  </td>
+</tr>
+<tr><!-- LEFT COLUMN, BILLING -->
+  <td class='cartform' valign=top>
+    <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> First Name:</td>
+        <td><input class='formbox' type=text name='bill_first_name' value='' maxlength=15></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Last Name:</td>
+        <td><input class='formbox' type=text name='bill_last_name' value='' maxlength=20></td>
+      </tr>
+      <tr>
+        <td align='right'>Company:</td>
+        <td><input class='formbox' type=text name='bill_company' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Address 1:</td>
+        <td><input class='formbox' type=text name='bill_address1' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td align='right'>Address 2:</td>
+        <td><input class='formbox' type=text name='bill_address2' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> City:</td>
+        <td><input class='formbox' type=text name='bill_city' value='' maxlength=20></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> State/Province:</td>
+        <td>
+          <select name='bill_state' class='formbox'>
+          <option value=''>
+          [% FOREACH state IN states %]
+          <option value="[% state.abbr %]">[% state.name %]</option>
+          [% END %]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Country:</td>
+        <td>
+          <select name='bill_country' class='formbox'>
+          <option value=''>
+          [% FOREACH country IN countries %]
+          <option value="[% country.abbr %]">[% country.name %]</option>
+          [% END %]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
+        <td>
+          <input class='formbox' type=text name='bill_zip_code' value='' 
+            maxlength='10'>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Phone:</td>
+        <td><input class='formbox' type=text name='bill_phone' value='' maxlength=14></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Email Address:</td>
+        <td><input class='formbox' type=text name='email' value='' maxlength=50></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Password:</td>
+        <td>
+          <input class='formbox' type=text name='password' value='' 
+            maxlength=50>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Verify Password:</td>
+        <td>
+          <input class='formbox' type=text name='verify_password' value='' 
+            maxlength=50>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp</td>
+        <td><input type=checkbox name='same_as' onClick='copyFields();'> Ship to my billing address</td>
+      </tr>
+
+    </table>
+  </td>
+
+<!-- RIGHT COLUMN -->
+
+  <td class='cartform' valign=top>
+    <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> First Name:</td>
+        <td><input class='formbox' type=text name='ship_first_name' value='' maxlength=15></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Last Name:</td>
+        <td><input class='formbox' type=text name='ship_last_name' value='' maxlength=20></td>
+      </tr>
+      <tr>
+        <td align='right'>Company:</td>
+        <td><input class='formbox' type=text name='ship_company' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Address 1:</td>
+        <td><input class='formbox' type=text name='ship_address1' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td align='right'>Address 2:</td>
+        <td><input class='formbox' type=text name='ship_address2' value='' maxlength=40></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><span class='subdue'>NOTE: NO P.O. BOXES PLEASE</span></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> City:</td>
+        <td><input class='formbox' type=text name='ship_city' value='' size=20 maxlength=20></td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> State/Province:</td>
+        <td>
+          <select name='ship_state' class='formbox'>
+          <option value=''>
+          [% FOREACH state IN states %]
+          <option value="[% state.abbr %]">[% state.name %]</option>
+          [% END %]
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Country:</td>
+        <td>
+          <select name='ship_country' class='formbox'>
+            <option value=''></option>
+            <option value='US' selected>United States</option>
+            <option value='CA'>Canada</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
+        <td><input class='formbox' type=text name='ship_zip_code' value='' maxlength=10></td>
+      </tr>
+      <tr>
+        <td align='right'>Phone:</td>
+        <td><input class='formbox' type=text name='ship_phone' value='' maxlength=14></td>
+      </tr>
+      <tr>
+        <td align='right'>&nbsp;</td>
+        <td>
+          <div align=right>
+            <input type="button" name="continue" value="Continue Checkout"
+              onClick="window.location='[%
+              c.uri_for(c.controller('Checkout').action_for('shipping'))
+            %]'" >
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- CART -->
+
+<tr>
+  <td class='cartform' colspan="2" align="center">
+[% INCLUDE cart/checkout_view.tt2 %]
+  </td>
+</tr>
+<tr>
+  <td colspan='2' id='questions' valign='bottom'>
+    <a href='#'  onclick='javascript:window.open("/support/popup.html?pup=satisfaction", "notify", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=50,top=50,width=530,height=265")'><img src='/images/gfx_guaranteed.gif' width='110' height='25' border='0' alt='Satisfaction Guaranteed' align='right'></a>
+    <b>Questions?</b><br>Order 24 Hours Toll Free: 305-467-8027 
+    <br>Customer Service Toll Free: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
+  </td>
+</tr>
+</table>
+</form>
+

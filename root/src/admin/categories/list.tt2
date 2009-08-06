@@ -1,0 +1,40 @@
+[% META title = 'List Categories' -%]
+
+<div id="categories_block">
+<a href="[% c.uri_for(c.controller.action_for('create')) %]">
+<h3>Create a category</h3>
+</a>
+  <table border="1" cellspacing="1" cellpadding="1">
+    <tr>
+      <th>Parent</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Photo</th>
+      <th>Edit / Delete</th>
+    </tr>
+
+[% FOREACH category IN categories %]
+    <tr>
+      <td>[% category.parent.name %] &nbsp;</td>
+      <td>[% category.name %] &nbsp;</td>
+      <td>[% category.description FILTER truncate(64) %] &nbsp;</td>
+      <td>[% category.photo %] &nbsp;</td>
+      <td>
+        <a href="[% c.uri_for(
+          c.controller.action_for('edit'), [category.id]
+        ) %]">
+          edit
+        </a>
+        -
+        <a href="[% c.uri_for(
+          c.controller.action_for('delete'), [category.id]
+        ) %]">
+          delete 
+        </a>
+      </td>
+    </tr>
+[% END %]
+  
+</table>
+
+</div><!-- end categories_block -->

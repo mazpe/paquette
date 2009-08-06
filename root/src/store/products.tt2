@@ -1,0 +1,50 @@
+[% META title = 'List Products' -%]
+
+<div id="products_block">
+
+[% i = 0 %]
+[% FOREACH product IN products %]
+[% i = i + 1 %]
+
+[% IF (i % 2) %] 
+  <div class="leftbox">
+[% ELSE %]
+  <div class="rightbox">
+[% END %]
+    <h3>
+      <a href="[% c.uri_for(
+          c.controller.action_for('item'),
+          [category_url_name,subcategory_url_name,product.url_name]) %]
+      ">
+      [% product.name %]
+      </a>  
+    </h3>
+    <img width="93" height="95" alt="[% product.name %]" class="left" 
+      src="[% c.uri_for(
+              '/static/item_photos/' _ product.url_name _ '.jpg
+          ') %]"
+    />
+    <p>[% product.brief_description %]</p>
+    <form method="post" action="[% c.uri_for(
+        c.controller('Cart').action_for('add_item')
+    )  %]">
+    <input type="hidden" name="sku" value="[% product.sku %]">
+    <p>
+      <input type="text" name="qty" size="5">
+      <input type="image" name="submit"
+        src="[% c.uri_for('/static/images/add_to_cart.gif') %]">
+    </p>
+    </form>
+    <p>[% items.description FILTER html_para %]</p>
+
+      <div class="clear"></div>
+  </div><!-- end .leftbox or .rightbox-->
+  
+  [% IF !(i % 2) && i != 1 %]
+    <div class="clear br"></div>
+  [% END %]
+
+[% END %]
+
+</div><!-- end products_block -->
+

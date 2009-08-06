@@ -1,0 +1,43 @@
+<script language="JavaScript">
+function submitForm()
+{
+    document.recalculate.submit();
+}
+</script>
+<form method="post" name="recalculate" action="[% c.uri_for(
+    c.controller('Cart').action_for('update')
+)  %]">
+
+<table width="500">
+<thead>
+  <tr>
+    <th scope="col">SKU</th>
+    <th scope="col">Product Name</th>
+    <th scope="col" align="center">Quantity</th>
+    <th scope="col" align="center">Price</th>
+    <th scope="col" align="center">Total</th>
+  </tr>
+</thead>
+<tbody>
+[% FOREACH items IN cart_items %]
+[% item = items.values.0 %]
+[% subtotal = item.qty * item.price %]
+[% total = total + subtotal %]
+  <tr>
+    <td>[% item.sku %]</td>
+    <td>[% item.name %]</td>
+    <td align="center">[% item.qty %]</td>
+    <td align="right">$[% item.price %]</td>
+    <td align="right">$[% subtotal %]</td>
+  </tr>
+[% END %]
+</tbody>
+<tfoot>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>SUBTOTAL</td>
+    <td align="right">$[% total %]</td>
+</tfoor>
+</table>
+</form>

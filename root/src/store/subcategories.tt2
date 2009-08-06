@@ -1,0 +1,38 @@
+[% META title = 'List Sub Categories' -%]
+
+<div id="subcategories_block">
+
+[% i = 0 %]
+[% FOREACH subcategory IN subcategories %]
+[% i = i + 1 %]
+
+[% IF (i % 2) %]
+  <div class="leftbox">
+[% ELSE %]
+  <div class="rightbox">
+[% END %]
+      <h3>
+        <a href="[% c.uri_for(
+            c.controller.action_for('products'),
+            [category_url_name,subcategory.url_name])
+         %]">
+        [% subcategory.name %]
+        </a>
+      </h3>
+      <img width="93" height="95" alt="[% subcategory.name %]" class="left"
+        src="[% c.uri_for(
+                '/static/categories_photos/' _ subcategory.url_name _ '.jpg
+            ') %]"
+      />
+      <p>[% subcategory.description FILTER truncate(250) %]</p>
+      <div class="clear"></div>
+  </div><!-- end .leftbox -->
+
+  [% IF !(i % 2) && i != 1 %]
+    <div class="clear br"></div>
+  [% END %]
+
+[% END %]
+
+</div><!-- end subcategories_block -->
+

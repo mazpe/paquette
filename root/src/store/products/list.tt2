@@ -1,0 +1,43 @@
+[% META title = 'List Products' -%]
+
+<div id="products_block">
+<a href="[% c.uri_for(c.controller.action_for('create')) %]">
+<h3>Create a Product</h3>
+</a>
+  <table border="1" cellspacing="1" cellpadding="1">
+    <tr>
+      <th>SKU</th>
+      <th>Category</th>
+      <th>Name</th>
+      <th>Brief Description</th>
+      <th>Price</th>
+      <th>Edit / Delete</th>
+    </tr>
+
+[% FOREACH product IN products %]
+    <tr>
+      <td>[% product.sku %] &nbsp;</td>
+      <td>[% product.category.name %] &nbsp;</td>
+      <td>[% product.name %] &nbsp;</td>
+      <td>[% product.brief_description %] &nbsp;</td>
+      <td>[% product.price %] &nbsp;</td>
+      <td>
+        <a href="[% c.uri_for(
+          c.controller.action_for('edit'), [product.id]
+        ) %]">
+          edit
+        </a>
+        -
+        <a href="[% c.uri_for(
+          c.controller.action_for('delete'), [product.id]
+        ) %]">
+          delete
+        </a>
+      </td>
+    </tr>
+[% END %]
+
+</table>
+
+</div><!-- end products_block -->
+

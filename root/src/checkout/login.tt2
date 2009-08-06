@@ -1,0 +1,157 @@
+[% META title = 'Login' %]
+
+<p>
+[% IF c.user_exists %]
+    Please Note: You are already logged in as '[% c.user.username %]'.
+    You can <a href="[% c.uri_for('/logout') %]">logout</a> here.
+[% ELSE %]
+    You need to log in to use this application.
+[% END %]
+</p>
+
+<!-- Login form -->
+
+<form method="post" action="[% c.uri_for('/checkout/login') %]">
+<table border="0" width="100%" cellspacing="0" cellpadding="2" 
+    style="margin-top:9px">
+<tr>
+  <td class="main" width="50%" valign="top"><b>New Customer</b></td>
+  <td class="main" width="50%" valign="top"><b>Returning Customer</b></td>
+</tr>
+<tr>
+  <td width="50%" height="100%" valign="top">
+    <table border="0" width="100%" height="100%" cellspacing="1" cellpadding="2"
+      style="border:1px solid #DADDE4;">
+      <tr>
+        <td>
+          <table border="0" width="100%" height="100%" cellspacing="0" 
+            cellpadding="2">
+            <tr>
+              <td>
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                  height="10">
+              </td>
+            </tr>
+                <tr>
+              <td class="main" valign="top">
+                I am a new customer.<br><br>By creating an account at 
+                SABORESPANOL.com you will be able to shop faster, be up to date
+                on an orders status, and keep track of the orders you have 
+                previously made.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                height="10">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                  <tr>
+                    <td width="10">
+                      <img src="images/pixel_trans.gif" border="0" alt="" 
+                        width="10" height="1">
+                    </td>
+                    <td align="right">
+                      <a href="[% c.uri_for(
+                        c.controller('Customer').action_for('register')
+                      ) %]">
+                        <img src="continue.gif" border="0" alt="Continue" 
+                          title=" Continue " width="63" height="16">
+                      </a>
+                    </td>
+                    <td width="10">
+                      <img src="images/pixel_trans.gif" border="0" alt="" 
+                        width="10" height="1">
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+  <td width="50%" height="100%" valign="top">
+    <table border="0" width="100%" height="100%" cellspacing="1" cellpadding="2"
+      style="border:1px solid #DADDE4;">
+      <tr>
+        <td>
+          <table border="0" width="100%" height="100%" cellspacing="0" 
+            cellpadding="2">
+            <tr>
+              <td colspan="2">
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                 height="10">
+              </td>
+            </tr>
+            <tr>
+              <td class="main" colspan="2">I am a returning customer.</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                  height="10">
+              </td>
+            </tr>
+            <tr>
+              <td class="main"><b>E-Mail Address:</b></td>
+              <td class="main"><input type="text" name="username"></td>
+            </tr>
+            <tr>
+              <td class="main"><b>Password:</b></td>
+              <td class="main">
+                <input type="password" name="password" maxlength="40">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                  height="10">
+              </td>
+            </tr>
+            <tr>
+              <td class="smallText" colspan="2">
+                <a href="http://www.tiresxpress.com/password_forgotten.php">
+                  Password forgotten? Click here.
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
+                  height="10">
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                  <tr>
+                    <td width="10">
+                      <img src="images/pixel_trans.gif" border="0" alt="" 
+                        width="10" height="1">
+                    </td>
+                    <td align="right">
+                      <input type="image" src="button_login.gif" border="0" 
+                        alt="Sign In" title=" Sign In ">
+                    </td>
+                    <td width="10">
+                      <img src="images/pixel_trans.gif" border="0" alt="" 
+                        width="10" height="1">
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+</form>
+
