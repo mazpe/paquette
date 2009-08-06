@@ -1,1 +1,28 @@
 Run script/paquette_server.pl to test the application.
+
+Structure:
+
+MyCart => BETA
+ get_items_in_cart,
+ add_items_to_cart,
+ remove_items_from_cart,
+ update_items_in_cart,
+ clear_cart
+
+MyCheckout => WIP
+ get_available_shipping,
+ set_shipping,
+ get_available_payment,
+ set_payment,
+ set_order,
+ process_payment_paypal,
+ process_payment_authorizednet,
+ complete_order
+
+MyCustomer => WIP 
+ create_customer,
+ list_customers,
+ get_customer,
+ update_customer,
+ delete_customer
+ 
