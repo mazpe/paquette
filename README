@@ -9,20 +9,18 @@ MyCart => BETA
  update_items_in_cart,
  clear_cart
 
+MyCustomer => WIP
+ create_customer,
+ get_customer,
+ update_customer,
+ delete_customer
+
 MyCheckout => WIP
  get_available_shipping,
  set_shipping,
  get_available_payment,
  set_payment,
  set_order,
- process_payment_paypal,
- process_payment_authorizednet,
+ process_payment,
  complete_order
-
-MyCustomer => WIP 
- create_customer,
- list_customers,
- get_customer,
- update_customer,
- delete_customer
  
