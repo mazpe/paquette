@@ -14,15 +14,18 @@ has 'email'                 => ( is => 'ro', isa => Str );
 
 # create customer
 sub create_customer {
-    my ( $self, %args ) = @_;
+    my ( $self, $args ) = @_;
 
-    $self->resultset('Customer')->create_customer(
-        bill_first_name     => $args{'first_name'},
-        bill_last_name      => $args{'last_name'},
-        email               => $args{'email'}
-    );
+    if ( $args ) {
+    # We have arguments
 
-    print Dumper $self;
+        $self->resultset('Customer')->create_customer( $args ); 
+    
+    } else {
+    # No arguments submited
+
+    }
+
 } 
 # get customer
 

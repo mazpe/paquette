@@ -15,17 +15,17 @@ Customers ResultSet
 =cut
 
 sub create_customer {
-    my ( $self, %args ) = @_;
+    my ( $self, $args ) = @_;
 
-    my $customer = $self->find_or_create( 
-        {
-            bill_first_name     => $args{'bill_first_name'},
-            bill_last_name      => $args{'bill_last_name'},
-            email               => $args{'email'},
-        },
-        { key => 'email' },
+    if ( $args ) {
+    # We have arguments
 
-    );
+        my $customer = $self->find_or_create(  $args , { key => 'email' }, );
+
+    } else {
+    # No arguments submited
+    
+    }
 
     return $customer ? $customer : 0;
 }

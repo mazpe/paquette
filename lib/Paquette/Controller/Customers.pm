@@ -51,103 +51,65 @@ sub register_do : Local {
         # Get our fields from form
         my $bill_first_name     = $c->req->params->{'bill_first_name'};
         my $bill_last_name      = $c->req->params->{'bill_last_name'};
+        my $bill_company        = $c->req->param('bill_company');
+        my $bill_address1       = $c->req->param('bill_address1');
+        my $bill_address2       = $c->req->param('bill_address2');
+        my $bill_city           = $c->req->param('bill_city');
+        my $bill_state          = $c->req->param('bill_state');
+        my $bill_country        = $c->req->param('bill_country');
+        my $bill_zip_code       = $c->req->param('bill_zip_code');
+        my $bill_phone          = $c->req->param('bill_phone');
+        my $ship_first_name     = $c->req->param('ship_first_name');
+        my $ship_last_name      = $c->req->param('ship_last_name');
+        my $ship_company        = $c->req->param('ship_company');
+        my $ship_address1       = $c->req->param('ship_address1');
+        my $ship_address2       = $c->req->param('ship_address2');
+        my $ship_city           = $c->req->param('ship_city');
+        my $ship_state          = $c->req->param('ship_state');
+        my $ship_country        = $c->req->param('ship_country');
+        my $ship_zip_code       = $c->req->param('ship_zip_code');
+        my $ship_phone          = $c->req->param('ship_phone');
         my $email               = $c->req->params->{'email'};
-
-        my $customer = $c->model('Customer')->create_customer(
+        
+        my $customer = $c->model('Customer')->create_customer({
             bill_first_name     => $bill_first_name,
             bill_last_name      => $bill_last_name,
-            email               => $email 
-        );
+            bill_company        => $bill_company,
+            bill_address1       => $bill_address1,
+            bill_address2       => $bill_address2,
+            bill_city           => $bill_city,
+            bill_state          => $bill_state,
+            bill_country        => $bill_country,
+            bill_zip_code       => $bill_zip_code,
+            bill_phone          => $bill_phone,
+            ship_first_name     => $ship_first_name,
+            ship_last_name      => $ship_last_name,
+            ship_company        => $ship_company,
+            ship_address1       => $ship_address1,
+            ship_address2       => $ship_address2,
+            ship_city           => $ship_city,
+            ship_state          => $ship_state,
+            ship_country        => $ship_country,
+            ship_zip_code       => $ship_zip_code,
+            ship_phone          => $ship_phone,
+            email               => $email,
+        });
+
+        if ( $customer ) {
+        # Customer created
+            print "Customer Created - ". $customer->id ."\n";
+
+        } else {
+        # Customer not created
+            print "Customer not created - $customer->id\n";        
+
+        } 
 
     } else {
     # Form not submited
 
     }
 }
-
-sub register2_do : Local {
-    my ( $self, $c ) = @_;
-
-    my $bill_first_name     = $c->req->param('bill_first_name');
-    my $bill_last_name      = $c->req->param('bill_last_name');
-    my $bill_company        = $c->req->param('bill_company');
-    my $bill_address1       = $c->req->param('bill_address1');
-    my $bill_address2       = $c->req->param('bill_address2');
-    my $bill_city           = $c->req->param('bill_city');
-    my $bill_state          = $c->req->param('bill_state');
-    my $bill_country        = $c->req->param('bill_country');
-    my $bill_zip_code       = $c->req->param('bill_zip_code');
-    my $bill_phone          = $c->req->param('bill_phone');
-
-    my $ship_first_name     = $c->req->param('ship_first_name');
-    my $ship_last_name      = $c->req->param('ship_last_name');
-    my $ship_company        = $c->req->param('ship_company');
-    my $ship_address1       = $c->req->param('ship_address1');
-    my $ship_address2       = $c->req->param('ship_address2');
-    my $ship_city           = $c->req->param('ship_city');
-    my $ship_state          = $c->req->param('ship_state');
-    my $ship_country        = $c->req->param('ship_country');
-    my $ship_zip_code       = $c->req->param('ship_zip_code');
-    my $ship_phone          = $c->req->param('ship_phone');
-
-    my $email               = $c->req->param('email');
-
-    my $is_user = $c->model('PaquetteDB::User')->search(
-        { username  => $email }
-    )->count;
-
-    if ($is_user == 0) {
-
-        my $customer = $c->model('PaquetteDB::Customer')->find_or_create(
-            {
-                bill_first_name     => $bill_first_name,
-                bill_last_name      => $bill_last_name,
-                bill_company        => $bill_company,
-                bill_address1       => $bill_address1,
-                bill_address2       => $bill_address2,
-                bill_city           => $bill_city,
-                bill_state          => $bill_state,
-                bill_country        => $bill_country,
-                bill_zip_code       => $bill_zip_code,
-                bill_phone          => $bill_phone,
-
-                ship_first_name     => $ship_first_name,
-                ship_last_name      => $ship_last_name,
-                ship_company        => $ship_company,
-                ship_address1       => $ship_address1,
-                ship_address2       => $ship_address2,
-                ship_city           => $ship_city,
-                ship_state          => $ship_state,
-                ship_country        => $ship_country,
-                ship_zip_code       => $ship_zip_code,
-                ship_phone          => $ship_phone,
-
-                email               => $email,
-            },
-            {   key                 => 'email'},
-        );
-
-        my $user = $c->model('PaquetteDB::User')->find_or_create(
-            { username              => $email, },
-            { key                   => 'username' },
-        );
-
-        # Store cart in database
-
-       $c->response->redirect(
-            $c->uri_for( 
-                $c->controller('Checkout')->action_for('shipping')
-            ) . '/' );
-
-    } else {
-
-        $c->flash->{status_msg} = "you already have an account";
-
-    }
-
-}
-
-
 
 =head2 pre_registration
 

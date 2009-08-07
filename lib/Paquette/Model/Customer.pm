@@ -27,6 +27,7 @@ sub build_per_context_instance {
         session => $c->session,
         schema  => $c->model('PaquetteDB')->schema
     );
+
 }
 
 =head1 AUTHOR
