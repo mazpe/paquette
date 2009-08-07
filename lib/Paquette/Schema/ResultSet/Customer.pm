@@ -16,11 +16,12 @@ Customers ResultSet
 
 sub create_customer {
     my ( $self, $args ) = @_;
+    my $customer;
 
     if ( $args ) {
     # We have arguments
 
-        my $customer = $self->find_or_create(  $args , { key => 'email' }, );
+        $customer = $self->find_or_create(  $args , { key => 'email' }, );
 
     } else {
     # No arguments submited
