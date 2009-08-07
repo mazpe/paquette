@@ -8,13 +8,22 @@ use Data::Dumper;
 has 'user'      => ( is => 'ro', required => 1, weak_ref => 1 );
 has 'session'   => ( is => 'ro', required => 1, weak_ref => 1 );
 has 'schema'    => ( is => 'rw', required => 1, handles => [qw / resultset /] );
-has 'sku'       => ( is => 'ro', isa => Str );
-has 'qty'       => ( is => 'ro', isa => Int, default => 0 );
+has 'bill_first_name'       => ( is => 'ro', isa => Str );
+has 'bill_last_name'        => ( is => 'ro', isa => Str );
+has 'email'                 => ( is => 'ro', isa => Str );
 
 # create customer
- 
-# list customer
+sub create_customer {
+    my ( $self, %args ) = @_;
 
+    $self->resultset('Customer')->create_customer(
+        bill_first_name     => $args{'first_name'},
+        bill_last_name      => $args{'last_name'},
+        email               => $args{'email'}
+    );
+
+    print Dumper $self;
+} 
 # get customer
 
 # update customer
