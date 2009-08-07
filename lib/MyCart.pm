@@ -51,7 +51,7 @@ sub get_items_in_cart { # Return list of items
 
 # Adds items to the shopping cart
 sub add_items_to_cart {  
-    my ( $self, %args ) = @_; 
+    my ( $self, $args ) = @_; 
 
     if ($self->user) {
     # Add to db 
@@ -60,11 +60,11 @@ sub add_items_to_cart {
     # Add to session
 
         # Check that we do have this item
-        if ( $self->resultset('Product')->get_item_by_sku($args{sku}) ) {
+        if ( $self->resultset('Product')->get_item_by_sku($args->{sku}) ) {
         # Found sku on db
 
             # We add a new item to our cart.
-            $self->session->{cart}{$args{sku}} += $args{qty};
+            $self->session->{cart}{$args->{sku}} += $args->{qty};
 
         } else {
         # Sku not found 
@@ -78,7 +78,7 @@ sub add_items_to_cart {
 
 # Removes items from the shopping cart
 sub remove_items_from_cart { 
-    my ( $self, %args ) = @_;
+    my ( $self, $args ) = @_;
 
     if ( $self->user ) {
     # Delete item from cart in the db
@@ -86,10 +86,10 @@ sub remove_items_from_cart {
     } else {
     # Delete item from cart in session
 
-        if ( $self->session->{cart}{$args{sku}} ) {
+        if ( $self->session->{cart}{$args->{sku}} ) {
         # Found sku in session
 
-            delete($self->session->{cart}{$args{sku}});
+            delete($self->session->{cart}{$args->{sku}});
 
         } else {
         # Sku not found in session
@@ -101,9 +101,9 @@ sub remove_items_from_cart {
 
 # Update items in the shopping cart
 sub update_items_in_cart {
-    my ( $self, %args ) = @_;
+    my ( $self, $args ) = @_;
 
-    my $items = $args{items};
+    my $items = $args->{items};
 
     if ( $self->user ) {
     # Update items in cart in db
@@ -117,7 +117,7 @@ sub update_items_in_cart {
             #print $key ." => ". $args{items}{$key} ."\n";
 
             # Update session's qty
-            $self->session->{cart}{$key} = $args{items}{$key};
+            $self->session->{cart}{$key} = $args->{items}->{$key};
 
             #print $self->session->{cart}{$key};
         }        

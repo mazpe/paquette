@@ -58,10 +58,10 @@ sub add_item : Local {
     # Form submited
     
         # Add items to the shopping cart
-        my $add_to_cart = $c->model('Cart')->add_items_to_cart( 
+        my $add_to_cart = $c->model('Cart')->add_items_to_cart( {
             sku => $c->req->params->{sku},
             qty => $c->req->params->{qty},
-        );
+        } );
 
         if ( $add_to_cart ) {
         # Item added to cart
@@ -92,7 +92,7 @@ sub remove_item : Chained('load') : PathPart('remove_item') : Args(0) {
 
         # Remove items from the shopping cart
         my $remove_from_cart = $c->model('Cart')->remove_items_from_cart(
-            sku => $c->stash->{sku},
+            { sku => $c->stash->{sku} },
         );
 
         if ( $remove_from_cart ) {
@@ -157,9 +157,9 @@ sub clear : Local {
 sub update : Local {
     my ( $self, $c ) = @_;
 
-    my $update_cart = $c->model('Cart')->update_items_in_cart(
+    my $update_cart = $c->model('Cart')->update_items_in_cart( {
         items => $c->req->params
-    );
+    } );
 
     if ( $update_cart ) { 
     # Items updated
