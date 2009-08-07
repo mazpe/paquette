@@ -28,43 +28,44 @@ sub index :Path :Args(0) {
     $c->response->body('Matched Paquette::Controller::Customers in Customers.');
 }
 
-=head2 register
-
-Display register form
-
-=cut
-
 sub register : Local {
     my ( $self, $c ) = @_;
-    my $cart_items;
-    my $items = $c->session->{items};
 
-    $c->log->debug("test: ". $items);
-    # Loop through all my items.
-    for my $sku ( keys %$items ) {
+    # Get items in the shopping cart and set them in stash
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
 
-        # get item data from database
-        my $item_info = $c->model('PaquetteDB::Product')->search(
-            { 'sku' => $sku },
-            { columns => [qw/ name price /], }
-        )->single;
-
-        # create hash with full cart info
-        $cart_items->{$sku}->{sku}      = $sku;
-        $cart_items->{$sku}->{name}     = $item_info->name;
-        $cart_items->{$sku}->{qty}      = $items->{$sku};
-        $cart_items->{$sku}->{price}    = $item_info->price;
-
-    }
-
+    # Get countries and states from database and set them in stash 
     $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
     $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
-    $c->stash->{cart_items} = $cart_items;
-    $c->stash->{template}   = 'customers/register.tt2';
 
+    # Set template to be used
+    $c->stash->{template}   = 'customers/register.tt2';
 }
 
 sub register_do : Local {
+    my ( $self, $c ) = @_;
+
+    if ( $c->req->params->{submit} ) {
+    # Form submited
+
+        # Get our fields from form
+        my $bill_first_name     = $c->req->params->{'bill_first_name'};
+        my $bill_last_name      = $c->req->params->{'bill_last_name'};
+        my $email               = $c->req->params->{'email'};
+
+        my $customer = $c->model('Customer')->create_customer(
+            bill_first_name     => $bill_first_name,
+            bill_last_name      => $bill_last_name,
+            email               => $email 
+        );
+
+    } else {
+    # Form not submited
+
+    }
+}
+
+sub register2_do : Local {
     my ( $self, $c ) = @_;
 
     my $bill_first_name     = $c->req->param('bill_first_name');
