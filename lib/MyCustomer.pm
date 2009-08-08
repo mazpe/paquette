@@ -19,7 +19,13 @@ sub create_customer {
     if ( $args ) {
     # We have arguments
 
-        my $customer =  $self->resultset('Customer')->create_customer( $args ); 
+        # Create a new hash with our submitted arguments
+        my %customer_args = $args;
+        # Remove arguments not used by Customer resultset
+        delete $customer_args{password}; 
+        # Create a customer
+        my $customer 
+            = $self->resultset('Customer')->create_customer( \%customer_args ); 
 
         if ( $customer ) {
         # Customer was created       
