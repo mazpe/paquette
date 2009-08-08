@@ -21,7 +21,15 @@ sub create_customer {
     if ( $args ) {
     # We have arguments
 
-        $customer = $self->find_or_create(  $args , { key => 'email' }, );
+        $customer = $self->find_or_new(  $args , { key => 'email' }, );
+
+        unless ( $customer->in_storage ) {
+        # Customer not in store
+
+            # Insert customer
+            $customer->insert;
+
+        }
 
     } else {
     # No arguments submited
@@ -30,6 +38,7 @@ sub create_customer {
 
     return $customer ? $customer : 0;
 }
+
 
 =head1 AUTHOR
 

@@ -70,6 +70,7 @@ sub register_do : Local {
         my $ship_zip_code       = $c->req->param('ship_zip_code');
         my $ship_phone          = $c->req->param('ship_phone');
         my $email               = $c->req->params->{'email'};
+        my $password            = $c->req->params->{'password'};
         
         my $customer = $c->model('Customer')->create_customer({
             bill_first_name     => $bill_first_name,
@@ -93,15 +94,16 @@ sub register_do : Local {
             ship_zip_code       => $ship_zip_code,
             ship_phone          => $ship_phone,
             email               => $email,
+            password            => $password,
         });
 
         if ( $customer ) {
         # Customer created
-            print "Customer Created - ". $customer->id ."\n";
+            print "Customer Created - ". $customer ."\n";
 
         } else {
         # Customer not created
-            print "Customer not created - $customer->id\n";        
+            print "Customer not created - ". $customer . "\n";        
 
         } 
 

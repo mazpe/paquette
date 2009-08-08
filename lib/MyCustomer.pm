@@ -19,7 +19,21 @@ sub create_customer {
     if ( $args ) {
     # We have arguments
 
-        $self->resultset('Customer')->create_customer( $args ); 
+        my $customer =  $self->resultset('Customer')->create_customer( $args ); 
+
+        if ( $customer ) {
+        # Customer was created       
+            my $user_account 
+                = $self->resultset('User')->create_user_account( {
+                username            => $args->{email},
+                password            => $args->{password},
+            } );
+
+        } else {
+        # Customer was not created
+            
+            
+        }
     
     } else {
     # No arguments submited
