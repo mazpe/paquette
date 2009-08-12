@@ -20,11 +20,11 @@
               <div id="nav">
                 [% IF c.user_exists %]
                 <a href="[% c.uri_for(
-                    c.controller('Logout').action_for('index')
+                    c.controller('Customers').action_for('logout')
                 ) %]"> logout</a> 
                 [% ELSE %]
                 <a href="[% c.uri_for(
-                    c.controller('Customers').action_for('register')
+                    c.controller('Customers').action_for('login')
                 ) %]"> login </a>
                 [% END %]
                 |

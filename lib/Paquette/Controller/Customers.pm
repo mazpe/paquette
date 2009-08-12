@@ -28,6 +28,43 @@ sub index :Path :Args(0) {
     $c->response->body('Matched Paquette::Controller::Customers in Customers.');
 }
 
+sub login : Local {
+    my ($self, $c) = @_;
+
+    # Get the username and password from form
+    my $username = $c->request->params->{username} || "";
+    my $password = $c->request->params->{password} || "";
+
+    # If the username and password values were found in form
+    if ($username && $password) {
+        # Attempt to log the user in
+        if ($c->authenticate({ username => $username,
+                               password => $password  } )) {
+            # If successful, then let them use the application
+            $c->response->redirect($c->uri_for(
+                $c->controller('Customers')->action_for('index')));
+            return;
+        } else {
+            # Set an error message
+            $c->stash->{error_msg} = "Bad username or password.";
+        }
+    }
+
+    # If either of above don't work out, send to the login page
+    $c->stash->{template} = 'customers/login.tt2';
+}
+
+sub logout : Local {
+    my ( $self, $c ) = @_;
+
+    # Clear the user's state
+    $c->logout;
+
+    # Send the user to the starting point
+    $c->response->redirect($c->uri_for('/'));
+
+}
+
 sub register : Local {
     my ( $self, $c ) = @_;
 

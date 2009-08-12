@@ -33,7 +33,7 @@ sub create_cart {
 
 sub get_cart {
     my $self            = shift;
-    my $customer_id     = $self->user->id || '';
+    my $customer_id     = $self->user->id if ($self->user);
     my $cart;
 
     # Check for a cart with the same session id
@@ -57,7 +57,6 @@ sub get_cart {
 # Adds items to the shopping cart
 sub add_items_to_cart {
     my ( $self, $args ) = @_;
-    my $customer_id     = $self->user->id || '';
     my $cart_id         = get_cart($self)->id;
     my $item;
 
