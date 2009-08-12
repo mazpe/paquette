@@ -34,14 +34,20 @@ sub create_cart {
 sub get_cart {
     my $self            = shift;
     my $customer_id     = $self->user->id if ($self->user);
+    my $session_id      = $self->session_id;
     my $cart;
 
+    my $args = {
+        customer_id => $customer_id,
+        session_id  => $session_id,
+    };
+
     # Check for a cart with the same session id
-    if ( $self->resultset('Cart')->get_cart($self->session_id) ) {
+    if ( $self->resultset('Cart')->get_cart($args) ) {
     # Found cart with the same Session ID
 
         # Get our cart id from database
-        $cart = $self->resultset('Cart')->get_cart($self->session_id);
+        $cart = $self->resultset('Cart')->get_cart($args);
 
     } else {
     # Found no cart, creating one
@@ -54,10 +60,50 @@ sub get_cart {
     return $cart;
 }
 
+
+sub get_cart_id {
+    my $self            = shift;
+    my $session_id      = $self->session_id;
+    my $cart_args;
+    my $cart_id;
+
+
+    if ( $self->session->{cart_id} gt 0 ) {
+    # There is a cart_id in the session
+
+        # Get our Cart ID from session
+        $cart_id = $self->session->{cart_id};
+
+        # Set arguments for validation
+        $cart_args = {
+            cart_id     => $cart_id,
+            session_id  => $session_id,
+        };
+
+        # Check if Cart ID still valid, if not create a new cart
+        unless ( $self->resultset('Cart')->validate_cart_id($cart_args) == 1 ) {
+        # Cart_id from session not valid
+
+            $cart_id = create_cart($self)->id;
+        }
+
+    } else {
+    # Card ID not found
+
+        # Create Cart ID
+        $cart_id = create_cart($self)->id;
+
+    }
+        
+    $self->session->{cart_id} = $cart_id;
+
+    return $cart_id;
+}
+
 # Adds items to the shopping cart
 sub add_items_to_cart {
     my ( $self, $args ) = @_;
-    my $cart_id         = get_cart($self)->id;
+    my $cart_id         = get_cart_id($self);
     my $item;
 
     # Check that we do have this item
@@ -84,7 +130,7 @@ sub add_items_to_cart {
 # Return list of items
 sub get_items_in_cart { 
     my $self            = shift;
-    my $cart_id         = get_cart($self)->id;
+    my $cart_id         = get_cart_id($self);
 
     my $items_in_cart 
             = $self->resultset('CartItem')->get_items( $cart_id );
@@ -95,7 +141,7 @@ sub get_items_in_cart {
 # Removes items from the shopping cart
 sub remove_items_from_cart { 
     my ( $self, $args ) = @_;
-    my $cart_id         = get_cart($self)->id;
+    my $cart_id         = get_cart_id($self);
     my $cart_sku        = $cart_id.''.$args->{sku};
 
     # Remove particular item from cart
@@ -107,7 +153,7 @@ sub remove_items_from_cart {
 # Update items in the shopping cart
 sub update_items_in_cart {
     my ( $self, $args ) = @_;
-    my $cart_id         = get_cart($self)->id;
+    my $cart_id         = get_cart_id($self);
     my $items           = $args->{items};
 
     # Loop through each sku
@@ -130,7 +176,7 @@ sub update_items_in_cart {
 # Clear items in the shopping cart
 sub clear_cart {
     my $self            = shift; 
-    my $cart_id         = get_cart($self)->id;
+    my $cart_id         = get_cart_id($self);
 
     # Clear our shopping cart items
     $self->resultset('CartItem')->clear_items($cart_id);
@@ -138,7 +184,16 @@ sub clear_cart {
     return 1;
 }
 
-sub checkout { # This will persist the cart, and place the order 
+sub assign_cart {
+    my $self            = shift;
+    my $cart_id         = get_cart_id($self);
+
+    # Attached Cart and Customer 
+    $self->resultset('Cart')->attach_cart_to_customer( { 
+        customer_id => $self->user->id,
+        cart_id     => $cart_id,
+    } );
+
 }
 
 1;

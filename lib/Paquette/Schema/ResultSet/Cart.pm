@@ -13,6 +13,21 @@ Paquette::Schema::ResultSet::Cart - ResultSet
 Carts ResultSet
 
 =cut
+sub create2 {
+    my ( $self, $args ) = @_;
+
+    my $cart = $self->find_or_new ( $args, { key => 'id' } );
+
+    unless ( $cart->in_storage ) {
+    # Cart not found
+
+        # Create cart
+        $cart->insert;
+
+    }
+
+    return $cart;
+}
 
 sub create {
     my ( $self, $args ) = @_;
@@ -37,10 +52,27 @@ sub create {
 
 sub get_cart {
     my ( $self, $args ) = @_;
+    my $cart;
 
-    my $cart = $self->find( $args, { key => 'session_id' } );
+    $cart = $self->search( { session_id => $args->{session_id} } )->first;
+
+    if ( !$cart && $args->{customer_id} ) {
+        $cart = $self->search( { customer_id => $args->{customer_id} } )->first;
+    }
 
     return $cart;
+}
+
+sub validate_cart_id {
+    my ( $self, $args ) = @_;
+
+    # Cart_ID valid
+    my $is_valid = $self->search( { 
+        id => $args->{cart_id}, session_id => $args->{session_id}
+    } );
+
+    return $is_valid ;
+    
 }
 
 sub save_item_to_cart {
@@ -72,6 +104,19 @@ sub get_item_by_sku {
     my $item = $self->find( { sku => $sku } );
 
     return $item ? $item : 0;
+}
+
+sub attach_cart_to_customer {
+    my ( $self, $args ) = @_;
+
+    # Get our cart
+    my $cart = $self->search( { id => $args->{cart_id} } );
+
+    # if we find a cart then update
+    if ( $cart == 1) {
+        $cart->update( { customer_id => $args->{customer_id} } );
+    }
+    
 }
 
 =head1 AUTHOR

@@ -40,6 +40,10 @@ sub login : Local {
         # Attempt to log the user in
         if ($c->authenticate({ username => $username,
                                password => $password  } )) {
+
+            # Assign cart_id/session_id to user
+            $c->model('Cart')->assign_cart;
+
             # If successful, then let them use the application
             $c->response->redirect($c->uri_for(
                 $c->controller('Customers')->action_for('index')));
@@ -48,6 +52,7 @@ sub login : Local {
             # Set an error message
             $c->stash->{error_msg} = "Bad username or password.";
         }
+
     }
 
     # If either of above don't work out, send to the login page
