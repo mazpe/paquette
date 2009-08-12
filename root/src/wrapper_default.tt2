@@ -18,9 +18,16 @@
                   width="452" height="63" alt="A step closer to Spain" />
               </h1>
               <div id="nav">
+                [% IF c.user_exists %]
+                <a href="[% c.uri_for(
+                    c.controller('Logout').action_for('index')
+                ) %]"> logout</a> 
+                [% ELSE %]
                 <a href="[% c.uri_for(
                     c.controller('Customers').action_for('register')
-                ) %]">your account</a> |
+                ) %]"> login </a>
+                [% END %]
+                |
                 <a href="
                   [% c.uri_for(c.controller('Cart').action_for('view')) %]
                 ">view cart 
@@ -104,7 +111,7 @@
           
           <div class="clear"></div>
           <div id="footer">
-              Web Development by gbRND
+           [% c.user.username %]   Web Development by gbRND
 <div id="footnav">
           <a href="/legal">Legal</a> | <a href="/privacy">Privacy Policy</a>
         </div><!-- end footnav -->

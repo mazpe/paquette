@@ -9,32 +9,30 @@ __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedCol
 __PACKAGE__->table("cart_item");
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
+  { data_type => "INT", default_value => undef, is_nullable => 0, size => 36 },
   "cart_id",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
+  "cart_sku",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
   "sku",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
-    size => 25,
+    size => 128,
   },
   "quantity",
-  { data_type => "TINYINT", default_value => 1, is_nullable => 0, size => 3 },
-  "price",
-  {
-    data_type => "DECIMAL",
-    default_value => "0.00",
-    is_nullable => 0,
-    size => 9,
-  },
-  "description",
-  {
-    data_type => "VARCHAR",
-    default_value => undef,
-    is_nullable => 1,
-    size => 255,
-  },
+  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
   "created",
   {
     data_type => "DATETIME",
@@ -51,10 +49,32 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("cart_sku", ["cart_sku"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-07 22:45:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R46HCQ4MEb1CDmKllQR8Kw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-11 15:37:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/720jKUnRAZwSuXxBsgyQA
+__PACKAGE__->add_columns(
+    "created",
+    { data_type => 'datetime', set_on_create => 1 },
+    "updated",
+    { data_type => 'datetime', set_on_create => 1, set_on_update => 1 },
+);
+
+__PACKAGE__->belongs_to(
+    carts => 'Paquette::Schema::Result::Cart',
+    'cart_id'
+);
+__PACKAGE__->belongs_to(
+    products => 'Paquette::Schema::Result::Product',
+    'sku'
+);
+__PACKAGE__->has_one(
+    product => 'Paquette::Schema::Result::Product',
+    { 'foreign.sku' => 'self.sku' },
+    { cascade_delete => 0 }
+);
+
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

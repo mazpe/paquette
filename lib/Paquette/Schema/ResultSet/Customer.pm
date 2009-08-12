@@ -3,6 +3,7 @@ package Paquette::Schema::ResultSet::Customer;
 use strict;
 use warnings;
 use base 'DBIx::Class::ResultSet';
+use Data::Dumper;
 
 =head1 NAME
 
@@ -17,12 +18,11 @@ Customers ResultSet
 sub create_customer {
     my ( $self, $args ) = @_;
     my $customer;
-
     if ( $args ) {
     # We have arguments
 
         $customer = $self->find_or_new(  $args , { key => 'email' }, );
-
+        
         unless ( $customer->in_storage ) {
         # Customer not in store
 
@@ -38,6 +38,25 @@ sub create_customer {
 
     return $customer ? $customer : 0;
 }
+
+sub get_customer_by_email {
+    my ( $self, $email ) = @_;
+    my $customer;
+
+    if ( $email) {
+    # We have arguments
+    
+        # Get our customer
+        $customer = $self->find( $email, { key => 'email' } );
+
+    } else {
+    # No arguments submited
+
+    }
+
+    return $customer ? $customer : 0;
+}
+
 
 
 =head1 AUTHOR

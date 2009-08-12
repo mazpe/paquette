@@ -5,122 +5,123 @@ use MooseX::Types::Moose qw(Str Int ArrayRef);
 use namespace::autoclean;
 use Data::Dumper;
 
-has 'user'      => ( is => 'ro', required => 1, weak_ref => 1 );
-has 'session'   => ( is => 'ro', required => 1, weak_ref => 1 );
+has 'user'          => ( is => 'ro', required => 1, weak_ref => 1 );
+has 'session'       => ( is => 'ro', required => 1, weak_ref => 1 );
+has 'session_id'    => ( is => 'ro', required => 1, weak_ref => 1 );
 has 'schema'    => ( is => 'rw', required => 1, handles => [qw / resultset /] );
 has 'sku'       => ( is => 'ro', isa => Str );
 has 'qty'       => ( is => 'ro', isa => Int, default => 0 );
 
 has '_items'    => ( is => 'ro', isa => ArrayRef, lazy_build => 1 );
 
-sub _build_items { # Inflate the items from either the sessin or the DB 
+sub create_cart {
+    my ( $self, $customer_id ) = @_;
+    my $cart;
+    my $cart_args;
+
+    # Create a hashref with our cart arguments 
+    $cart_args = ( { 
+        session_id  => $self->session_id,
+        customer_id => $customer_id,
+    } );
+
+    # Create the Cart
+    $cart = $self->resultset('Cart')->create( $cart_args );
+    
+    return $cart;
 }
 
-sub get_items_in_cart { # Return list of items 
-    my $self = shift;
+sub get_cart {
+    my $self            = shift;
+    my $customer_id     = $self->user->id || '';
+    my $cart;
 
-    my %items_in_cart;
+    # Check for a cart with the same session id
+    if ( $self->resultset('Cart')->get_cart($self->session_id) ) {
+    # Found cart with the same Session ID
 
-    if ($self->user) {
-    # Get items in cart from db
-
+        # Get our cart id from database
+        $cart = $self->resultset('Cart')->get_cart($self->session_id);
 
     } else {
-    # Get items in cart from session
-    
-        my $items_in_session = $self->session->{cart};
+    # Found no cart, creating one
 
-        foreach my $sku ( keys %$items_in_session ) {
-
-            my $sku_data_from_db 
-                = $self->resultset('Product')->get_item_by_sku($sku);
-
-            $items_in_cart{$sku} = { 
-                sku     => $sku, 
-                qty     => $items_in_session->{$sku},
-                name    => $sku_data_from_db->name,
-                price   => $sku_data_from_db->price,
-            }; 
-
-        }
+        # Create a new cart
+        $cart = create_cart( $self, $customer_id );
 
     }
 
-    return %items_in_cart ? \%items_in_cart : 0;
+    return $cart;
 }
 
 # Adds items to the shopping cart
-sub add_items_to_cart {  
-    my ( $self, $args ) = @_; 
+sub add_items_to_cart {
+    my ( $self, $args ) = @_;
+    my $customer_id     = $self->user->id || '';
+    my $cart_id         = get_cart($self)->id;
+    my $item;
 
-    if ($self->user) {
-    # Add to db 
+    # Check that we do have this item
+    if ( $self->resultset('Product')->get_item_by_sku($args->{sku}) ) {
+    # Sku found on db
 
+        $item = {
+            cart_id     => $cart_id,
+            cart_sku    => $cart_id.''.$args->{sku},
+            sku         => $args->{sku},
+            quantity    => $args->{qty},
+        };
+
+        # Add item to cart
+        $self->resultset('CartItem')->add_item( $item );
+        
     } else {
-    # Add to session
+    # Sku not found
 
-        # Check that we do have this item
-        if ( $self->resultset('Product')->get_item_by_sku($args->{sku}) ) {
-        # Found sku on db
-
-            # We add a new item to our cart.
-            $self->session->{cart}{$args->{sku}} += $args->{qty};
-
-        } else {
-        # Sku not found 
-
-        }
     }
 
-    #print Dumper $self->session;
+}
 
+# Return list of items
+sub get_items_in_cart { 
+    my $self            = shift;
+    my $cart_id         = get_cart($self)->id;
+
+    my $items_in_cart 
+            = $self->resultset('CartItem')->get_items( $cart_id );
+
+    return $items_in_cart ? $items_in_cart : 0;
 }
 
 # Removes items from the shopping cart
 sub remove_items_from_cart { 
     my ( $self, $args ) = @_;
+    my $cart_id         = get_cart($self)->id;
+    my $cart_sku        = $cart_id.''.$args->{sku};
 
-    if ( $self->user ) {
-    # Delete item from cart in the db
+    # Remove particular item from cart
+    $self->resultset('CartItem')->remove_item($cart_sku);
 
-    } else {
-    # Delete item from cart in session
-
-        if ( $self->session->{cart}{$args->{sku}} ) {
-        # Found sku in session
-
-            delete($self->session->{cart}{$args->{sku}});
-
-        } else {
-        # Sku not found in session
-
-        }
-    }
-
+    return 1;
 }
 
 # Update items in the shopping cart
 sub update_items_in_cart {
     my ( $self, $args ) = @_;
+    my $cart_id         = get_cart($self)->id;
+    my $items           = $args->{items};
 
-    my $items = $args->{items};
+    # Loop through each sku
+    foreach my $sku ( keys %$items ) {
 
-    if ( $self->user ) {
-    # Update items in cart in db
+        # Create our cart_sku identifyer
+        my $cart_sku = $cart_id.''.$sku;
 
-
-    } else {
-    # Update items in cart in session
-
-        # Get each of our items sku
-        foreach my $key ( keys %$items ) {
-            #print $key ." => ". $args{items}{$key} ."\n";
-
-            # Update session's qty
-            $self->session->{cart}{$key} = $args->{items}->{$key};
-
-            #print $self->session->{cart}{$key};
-        }        
+        # Update item in the cart
+        my $item = $self->resultset('CartItem')->update_item( {
+            quantity    => $items->{$sku},
+            cart_sku    => $cart_sku,
+        } );
 
     }
 
@@ -129,20 +130,13 @@ sub update_items_in_cart {
 
 # Clear items in the shopping cart
 sub clear_cart {
-    my $self = shift; 
+    my $self            = shift; 
+    my $cart_id         = get_cart($self)->id;
 
-    if ( $self->user ) {
-    # Clear cart in db
-        
+    # Clear our shopping cart items
+    $self->resultset('CartItem')->clear_items($cart_id);
 
-    } else {
-    # Clear cart in session 
-        
-        # Clear session
-        $self->session->{cart} = {};
-
-    }
-
+    return 1;
 }
 
 sub checkout { # This will persist the cart, and place the order 

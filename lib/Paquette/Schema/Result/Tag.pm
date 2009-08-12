@@ -36,8 +36,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("tag_name", ["name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-07 22:45:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XVlPCtv21dScQXh6bNtTag
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-11 15:37:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5q8IC8TKsQMv9tzVft008g
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -16,6 +16,7 @@ MyCustomer => WIP
  delete_customer
 
 MyCheckout => WIP
+ login_or_register 
  get_available_shipping,
  set_shipping,
  get_available_payment,

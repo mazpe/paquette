@@ -3,6 +3,7 @@ package Paquette::Schema::ResultSet::Product;
 use strict;
 use warnings;
 use base 'DBIx::Class::ResultSet';
+use Data::Dumper;
 
 =head1 NAME
 
@@ -19,7 +20,7 @@ sub get_item_by_sku {
 
     my $item = $self->find( { sku => $sku } );
 
-    return $item ? $item : 0;
+    return $item;
 }
 
 =head1 AUTHOR

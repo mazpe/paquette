@@ -3,6 +3,7 @@ package Paquette::Controller::Checkout;
 use strict;
 use warnings;
 use parent 'Catalyst::Controller';
+use Data::Dumper;
 
 =head1 NAME
 
@@ -22,7 +23,7 @@ Check if there is a user and, if not, forward to login page
 
 =cut
 
-sub auto : Private {
+sub authenticate : Local {
     my ($self, $c) = @_;
 
     if ($c->controller eq $c->controller('Checkout::Login')) {
@@ -50,74 +51,115 @@ sub auto : Private {
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-
-    $c->response->body('Matched Paquette::Controller::Checkout in Checkout.');
-}
-
-sub register_do : Local {
-    my ( $self, $c ) = @_;
-
-    my $bill_first_name     = $c->req->param('bill_first_name');
-    my $bill_last_name      = $c->req->param('bill_last_name');
-    my $bill_company        = $c->req->param('bill_company');
-    my $bill_address1       = $c->req->param('bill_address1');
-    my $bill_address2       = $c->req->param('bill_address2');
-    my $bill_city           = $c->req->param('bill_city');
-    my $bill_state          = $c->req->param('bill_state');
-    my $bill_country        = $c->req->param('bill_country');
-    my $bill_zip_code       = $c->req->param('bill_zip_code');
-    my $bill_phone          = $c->req->param('bill_phone');
-
-    my $ship_first_name     = $c->req->param('ship_first_name');
-    my $ship_last_name      = $c->req->param('ship_last_name');
-    my $ship_company        = $c->req->param('ship_company');
-    my $ship_address1       = $c->req->param('ship_address1');
-    my $ship_address2       = $c->req->param('ship_address2');
-    my $ship_city           = $c->req->param('ship_city');
-    my $ship_state          = $c->req->param('ship_state');
-    my $ship_country        = $c->req->param('ship_country');
-    my $ship_zip_code       = $c->req->param('ship_zip_code');
-    my $ship_phone          = $c->req->param('ship_phone');
-
-    my $email               = $c->req->param('email');
-
-    my $customer = $c->model('PaquetteDB::Customer')->create({
-        bill_first_name     => $bill_first_name,
-        bill_last_name      => $bill_last_name,
-        bill_company        => $bill_company,
-        bill_address1       => $bill_address1,
-        bill_address2       => $bill_address2,
-        bill_city           => $bill_city,
-        bill_state          => $bill_state,
-        bill_country        => $bill_country,
-        bill_zip_code       => $bill_zip_code,
-        bill_phone          => $bill_phone,
-
-        ship_first_name     => $ship_first_name,
-        ship_last_name      => $ship_last_name,
-        ship_company        => $ship_company,
-        ship_address1       => $ship_address1,
-        ship_address2       => $ship_address2,
-        ship_city           => $ship_city,
-        ship_state          => $ship_state,
-        ship_country        => $ship_country,
-        ship_zip_code       => $ship_zip_code,
-        ship_phone          => $ship_phone,
-
-        email               => $email,
-    });
-
-    my $user = $c->model('PaquetteDB::User')->create({
-        user                => '$email',
-        
-    });
     
 }
 
-sub view_cart : Local {
+sub customer_info : Local {
     my ( $self, $c ) = @_;
 
-    $c->stash->{template} = 'checkout/cart.tt2';
+    # Load our countries and states
+    $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
+    $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
+
+    # If customer is already logged in pull his customer information or load
+    # registration page
+    if ( $c->user_exists ) {
+    # Customer logged in 
+        
+        # pull customer information from db
+        my $a_customer 
+            = $c->model('Customer')->get_customer($c->user->username);
+
+        # fill form with customer info
+        $c->stash->{customer} = $a_customer;
+
+        # Load items from cart
+        $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
+        # Set the template to use
+        $c->stash->{template} = 'checkout/customer_info.tt2';
+
+    } else {
+    # Customer not logged in
+        
+        # register
+        # Load items from cart
+        $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
+        # Set the template to use
+        $c->stash->{template}   = 'checkout/customer_info.tt2';
+
+        # login
+    }
+
+}
+
+sub customer_info_do : Local {
+    my ( $self, $c ) =  @_;
+    my $cart;
+    my $customer;
+
+    if ( $c->req->params->{submit} ) {
+
+        if ( $c->user_exists ) {
+        # Customer logged in
+            
+            # Import cart from session to database            
+            $cart = $c->model('Cart')->save_cart;
+
+        } else {
+        # Customer not logged in
+
+            my $username = $c->req->params->{email};
+            my $password = $c->req->params->{password};
+
+            # Create customer object
+            $customer = $c->model('Customer')->create_customer(
+                $c->req->params
+            );
+            
+            # Login customer
+            if ( !$c->authenticate( { 
+                username => $username, password => $password, 
+            } ) ) 
+            { 
+                print "Authentication Failed\n";
+                    
+            }
+
+            # Import cart from session to database
+            $cart = $c->model('Cart')->save_cart; 
+
+                $c->detach('shipping_info');
+
+            if ( $customer && $cart ) {
+            # Customer was created and cart was imported
+            
+                # Forward to shipping information
+                $c->detach('shipping_info');
+
+            } else {
+            # Customer or Cart were not created
+
+            }
+        }
+
+        # Forward to shipping information
+        $c->detach('shipping_info');
+
+    } else {
+
+
+
+    }
+    
+}
+
+sub shipping_info : Local {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{customer} 
+        = $c->model('Customer')->get_customer($c->user->username);
+    $c->stash->{template} = 'checkout/shipping_info.tt2';
+
 }
 
 =head1 AUTHOR

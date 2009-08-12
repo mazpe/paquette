@@ -23,9 +23,10 @@ sub build_per_context_instance {
     my ( $self, $c ) = @_;
     
     return MyCart->new(
-        user    => $c->user,
-        session => $c->session,
-        schema  => $c->model('PaquetteDB')->schema
+        user            => $c->user,
+        session         => $c->session,
+        session_id      => $c->sessionid,
+        schema          => $c->model('PaquetteDB')->schema
     );
 }
 

@@ -99,11 +99,29 @@ sub register_do : Local {
 
         if ( $customer ) {
         # Customer created
-            print "Customer Created - ". $customer ."\n";
+
+            # Authenticate customer
+            if ( $c->authenticate( {
+                username => $email,
+                password => $password
+            } ) ) {
+            # Authenticated
+
+                # Checkout mode 
+                    $c->response->redirect(
+                        $c->uri_for( 
+                            $c.controller('Checkout')->action_for('shipping'), )
+                    . '/' );
+
+
+            } else {
+
+                print "no go\n";
+            }
 
         } else {
         # Customer not created
-            print "Customer not created - ". $customer . "\n";        
+            #print "Customer not created - ". $customer . "\n";        
 
         } 
 

@@ -76,10 +76,23 @@ __PACKAGE__->add_unique_constraint("sku", ["sku"]);
 __PACKAGE__->add_unique_constraint("url_name", ["url_name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-07 22:45:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1CvC3aovqopKa9g8KHPpAg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-11 15:37:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hR6Ji0mAedvIM9RQ1Suk0g
+__PACKAGE__->add_columns(
+    "created",
+    { data_type => 'datetime', set_on_create => 1 },
+    "updated",
+    { data_type => 'datetime', set_on_create => 1, set_on_update => 1 },
+);
+
 __PACKAGE__->has_one(category => 'Paquette::Schema::Result::Categories',
     { 'foreign.id' => 'self.category_id' },
+    { cascade_delete => 0 }
+);
+
+__PACKAGE__->has_many(
+    cart_items => 'Paquette::Schema::Result::CartItem',
+    { 'foreign.sku' => 'self.sku' },
     { cascade_delete => 0 }
 );
 

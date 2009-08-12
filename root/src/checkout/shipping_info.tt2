@@ -1,0 +1,147 @@
+<script language="JavaScript">
+<!--
+function submitForm()
+{
+    document.billing.submit();
+}
+
+//-->
+</script>
+
+<form method="post" action="[% c.uri_for(
+    c.controller('Checkout').action_for('billing_info_do') 
+) %]" name='billing'>
+
+<table width='585' cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
+  <tr>
+    <td colspan='2' class='breadcrumbs'>
+      &nbsp;CHECKOUT PROCESS: &nbsp;&nbsp; 
+      1 ENTER INFO&nbsp;&nbsp; <font color='#990000'>
+      <b>2 CHOOSE SHIPPING</b></font>&nbsp;&nbsp; 
+      3 ENTER PAYMENT&nbsp;&nbsp; 4 CONFIRMATION
+    </td>
+  </tr>
+  <tr>
+    <td valign='top'>
+      <img src='/images/title_shipdetail.gif' width='280' height='20' border='0' alt='Shipping details'>
+    </td>
+    <td valign='bottom'>
+     <input type='submit' name='submit' value='Continue Checkout'
+        onClick="submitForm()"  >
+    </td>
+  </tr>
+  <tr>
+    <td valign='top' width='50%'>
+      <table cellpadding='0' valign='top' align='left' border='0' width='100%'>
+        <tr>
+          <td>
+            <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
+              <tr>
+                <td class='summarycell'>
+                  <table border=0 width='100%'>
+                    <tr>
+                      <td>BILL TO:</td>
+                      <td align='right' valign='top'>
+                        <a href='shipping.html'><img src='/images/but_editinfo2.gif' width=54 height=18 title='Edit Recipient' name='Edit Recipient' border=0></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan=2>
+                      [% customer.bill_first_name %], 
+                      [% customer.bill_last_name %]<br />
+                      [% customer.bill_address1 %]<br />
+                      [% customer.bill_address2 %]<br />    
+                      [% customer.bill_city %], [% customer.bill_state %]
+                      [% customer.bill_zip %]<br />
+                      [% customer.bill_country %]<br />
+                      [% customer.bill_phone %]<br />
+                      [% customer.bill_email %]<br />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td class='summarycell'>
+                  <table border=0 width='100%'>
+                    <tr>
+                      <td>SHIP TO:</td>
+                      <td align='right' valign='top'>
+                        <a href='shipping.html'><img src='/images/but_editinfo2.gif' width=54 height=18 title='Edit Recipient' name='Edit Recipient' border=0></a>
+                    </td>
+                  </tr>
+                    <td colspan=2>
+                    [% customer.ship_first_name %],
+                    [% customer.ship_last_name %]<br />
+                    [% customer.ship_address1 %]<br />
+                    [% customer.ship_address2 %]<br />
+                    [% customer.ship_city %], [% customer.bill_state %]
+                    [% customer.ship_zip %]<br />
+                    [% customer.ship_country %]<br />
+                    [% customer.ship_phone %]<br />
+                    [% customer.ship_email %]<br />
+                    </td>
+              </tr>
+          </table></td>
+          </tr>
+  </table></td></td>
+      </tr>
+  </table></td>
+  <!-- RIGHT COLUMN -->
+
+  <td valign=top width='50%'>
+  <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
+      <!-- CELL: SHIPPING METHOD -->
+      <tr>
+      <td class='summarycell'>
+      CHOOSE SHIPPING METHOD:<br>
+      <!--<a href='#' onclick='javascript:window.open("/support/popup.html?pup=holiday", "notify", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=50,top=50,width=530,height=500")' style='color: blue;'>Holiday Deadlines</a>-->
+
+<table border=0>
+<tr>
+    <td valign=top>
+        <input type=radio name='shp_rate_150812' value='PM:5.95'>
+    </td>
+    <td nowrap>US Mail ($5.95) 
+        <br><i>Estimated Arrival 3 to 7 days 
+    </td>
+</tr>
+<tr>
+    <td valign=top>
+        <input type=radio name='shp_rate_150812' value='UPS:6.12'>
+    </td>
+    <td nowrap>Ground ($6.12) 
+        <br><i>Estimated Arrival Thursday 08/13 
+    </td>
+</tr>
+<tr>
+    <td valign=top>
+        <input type=radio name='shp_rate_150812' value='UPX:22.43'>
+    </td>
+    <td nowrap>Next Day Air ($22.43) 
+        <br><i>Estimated Arrival Wednesday 08/12 </a></i>
+    </td>
+</tr>
+</table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+     <input type='submit' name='submit' value='Continue Checkout'
+        onClick="submitForm()"  >
+      </td>
+    </tr>
+      </td>
+
+      </tr>
+<tr>
+      </tr>       
+  </table>
+  </td>
+ </tr>
+</table>
+</form>
+

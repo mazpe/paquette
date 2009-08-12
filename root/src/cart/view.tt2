@@ -20,9 +20,10 @@ function submitForm()
   </tr>
 </thead>
 <tbody>
-[% FOREACH items IN cart_items %]
-[% item = items.values.0 %]
-[% subtotal = item.qty * item.price %]
+[% total = 0%]
+[% subtotal = 0%]
+[% FOREACH item IN cart_items %]
+[% subtotal = item.quantity * item.product.price %]
 [% total = total + subtotal %]
   <tr>
     <td>
@@ -32,11 +33,11 @@ function submitForm()
          %]'" >
     </td>
     <td>[% item.sku %]</td>
-    <td>[% item.name %]</td>
+    <td>[% item.product.name %]</td>
     <td align="center">
-      <input type="text" size="2" name="[% item.sku %]" value="[% item.qty %]">
+      <input type="text" size="2" name="[% item.sku %]" value="[% item.quantity %]">
     </td>
-    <td align="right">$[% item.price %]</td>
+    <td align="right">$[% item.product.price %]</td>
     <td align="right">$[% subtotal %]</td>
   </tr>
 [% END %]
@@ -73,7 +74,7 @@ function submitForm()
     <td>
       <input type="button" name="clear" value="Checkout"
         onClick="window.location='[%
-            c.uri_for(c.controller('Checkout').action_for('view_cart'))
+            c.uri_for(c.controller('Checkout').action_for('customer_info'))
          %]'" >
     </td>
 

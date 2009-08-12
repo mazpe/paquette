@@ -19,6 +19,7 @@ use Catalyst qw/-Debug
                 Static::Simple
 
                 StackTrace
+                SubRequest
             
                 Authentication
 
@@ -26,7 +27,7 @@ use Catalyst qw/-Debug
                 Session::Store::File
                 Session::State::Cookie
 /;
-our $VERSION = '0.01';
+our $VERSION = '0.05';
 
 # Configure the application.
 #
