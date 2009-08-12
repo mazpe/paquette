@@ -76,9 +76,11 @@
     <dd [% IF (i == 1) %] class="first" [% END %] >
     <dd [% IF (loop.last) %] class="last" [% END %] >
       <a href="[% c.uri_for(
-        c.controller('Store').action_for('subcategories'), category.url_name
+        c.controller('Store').action_for('index'), category.url_name
       ) %] ">
+
         [% category.name FILTER upper %]
+
       </a>
     </dd>
   [% IF category_id == category.id %]
