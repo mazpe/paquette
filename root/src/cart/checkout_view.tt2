@@ -19,15 +19,15 @@ function submitForm()
   </tr>
 </thead>
 <tbody>
-[% FOREACH items IN cart_items %]
-[% item = items.values.0 %]
-[% subtotal = item.qty * item.price %]
+[% total = 0 %]
+[% FOREACH item IN cart_items %]
+[% subtotal = item.quantity * item.product.price %]
 [% total = total + subtotal %]
   <tr>
     <td>[% item.sku %]</td>
-    <td>[% item.name %]</td>
-    <td align="center">[% item.qty %]</td>
-    <td align="right">$[% item.price %]</td>
+    <td>[% item.product.name %]</td>
+    <td align="center">[% item.quantity %]</td>
+    <td align="right">$[% item.product.price %]</td>
     <td align="right">$[% subtotal %]</td>
   </tr>
 [% END %]
