@@ -25,7 +25,8 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Paquette::Controller::Customers in Customers.');
+    # Set our template
+    $c->stash->{template} = 'customers/index.tt2';
 }
 
 sub login : Local {
@@ -73,9 +74,6 @@ sub logout : Local {
 sub register : Local {
     my ( $self, $c ) = @_;
 
-    # Get items in the shopping cart and set them in stash
-    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-
     # Get countries and states from database and set them in stash 
     $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
     $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
@@ -86,86 +84,39 @@ sub register : Local {
 
 sub register_do : Local {
     my ( $self, $c ) = @_;
+    my $customer;
 
     if ( $c->req->params->{submit} ) {
     # Form submited
 
-        # Get our fields from form
-        my $bill_first_name     = $c->req->params->{'bill_first_name'};
-        my $bill_last_name      = $c->req->params->{'bill_last_name'};
-        my $bill_company        = $c->req->param('bill_company');
-        my $bill_address1       = $c->req->param('bill_address1');
-        my $bill_address2       = $c->req->param('bill_address2');
-        my $bill_city           = $c->req->param('bill_city');
-        my $bill_state          = $c->req->param('bill_state');
-        my $bill_country        = $c->req->param('bill_country');
-        my $bill_zip_code       = $c->req->param('bill_zip_code');
-        my $bill_phone          = $c->req->param('bill_phone');
-        my $ship_first_name     = $c->req->param('ship_first_name');
-        my $ship_last_name      = $c->req->param('ship_last_name');
-        my $ship_company        = $c->req->param('ship_company');
-        my $ship_address1       = $c->req->param('ship_address1');
-        my $ship_address2       = $c->req->param('ship_address2');
-        my $ship_city           = $c->req->param('ship_city');
-        my $ship_state          = $c->req->param('ship_state');
-        my $ship_country        = $c->req->param('ship_country');
-        my $ship_zip_code       = $c->req->param('ship_zip_code');
-        my $ship_phone          = $c->req->param('ship_phone');
-        my $email               = $c->req->params->{'email'};
-        my $password            = $c->req->params->{'password'};
-        
-        my $customer = $c->model('Customer')->create_customer({
-            bill_first_name     => $bill_first_name,
-            bill_last_name      => $bill_last_name,
-            bill_company        => $bill_company,
-            bill_address1       => $bill_address1,
-            bill_address2       => $bill_address2,
-            bill_city           => $bill_city,
-            bill_state          => $bill_state,
-            bill_country        => $bill_country,
-            bill_zip_code       => $bill_zip_code,
-            bill_phone          => $bill_phone,
-            ship_first_name     => $ship_first_name,
-            ship_last_name      => $ship_last_name,
-            ship_company        => $ship_company,
-            ship_address1       => $ship_address1,
-            ship_address2       => $ship_address2,
-            ship_city           => $ship_city,
-            ship_state          => $ship_state,
-            ship_country        => $ship_country,
-            ship_zip_code       => $ship_zip_code,
-            ship_phone          => $ship_phone,
-            email               => $email,
-            password            => $password,
-        });
+        my $username = $c->req->params->{email};
+        my $password = $c->req->params->{password};
+
+        # Create customer object
+        $customer = $c->model('Customer')->create_customer(
+            $c->req->params
+        );
+
+        # Login customer
+        if ( !$c->authenticate( {
+            username => $username, password => $password,
+        } ) )
+        {
+            print "Authentication Failed\n";
+
+        }
 
         if ( $customer ) {
-        # Customer created
+        # Customer was created and cart was imported
 
-            # Authenticate customer
-            if ( $c->authenticate( {
-                username => $email,
-                password => $password
-            } ) ) {
-            # Authenticated
-
-                # Checkout mode 
-                    $c->response->redirect(
-                        $c->uri_for( 
-                            $c.controller('Checkout')->action_for('shipping'), )
-                    . '/' );
-
-
-            } else {
-
-                print "no go\n";
-            }
+            $c->response->redirect(
+                    $c->uri_for( $self->action_for('index') )
+                . '/' );
 
         } else {
-        # Customer not created
-            #print "Customer not created - ". $customer . "\n";        
+        # Customer or Cart were not created
 
-        } 
+        }
 
     } else {
     # Form not submited

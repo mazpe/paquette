@@ -12,6 +12,8 @@ has 'schema'    => ( is => 'rw', required => 1, handles => [qw / resultset /] );
 # create customer
 sub create_customer {
     my ( $self, $args ) = @_;
+    my $customer;
+    my $user_account;
 
     if ( $args ) {
     # We have arguments
@@ -30,14 +32,14 @@ sub create_customer {
         delete $customer_args->{verify_password}; 
 
         # Create a customer
-        my $customer 
+        $customer 
             = $self->resultset('Customer')->create_customer( $customer_args ); 
 
         if ( $customer ) {
         # Customer was created       
 
             # Create customer login account
-            my $user_account 
+            $user_account 
                 = $self->resultset('User')->create_user_account( {
                 username            => $email_args{username},
                 password            => $email_args{password},

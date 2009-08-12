@@ -71,15 +71,6 @@ function submitForm()
 <table width='585' cellpadding='0' cellspacing='5' valign='top' align='left' 
   border='0'>
 <tr>
-  <td colspan='2' class='breadcrumbs'>
-    &nbsp;CHECKOUT PROCESS: &nbsp;&nbsp; 
-    <font color='#990000'><b>1 ENTER INFO</b></font>&nbsp;&nbsp; 
-    2 CHOOSE SHIPPING&nbsp;&nbsp; 
-    3 ENTER PAYMENT&nbsp;&nbsp; 
-    4 CONFIRMATION
-  </td>
-</tr>
-<tr>
   <td colspan=2>
     <br><font class='error'>You did not submit a valid billing State/Province 
     for the billing country selected.</font><br>&nbsp;
@@ -94,7 +85,7 @@ Items with an <font color='#990000'>*</font> are required.
     <img src='/images/title_shippinginfo.gif' width='280' height='20' border='0'
       alt='Ship To Information'><br>
     <div align=right>
-      <input type='submit' name='submit' value='Continue Checkout'
+      <input type='submit' name='submit' value='Create Account'
         onClick="submitForm()"  >
     </div>
   </td>
@@ -166,15 +157,14 @@ Items with an <font color='#990000'>*</font> are required.
       <tr>
         <td align='right'><font color='#990000'>*</font> Password:</td>
         <td>
-          <input class='formbox' type=text name='password' value='' 
+          <input class='formbox' type='password' name='password' value='' 
             maxlength=50>
         </td>
       </tr>
       <tr>
         <td align='right'><font color='#990000'>*</font> Verify Password:</td>
         <td>
-          <input class='formbox' type=text name='verify_password' value='' 
-            maxlength=50>
+          <input class='formbox' type='password' name='verify_password' value=''            maxlength=50>
         </td>
       </tr>
       <tr>
@@ -250,10 +240,8 @@ Items with an <font color='#990000'>*</font> are required.
         <td align='right'>&nbsp;</td>
         <td>
           <div align=right>
-            <input type="button" name="continue" value="Continue Checkout"
-              onClick="window.location='[%
-              c.uri_for(c.controller('Checkout').action_for('shipping'))
-            %]'" >
+            <input type='submit' name='submit' value='Create Accont'
+                onClick="submitForm()"  >
           </div>
         </td>
       </tr>
@@ -261,20 +249,7 @@ Items with an <font color='#990000'>*</font> are required.
   </td>
 </tr>
 
-<!-- CART -->
 
-<tr>
-  <td class='cartform' colspan="2" align="center">
-[% INCLUDE cart/checkout_view.tt2 %]
-  </td>
-</tr>
-<tr>
-  <td colspan='2' id='questions' valign='bottom'>
-    <a href='#'  onclick='javascript:window.open("/support/popup.html?pup=satisfaction", "notify", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=50,top=50,width=530,height=265")'><img src='/images/gfx_guaranteed.gif' width='110' height='25' border='0' alt='Satisfaction Guaranteed' align='right'></a>
-    <b>Questions?</b><br>Order 24 Hours Toll Free: 305-467-8027 
-    <br>Customer Service Toll Free: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
-  </td>
-</tr>
 </table>
 </form>
 
