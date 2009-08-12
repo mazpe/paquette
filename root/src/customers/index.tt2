@@ -1,0 +1,30 @@
+<table border='0'>
+  <tr>
+    <td>
+      <a href="[% c.uri_for(c.controller.action_for('logout')) %]">
+        Logout
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="[% c.uri_for(c.controller.action_for('account')) %]">
+        Account Information 
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>                                                                              <a href="[% c.uri_for(c.controller.action_for('orders')) %]">
+        Order History 
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="[% c.uri_for(c.controller.action_for('items')) %]">
+        Items Ordered 
+      </a>
+    </td>
+  </tr>
+
+</table>

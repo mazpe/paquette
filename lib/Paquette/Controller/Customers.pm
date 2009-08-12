@@ -173,6 +173,27 @@ if ($first_name && $email) {
 
 }
 
+sub account : Local {
+    my ( $self, $c ) = @_;
+
+    # Set our template
+    $c->stash->{template} = 'customers/account.tt2';
+}
+
+sub orders : Local {
+    my ( $self, $c ) = @_;
+
+    # Set our template
+    $c->stash->{template} = 'customers/orders.tt2';
+}
+
+sub items : Local {
+    my ( $self, $c ) = @_;
+    
+    # Set our template
+    $c->stash->{template} = 'customers/items.tt2';
+}
+
 #sub send_email : Local {
 #    my ( $self, $c ) = @_;
 #
