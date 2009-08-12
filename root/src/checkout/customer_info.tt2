@@ -190,7 +190,7 @@ Items with an <font color='#990000'>*</font> are required.
       <tr>
         <td align='right'><font color='#990000'>*</font> Verify Password:</td>
         <td>
-          <input class='formbox' type=text name='verify_password' 
+          <input class='formbox' type='password' name='verify_password' 
             value='[% customer.bill_ %]' maxlength=50>
         </td>
       </tr>

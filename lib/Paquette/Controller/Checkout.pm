@@ -102,8 +102,8 @@ sub customer_info_do : Local {
         if ( $c->user_exists ) {
         # Customer logged in
             
-            # Import cart from session to database            
-            $cart = $c->model('Cart')->save_cart;
+            # Assign our user the cart with we are working on
+            $cart = $c->model('Cart')->assign_cart;
 
         } else {
         # Customer not logged in
@@ -125,25 +125,15 @@ sub customer_info_do : Local {
                     
             }
 
-            # Import cart from session to database
-            $cart = $c->model('Cart')->save_cart; 
+            # Assign our user to the cart we are workig on
+            $cart = $c->model('Cart')->assign_cart;
 
-                $c->detach('shipping_info');
-
-            if ( $customer && $cart ) {
-            # Customer was created and cart was imported
-            
-                # Forward to shipping information
-                $c->detach('shipping_info');
-
-            } else {
-            # Customer or Cart were not created
-
-            }
         }
 
         # Forward to shipping information
-        $c->detach('shipping_info');
+        $c->response->redirect(
+                $c->uri_for( $self->action_for('shipping_info') )
+            . '/' );
 
     } else {
 
@@ -159,6 +149,26 @@ sub shipping_info : Local {
     $c->stash->{customer} 
         = $c->model('Customer')->get_customer($c->user->username);
     $c->stash->{template} = 'checkout/shipping_info.tt2';
+
+}
+
+sub shipping_info_do : Local {
+    my ( $self, $c ) = @_;
+    my $shipping;
+
+    if ( $c->req->params->{submit} ) {
+    # Form submited
+     
+        # Set our shipping information
+        $shipping = $c->model('Cart')->set_shipping(
+            $c->req->params
+        );
+
+    } else {
+    # Form not subimited
+
+    }
+
 
 }
 

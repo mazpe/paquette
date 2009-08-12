@@ -9,7 +9,7 @@ function submitForm()
 </script>
 
 <form method="post" action="[% c.uri_for(
-    c.controller('Checkout').action_for('billing_info_do') 
+    c.controller('Checkout').action_for('shipping_info_do') 
 ) %]" name='billing'>
 
 <table width='585' cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
@@ -103,7 +103,8 @@ function submitForm()
 <table border=0>
 <tr>
     <td valign=top>
-        <input type=radio name='shp_rate_150812' value='PM:5.95'>
+        <input type=radio name='shipping_type' value='USPS'>
+        <input type='hidden' name='shipping_amount' value='5.95'>
     </td>
     <td nowrap>US Mail ($5.95) 
         <br><i>Estimated Arrival 3 to 7 days 
@@ -111,7 +112,8 @@ function submitForm()
 </tr>
 <tr>
     <td valign=top>
-        <input type=radio name='shp_rate_150812' value='UPS:6.12'>
+        <input type=radio name='shipping_type' value='UPS'>
+        <input type='hidden' name='shipping_amount' value='6.12'>
     </td>
     <td nowrap>Ground ($6.12) 
         <br><i>Estimated Arrival Thursday 08/13 
@@ -119,7 +121,8 @@ function submitForm()
 </tr>
 <tr>
     <td valign=top>
-        <input type=radio name='shp_rate_150812' value='UPX:22.43'>
+        <input type=radio name='shipping_type' value='UPS-NEXTDAY'>
+        <input type='hidden' name='shipping_amount' value='22.43'>
     </td>
     <td nowrap>Next Day Air ($22.43) 
         <br><i>Estimated Arrival Wednesday 08/12 </a></i>

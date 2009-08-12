@@ -119,6 +119,17 @@ sub attach_cart_to_customer {
     
 }
 
+sub set_shipping_info {
+    my ( $self, $args ) = @_;
+
+    # Find our cart
+    my $cart = $self->search( { id => $args->{cart_id} } );
+
+    # If we found our cart, update the shipping information
+    if ( $cart == 1 ) { $cart->update( $args ); }
+
+}
+
 =head1 AUTHOR
 
 Lester Ariel Mesa,,305-402-6717,

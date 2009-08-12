@@ -196,4 +196,15 @@ sub assign_cart {
 
 }
 
+sub set_shipping {
+    my ( $self, $args ) = @_;
+    my $cart_id         = get_cart_id($self);
+
+    delete $args->{submit};
+    print Dumper $args;
+
+    # Set shipping
+    $self->resultset('Cart')->set_shipping_information();
+}
+
 1;
