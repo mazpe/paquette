@@ -1,0 +1,6 @@
+       <div id="center_specials">
+         <img src="[% c.uri_for('/static/images/center_special_chrozios.jpg') %]" width="166" height="186" />
+         <img src="[% c.uri_for('/static/images/center_special_ham.jpg') %]" width="166" height="186" />
+         <img src="[% c.uri_for('/static/images/center_special_wines.jpg') %]" width="166" height="186" />
+       </div>
+

@@ -1,5 +1,5 @@
 [% IF wrapper_admin %]
     [% INCLUDE wrapper_admin.tt2 %]
 [% ELSE %]
-    [% INCLUDE wrapper_default.tt2 %]
+    [% INCLUDE wrapper_site.tt2 %]
 [% END %]

@@ -1,50 +1,53 @@
-[% META title = 'List Products' -%]
+[% META title = 'List Sub Categories' -%]
 
-<div id="products_block">
+<h2>
+[% category_name %]
+<h2>
+
+<div id="content_categories">
 
 [% i = 0 %]
 [% FOREACH product IN products %]
 [% i = i + 1 %]
 
-[% IF (i % 2) %] 
-  <div class="leftbox">
-[% ELSE %]
-  <div class="rightbox">
-[% END %]
-    <h3>
-      <a href="[% c.uri_for(
-          c.controller.action_for('item'),
-          [category_url_name,subcategory_url_name,product.url_name]) %]
-      ">
-      [% product.name %]
-      </a>  
-    </h3>
-    <img width="93" height="95" alt="[% product.name %]" class="left" 
+<div class="content_category">
+  <div class="content_category_picture">
+    <a href="[% c.uri_for(
+      c.controller.action_for('item'),
+      [category_url_name,subcategory_url_name,product.url_name]) %]" >
+    <img width="122" height="110" border="0" alt="[% product.name %]"
       src="[% c.uri_for(
-              '/static/item_photos/' _ product.url_name _ '.jpg
-          ') %]"
-    />
-    <p>[% product.brief_description %]</p>
-    <form method="post" action="[% c.uri_for(
-        c.controller('Cart').action_for('add_item')
-    )  %]">
-    <input type="hidden" name="sku" value="[% product.sku %]">
-    <p>
-      <input type="text" name="qty" size="5">
-      <input type="image" name="submit"
-        src="[% c.uri_for('/static/images/add_to_cart.gif') %]">
-    </p>
-    </form>
-    <p>[% items.description FILTER html_para %]</p>
+        '/static/item_photos/' _ product.url_name _ '.jpg') %]" />
+    </a>
+  </div>
+  <div class="content_category_header">
+    <a href="[% c.uri_for(
+      c.controller.action_for('item'),
+      [category_url_name,subcategory_url_name,product.url_name]) %]" >
+    [% product.name FILTER upper %]
+    </a>
+  </div>
 
-      <div class="clear"></div>
-  </div><!-- end .leftbox or .rightbox-->
-  
-  [% IF !(i % 2) && i != 1 %]
+  <div class="content_category_desc">
+    <a href="[% c.uri_for(
+      c.controller.action_for('item'),
+      [category_url_name,subcategory_url_name,product.url_name]) %]" >
+    [% product.description FILTER truncate(55) %]
+    </a>
+    <span class="content_category_read_more">
+    <a href="[% c.uri_for(
+      c.controller.action_for('item'),
+      [category_url_name,subcategory_url_name,product.url_name]) %]" >
+    ADD TO CART 
+    </a>
+    </span>
+  </div>
+</div><!-- end of content_category -->
+
+  [% IF !(i % 4) && i != 1 %]
     <div class="clear br"></div>
   [% END %]
 
 [% END %]
 
-</div><!-- end products_block -->
-
+</div><!-- end of content_categories -->

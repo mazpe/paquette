@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sabor Espanol - Authentic Spanish Food from Spain</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex">
+    <meta name="keywords" content="alimentos espaanoles, alimentos tipicos espanoles, comprar alimentos espanoles, tienda de productos espanoles, alimentos, espanoles, alimentos tipicos, tipicos espanoles, comprar alimentos, comprar, tienda, tienda de productos, tienda alimentos, tienda comida espanola, gourmet, gastronomia, gastronomia espanola, productos tipicos, productos espanoles, delicatessen, exquisiteces, productos delicatessen, conservas, quesos, jamones, original spain, spain, vinos, venta de vinos de calidad, venta de productos delicatessen, venta de embutidos ibericos, tiendas gourmet, jamon Serrano, serrano, jamon iberico">
+    <meta name="description" content="We bring you one step closer to Spain by delivering the best variety of the Spanish food and products to your home including the exquisite Black Hoof (pata negra) Ham. Una gran variedad de los mejores productos espanoles de maxima calidad llevados a tu hogar a los majores precios del Mercado.">
+    <link href="[% c.uri_for('/static/css/style.css') %]" rel="stylesheet"
+        type="text/css" />
+</head>
+
+<body>
+
+<div id="wrapper">
+
+  <div id="main">
+
+    <div id="left_menu">
+      <img src="[% c.uri_for('/static/images/sabor_espanol_logo.gif') %]" width="134" height="125" />
+      <div id="left_menu_search">
+        <span id="">SEARCH FOR OUR PRODUCTS</span>
+        <input name="search" type="text" id="search" size="15" />
+      </div><!-- end of left_menu_search -->
+      <br />
+      <div id="left_menu_categories">
+        <dt>Full Category Lists</dt>
+[% i = 0 %]
+[% FOREACH category IN categories %]
+
+  [% i = i + 1 %]
+  [% IF i == 1 %]
+    <dd class="first" >
+  [% ELSIF loop.last %]
+    <dd class="last" >
+  [% ELSE %]
+    <dd>
+  [% END %]
+      <a href="[% c.uri_for(
+        c.controller('Store').action_for('index'), category.url_name
+      ) %]">
+        [% category.name FILTER upper %]
+      </a>
+    </dd>
+  [% IF category_id == category.id %]
+    [% FOREACH subcategory IN subcategories %]
+      [% i = i + 1 %]
+        <dd [% IF (i == 1) %] class="first" [% END %] >                                   <a href="[% c.uri_for(
+              c.controller('Store').action_for('products'),
+              [category_url_name,subcategory.url_name]
+          ) %]">
+           - [% subcategory.name %]
+          </a>
+        </dd>
+    [% END %]
+  [% END %]
+
+[% END %]
+          </dl>
+
+      </div><!-- end of left_menu_categories -->
+      <br />
+      <div id="left_aux">
+        <img src="[% c.uri_for('/static/images/aux_sign_up.gif') %]" width="119" height="73" /><br />
+        <img src="[% c.uri_for('/static/images/aux_order_free_catalog.gif') %]" width="119" height="64" /><br />
+        <img src="[% c.uri_for('/static/images/aux_you_tube.gif') %]" width="119" height="61" /><br />
+      </div>
+    </div><!-- end of left_menu -->
+    
+    <div id="center">
+      <div id="top_menu">
+        <div id="user_menu">
+          my account - view cart
+        </div><!-- end of user_menu -->
+        <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" />
+      </div><!-- end of top_menu -->
+
+      <div id="content">
+        [% content %]
+      </div><!-- end of content -->
+
+      <div id="center_banners">
+        <img src="[% c.uri_for('/static/images/center_banner.jpg') %]" width="514" height="62" />
+      </div> <!-- end of center_banner -->
+
+    </div><!-- end of center -->
+    
+    <div id="specials">
+      <div id="shield">
+        <img src="[% c.uri_for('/static/images/espana_escudo.gif') %]" width="119" height="96" hspace="0" vspace="0" border="0" />
+      </div><!-- end of shield -->
+      <div id="special_ads">
+
+        <h4>SPECIALS</h4>
+        <div class="special_ad_single">
+          <img src="[% c.uri_for('/static/images/specials_celebrate.jpg') %]" width="104" height="223" /><br />
+          <img src="[% c.uri_for('/static/images/spacer_line.png') %]" width="100" height="5" />
+        </div>
+        <div class="special_ad_single">
+          <img src="[% c.uri_for('/static/images/specials_wines.jpg') %]" width="104" height="115" /><br />
+          <img src="[% c.uri_for('/static/images/spacer_line.png') %]" width="100" height="5" />
+        </div>
+        <div class="special_ad_single">
+          <img src="[% c.uri_for('/static/images/specials_share.jpg') %]" width="104" height="115" /><br />
+          <img src="[% c.uri_for('/static/images/spacer_line.png') %]" width="100" height="5" />
+        </div>
+
+      </div><!-- end of special_ads -->
+    </div><!-- end of specials -->
+    
+    <div style="clear:both"></div>
+
+  <div id="footer">
+    Contact Us - Resellers - Partner Links - Privacy Policy - Site Map
+  </div><!-- end of footer -->
+    
+  </div> <!-- end of main -->
+
+
+</div><!-- end of wrapper -->
+
+</body>
+</html>
+

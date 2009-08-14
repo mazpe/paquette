@@ -73,8 +73,11 @@
 [% FOREACH category IN categories %]
 
   [% i = i + 1 %]
-    <dd [% IF (i == 1) %] class="first" [% END %] >
-    <dd [% IF (loop.last) %] class="last" [% END %] >
+  [% IF i == 1 %]
+    <dd class="first" >
+  [% ELSIF loop.last %]  
+    <dd class="last" >
+  [% END %]
       <a href="[% c.uri_for(
         c.controller('Store').action_for('index'), category.url_name
       ) %] ">
@@ -86,7 +89,9 @@
   [% IF category_id == category.id %]
     [% FOREACH subcategory IN subcategories %]
       [% i = i + 1 %]
-        <dd [% IF (i == 1) %] class="first" [% END %] >                                   <a href="[% c.uri_for(
+      [% IF i == 1 %]
+        <dd class="first" >
+      [% END %]
               c.controller('Store').action_for('products'),
               [category_url_name,subcategory.url_name]
           ) %]">

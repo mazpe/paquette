@@ -76,11 +76,12 @@ sub subcategories_base : Chained('base') :PathPart('') : CaptureArgs(1) {
     $c->stash->{category_url_name} = $arg;
 
     # Get my category id
-    my $category_id = $c->model('PaquetteDB::Categories')->search({
+    my $category = $c->model('PaquetteDB::Categories')->search({
         url_name => $c->stash->{category_url_name}
-     })->single->id;
+     })->single;
 
-    $c->stash->{category_id} = $category_id;
+    $c->stash->{category_id}    = $category->id;
+    $c->stash->{category_name}  = $category->name;
 
     # Get all subcategories under this category
     $c->stash->{subcategories} = [$c->model('PaquetteDB::Categories')->search({
@@ -99,6 +100,7 @@ Display sub categories inside this category
 sub subcategory : Chained('subcategories_base') : PathPart('') : Args(0) {
     my ( $self, $c ) = @_;
     my $debug;
+
 
     if ($c->stash->{categories}) {
 
@@ -120,13 +122,16 @@ sub products_base : Chained('subcategories_base') :PathPart('') : CaptureArgs(1)
     $c->stash->{subcategory_url_name} = $arg;
 
     # Get my category id
-    my $subcategory_id = $c->model('PaquetteDB::Categories')->search({
+    my $subcategory = $c->model('PaquetteDB::Categories')->search({
         url_name => $c->stash->{subcategory_url_name}
-     })->single->id;
+     })->single;
+
+    $c->stash->{subcategory_id}     = $subcategory->id;
+    $c->stash->{subcategory_name}   = $subcategory->name;
 
     # query database to create array of subcats
     $c->stash->{products} = [$c->model('PaquetteDB::Product')->search({
-        category_id => $subcategory_id
+        category_id => $c->stash->{subcategory_id}
     })];
 
 

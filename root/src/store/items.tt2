@@ -1,35 +1,85 @@
 [% META title = 'List Items' -%]
 
-<div id="item_block">
+<script>
+function submitItemDetailsForm()
+{
+    document.item_details_form.submit();
+}
+function submitItemDescForm()
+{
+    document.item_desc_form.submit();
+}
 
-  <div class="itemleft">
-      <img width="200" height="200" alt="[% items.name %]" class="left"
-        src="[% c.uri_for(
+</script>
+<h2> [% category_name %] :: [% subcategory_name %] </h2>
+<br>
+<div id="content_product">
+       
+    <div id="content_item_detail">
+            
+        <div id="content_item_header">
+            JAMON SERRANO
+        </div>
+        <div id="content_item_picture">
+        <img width="200" height="200" alt="[% items.name %]" class="left"
+            src="[% c.uri_for(
                 '/static/item_photos/' _ items.url_name _ '.jpg
-            ') %]"
-/>
+        ') %]" />
+        </div>
+        <div id="content_item_detail_text">
+        <a href="#">
+            View Larger
+        </a> 
+        <br />
+        <br />
+        <p>Breif description</p>
+                
+        <div id="content_item_price">
+            $[% items.price %]
+            <span id="content_item_sku">/ SKU: [% items.sku %]</span>
+        </div>
+        </div><!-- end of content_item_detail_text -->  
+        <div class="content_add_to_cart">
+           <form name="item_details_form" method="post" action="[% c.uri_for(
+                c.controller('Cart').action_for('add_item')
+            ) %]">
+            <span class="content_atc_qty">
+                <input name="[% item.sku %]" value="1" type="text" size="5"/>
+            </span>
+            <span class="content_atc_text"> 
+                <a href="javascript:submitItemDetailsForm()">Add to cart</a> 
+            </span>
+            </form>
+        </div>         
+              
+    </div><!-- end of content_item_detail -->
 
-  </div>
-  <div class="itemright">
-    <h4>[% items.name %]</h4>
-    <h2>[% items.brief_description %]</h2>
-    <p><b>SKU:</b> [% items.sku %]</p>
-    <p><b>Price:</b> $[% items.price %]</p>
-    <form method="post" action="[% c.uri_for(
-        c.controller('Cart').action_for('add_item')
-    )  %]">
-    <input type="hidden" name="sku" value="[% items.sku %]">
-    <p>
-      <input type="text" name="qty" size="5">
-      <input type="image" name="submit"
-        src="[% c.uri_for('/static/images/add_to_cart.gif') %]">
-    </p>
-    </form>
-    <p>[% items.description FILTER html_para %]</p>
-  </div><!-- end .leftbox -->
-  
-  <div class="clear br"></div>
+    <div id="content_item_description">
 
+        <div id="content_item_detail_text">
+        <h4>[% items.name %]</h4>
+            <div id="content_item_price">
+                $[% items.price %]
+               <span id="content_item_sku">/ SKU: [% items.sku %]</span>
+            </div>
+        </div><!-- end of content_item_detail_text -->
 
-</div><!-- end items_block -->
+        <div class="content_add_to_cart">
+           <form name="item_desc_form" method="post" action="[% c.uri_for(
+                c.controller('Cart').action_for('add_item')
+            ) %]">
+            <span class="content_atc_qty">                                                      <input name="[% item.sku %]" value="1" type="text" size="5"/>
+            </span>
+            <span class="content_atc_text">
+                <a href="javascript:submitItemDescForm()">Add to cart</a>
+            </span>
+            </form>
+        </div>
+
+        <br>
+        <p>[% items.description FILTER html_para %]</p>
+
+    </div><!-- end of content_item_description -->
+            
+</div><!-- end of content_product -->
 

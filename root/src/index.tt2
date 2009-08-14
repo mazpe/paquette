@@ -1,7 +1,20 @@
 [% META title = 'Index' -%]
+<div>
+        <h2> Welcome  to Sabor Espanol </h2>
 
-<div id="index_block">
+        <p>Spanish Flavor thrives on the freshest, quality ingredients and the cultural identity of 17 contrasting regions.          </p>
+        <p>&nbsp;</p>
+        <p>Our traditional spanish gourmet products are just bursting with legitimate and natural Spanish flavours.          </p>
+        <p>&nbsp;</p>
+        <p>Prepare authentic paellas, cooked in a traditional spanish style in a classic paella pan, a great way to enjoy the taste of Spain!          </p>
+        <p>&nbsp;</p>
+        <p>Fragrant .jamóerrano. (cured dry spanish ham) from the cool Spanish mountains and rich and creamy
+         .Manchego. cheese from La Mancha (land of the windmills) are just some of many greatest spanish products we have for you.          </p>
+         <p>&nbsp;</p>
+         <p>Prepare delicious spanish recepies with the delicious chorizo, spanish cheese, wine, preserves and rich spanish oils and vinegars.          </p>
+         <p>&nbsp;</p>
+         <p>The best place to buy traditional spanish gourment products online. </p>
+       </div><!-- end of content -->
+           <img src="[% c.uri_for('/static/images/spacer_line.png') %]" width="100" height="10" />
 
-
-</div><!-- end index_block -->
-
+[% INCLUDE front_specials.tt2 %]
