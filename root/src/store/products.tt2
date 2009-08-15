@@ -19,14 +19,14 @@
       src="[% c.uri_for(
         '/static/item_photos/' _ product.url_name _ '.jpg') %]" />
     </a>
-  </div>
+  </div><!-- end of content_category_picture -->
   <div class="content_category_header">
     <a href="[% c.uri_for(
       c.controller.action_for('item'),
       [category_url_name,subcategory_url_name,product.url_name]) %]" >
     [% product.name FILTER upper %]
     </a>
-  </div>
+  </div><!-- end of content_category_header -->
 
   <div class="content_category_desc">
     <a href="[% c.uri_for(
@@ -34,14 +34,15 @@
       [category_url_name,subcategory_url_name,product.url_name]) %]" >
     [% product.description FILTER truncate(55) %]
     </a>
-    <span class="content_category_read_more">
+  </div><!-- end of content_category_desc -->
+
+  <span class="content_category_read_more">
     <a href="[% c.uri_for(
       c.controller.action_for('item'),
       [category_url_name,subcategory_url_name,product.url_name]) %]" >
-    ADD TO CART 
+      DETAILS 
     </a>
-    </span>
-  </div>
+  </span>
 </div><!-- end of content_category -->
 
   [% IF !(i % 4) && i != 1 %]

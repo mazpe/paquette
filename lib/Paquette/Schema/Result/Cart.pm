@@ -20,7 +20,12 @@ __PACKAGE__->add_columns(
   "customer_id",
   { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
   "shipping_type",
-  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 32,
+  },
   "shipping_amount",
   { data_type => "DECIMAL", default_value => undef, is_nullable => 1, size => 5 },
   "payment_type",
@@ -47,8 +52,8 @@ __PACKAGE__->add_unique_constraint("session_id", ["session_id"]);
 __PACKAGE__->add_unique_constraint("customer_id", ["customer_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-11 15:37:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1m/yQ762aegjTteVdYa95w
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-15 01:37:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dogjI3SdN1BdpTWIWOgLHw
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

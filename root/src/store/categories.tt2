@@ -1,35 +1,52 @@
 [% META title = 'List Categories' -%]
 
-<div id="categories_block">
+<h2>
+Sabor Espanol
+<h2>
+
+<div id="content_categories">
 
 [% i = 0 %]
 [% FOREACH category IN categories %]
 [% i = i + 1 %]
 
-[% IF (i % 2) %] 
-  <div class="leftbox">
-[% ELSE %]
-  <div class="rightbox">
-[% END %]
-      <h4>
-        <a href="[% c.uri_for(c.controller.action_for('subcategory'),[category.url_name]) %]">
-        [% category.name %]
-        </a>  
-      </h4>
-      <img width="93" height="95" alt="[% category.name %]" class="left"
-        src="[% c.uri_for(
-                '/static/categories_photos/' _ category.url_name _ '.jpg
-            ') %]"
-      />
-      <p>[% category.brief_description %]</p>
-      <div class="clear"></div>
-  </div><!-- end .leftbox -->
-  
-  [% IF !(i % 2) && i != 1 %]
+<div class="content_category">
+  <div class="content_category_header">
+    <a href="[% c.uri_for(
+      c.controller.action_for('subcategory'),
+      [category.url_name]) %]" >
+    [% category.name FILTER upper %]
+    </a>
+  </div>
+  <div class="content_category_picture">
+    <a href="[% c.uri_for(
+      c.controller.action_for('subcategory'),
+      [category.url_name]) %]" >
+    <img width="122" height="110" border="0" alt="[% category.name %]"
+      src="[% c.uri_for(
+        '/static/categories_photos/' _ category.url_name _ '.jpg') %]" />
+    </a>
+  </div>
+  <div class="content_category_desc">
+    <a href="[% c.uri_for(
+      c.controller.action_for('subcategory'),
+      [category.url_name]) %]" >
+    [% category.description FILTER truncate(55) %]
+    </a>
+    <span class="content_category_read_more">
+    <a href="[% c.uri_for(
+      c.controller.action_for('subcategory'),
+      [category.url_name]) %]" >
+    Read More
+    </a>
+    </span>
+  </div>
+</div><!-- end of content_category -->
+
+  [% IF !(i % 4) && i != 1 %]
     <div class="clear br"></div>
   [% END %]
 
 [% END %]
 
-</div><!-- end categories_block -->
-
+</div><!-- end of content_categories -->

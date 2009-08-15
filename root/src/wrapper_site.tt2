@@ -18,7 +18,10 @@
   <div id="main">
 
     <div id="left_menu">
-      <img src="[% c.uri_for('/static/images/sabor_espanol_logo.gif') %]" width="134" height="125" />
+      <a href="[% c.uri_for('/') %]">
+      <img src="[% c.uri_for('/static/images/sabor_espanol_logo.gif') %]" 
+        width="134" height="125" border="0"/>
+      </a>
       <div id="left_menu_search">
         <span id="">SEARCH FOR OUR PRODUCTS</span>
         <input name="search" type="text" id="search" size="15" />
@@ -71,7 +74,28 @@
     <div id="center">
       <div id="top_menu">
         <div id="user_menu">
-          my account - view cart
+            <a href="[% c.uri_for(
+                c.controller('cart').action_for('view')) %]">
+            view cart 
+            </a> 
+            ( <span id="user_menu_aux">[% cart_size %] items </span>)
+            - 
+          [% IF c.user_exists %]
+            <a href="[% c.uri_for(
+                c.controller('customers').action_for('logout')) %]">
+            my account
+            </a>
+             ( <span id="user_menu_aux">[% c.user.username %]</span> ) 
+            <a href="[% c.uri_for(
+                c.controller('customers').action_for('index')) %]">
+              logout 
+            </a> 
+          [% ELSE %]
+            <a href="[% c.uri_for(
+                c.controller('customers').action_for('login')) %]">
+            login
+            </a>
+          [% END %]
         </div><!-- end of user_menu -->
         <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" />
       </div><!-- end of top_menu -->
@@ -80,9 +104,15 @@
         [% content %]
       </div><!-- end of content -->
 
+      <div if="support">
+      <b>Questions?</b><br>
+      Customer Service: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
+      </div>
+
       <div id="center_banners">
         <img src="[% c.uri_for('/static/images/center_banner.jpg') %]" width="514" height="62" />
       </div> <!-- end of center_banner -->
+
 
     </div><!-- end of center -->
     

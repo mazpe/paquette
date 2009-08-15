@@ -21,8 +21,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-11 15:37:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:njA65R5bCODmeLjMHYenMw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-15 01:37:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aZ9ppn4e+rO5LDh+R3Es6w
 
 __PACKAGE__->has_many(map_user_roles => 
     'Paquette::Schema::Result::UserRole', 

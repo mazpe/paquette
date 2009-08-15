@@ -1,13 +1,3 @@
-<script language="JavaScript">
-function submitForm()
-{
-    document.recalculate.submit();
-}
-</script>
-<form method="post" name="recalculate" action="[% c.uri_for(
-    c.controller('Cart').action_for('update')
-)  %]">
-
 <table width="500">
 <thead>
   <tr>
@@ -40,4 +30,3 @@ function submitForm()
     <td align="right">$[% total %]</td>
 </tfoor>
 </table>
-</form>

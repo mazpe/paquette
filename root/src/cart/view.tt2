@@ -8,14 +8,14 @@ function submitForm()
     c.controller('Cart').action_for('update')
 )  %]">
 
-<table width="500">
+<table width="540" id="hor-minimalist-a" border="0">
 <thead>
   <tr>
-    <th scope="col">Remove</th> 
+    <th scope="col" width="50">Remove</th> 
     <th scope="col">SKU</th>
-    <th scope="col">Product Name</th>
+    <th scope="col" width="450">Product Name</th>
     <th scope="col" align="center">Quantity</th>
-    <th scope="col" align="center">Price</th>
+    <th scope="col" width="50" align="center">Price</th>
     <th scope="col" align="center">Total</th>
   </tr>
 </thead>
@@ -46,36 +46,46 @@ function submitForm()
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-    <td>SUBTOTAL</td>
+    <td colspan="2" align="right">SUBTOTAL</td>
     <td align="right">$[% total %]</td>
 </tfoor>
 </table>
 </form>
-
-<table width="500">
+<table width="500" id="hor-minimalist-a">
 <tr>
-    <td>
+    <td algin="center">
+    <br>
       <input type="button" name="continue" value="Continue Shopping" 
         onClick="window.location='[%
           c.uri_for(c.controller('Store').action_for('index'))
          %]'" >
+    <br>
+    <br>
     </td>
-    <td>
+    <td align="center">
+    <br>
       <input type="button" name="clear" value="Clear Cart"
         onClick="window.location='[%
             c.uri_for(c.controller('Cart').action_for('clear'))
          %]'" >
+    <br>
+    <br>
     </td>
-    <td>
+    <td align="center">
+    <br>
       <input type="button" name="recalculate" value="Recalculate"
         onClick="submitForm()" >
+    <br>
+    <br>
     </td>
-    <td>
+    <td align="center">
+    <br>
       <input type="button" name="clear" value="Checkout"
         onClick="window.location='[%
             c.uri_for(c.controller('Checkout').action_for('customer_info'))
          %]'" >
+    <br>
+    <br>
     </td>
 
 </tr>

@@ -123,10 +123,15 @@ sub set_shipping_info {
     my ( $self, $args ) = @_;
 
     # Find our cart
-    my $cart = $self->search( { id => $args->{cart_id} } );
+    my $cart = $self->search( { id => $args->{id} } );
 
     # If we found our cart, update the shipping information
-    if ( $cart == 1 ) { $cart->update( $args ); }
+    if ( $cart == 1 ) { 
+        $cart->update( {
+            shipping_type   => $args->{shipping_type},
+            shipping_amount => $args->{shipping_amount},
+        } );
+    }
 
 }
 

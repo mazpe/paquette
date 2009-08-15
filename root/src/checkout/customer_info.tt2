@@ -68,11 +68,10 @@ function submitForm()
 <form method="post" action="[% c.uri_for(
     c.controller('Checkout').action_for('customer_info_do')
 ) %]" name="infocollect">
-<table width='585' cellpadding='0' cellspacing='5' valign='top' align='left' 
-  border='0'>
+<table width='540' cellpadding='0' cellspacing='0' valign='top' align='center' 
+  border='0' id="customer_info">
 <tr>
   <td colspan='2' class='breadcrumbs'>
-    &nbsp;CHECKOUT PROCESS: &nbsp;&nbsp; 
     <font color='#990000'><b>1 ENTER INFO</b></font>&nbsp;&nbsp; 
     2 CHOOSE SHIPPING&nbsp;&nbsp; 
     3 ENTER PAYMENT&nbsp;&nbsp; 
@@ -103,37 +102,37 @@ Items with an <font color='#990000'>*</font> are required.
   <td class='cartform' valign=top>
     <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
       <tr>
-        <td align='right'><font color='#990000'>*</font> First Name:</td>
+        <th align='right'><font color='#990000'>*</font> First Name:</td>
         <td><input class='formbox' type=text name='bill_first_name' 
             value='[% customer.bill_first_name %]' maxlength=15></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Last Name:</td>
+        <th align='right'><font color='#990000'>*</font> Last Name:</td>
         <td><input class='formbox' type=text name='bill_last_name' 
             value='[% customer.bill_last_name %]' maxlength=20></td>
       </tr>
       <tr>
-        <td align='right'>Company:</td>
+        <th align='right'>Company:</td>
         <td><input class='formbox' type=text name='bill_company' 
             value='[% customer.bill_company %]' maxlength=40></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Address 1:</td>
+        <th align='right'><font color='#990000'>*</font> Address 1:</td>
         <td><input class='formbox' type=text name='bill_address1' 
             value='[% customer.bill_address1 %]' maxlength=40></td>
       </tr>
       <tr>
-        <td align='right'>Address 2:</td>
+        <th align='right'>Address 2:</td>
         <td><input class='formbox' type=text name='bill_address2' 
             value='[% customer.bill_address2 %]' maxlength=40></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> City:</td>
+        <th align='right'><font color='#990000'>*</font> City:</td>
         <td><input class='formbox' type=text name='bill_city' 
             value='[% customer.bill_city %]' maxlength=20></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> State/Province:</td>
+        <th align='right'><font color='#990000'>*</font> State</td>
         <td>
           <select name='bill_state' class='formbox'>
           <option value='[% customer.bill_ %]'>
@@ -147,7 +146,7 @@ Items with an <font color='#990000'>*</font> are required.
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Country:</td>
+        <th align='right'><font color='#990000'>*</font> Country:</td>
         <td>
           <select name='bill_country' class='formbox'>
           <option value='[% customer.bill_ %]'>
@@ -161,34 +160,34 @@ Items with an <font color='#990000'>*</font> are required.
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
+        <th align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
         <td>
           <input class='formbox' type=text name='bill_zip_code' 
             value='[% customer.bill_zip_code %]' maxlength='10'>
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Phone:</td>
+        <th align='right'><font color='#990000'>*</font> Phone:</td>
         <td>
           <input class='formbox' type=text name='bill_phone' 
             value='[% customer.bill_phone %]' maxlength=14></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Email Address:</td>
+        <th align='right'><font color='#990000'>*</font> Email Address:</td>
         <td>
           <input class='formbox' type=text name='email' 
             value='[% customer.email %]' maxlength=50></td>
       </tr>
 [% IF (!c.user_exists) %]
       <tr>
-        <td align='right'><font color='#990000'>*</font> Password:</td>
+        <th align='right'><font color='#990000'>*</font> Password:</td>
         <td>
           <input class='formbox' type='password' name='password' 
             value='[% customer.password %]' maxlength=50>
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Verify Password:</td>
+        <th align='right'><font color='#990000'>*</font> Verify Password:</td>
         <td>
           <input class='formbox' type='password' name='verify_password' 
             value='[% customer.bill_ %]' maxlength=50>
@@ -211,26 +210,26 @@ Items with an <font color='#990000'>*</font> are required.
   <td class='cartform' valign=top>
     <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0'>
       <tr>
-        <td align='right'><font color='#990000'>*</font> First Name:</td>
+        <th align='right'><font color='#990000'>*</font> First Name:</td>
         <td>
           <input class='formbox' type=text name='ship_first_name' 
             value='[% customer.ship_first_name %]' maxlength=15>
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Last Name:</td>
+        <th align='right'><font color='#990000'>*</font> Last Name:</td>
         <td><input class='formbox' type=text name='ship_last_name' value='[% customer.ship_last_name %]' maxlength=20></td>
       </tr>
       <tr>
-        <td align='right'>Company:</td>
+        <th align='right'>Company:</td>
         <td><input class='formbox' type=text name='ship_company' value='[% customer.ship_company %]' maxlength=40></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Address 1:</td>
+        <th align='right'><font color='#990000'>*</font> Address 1:</td>
         <td><input class='formbox' type=text name='ship_address1' value='[% customer.ship_address1 %]' maxlength=40></td>
       </tr>
       <tr>
-        <td align='right'>Address 2:</td>
+        <th align='right'>Address 2:</td>
         <td><input class='formbox' type=text name='ship_address2' value='[% customer.ship_address2 %]' maxlength=40></td>
       </tr>
       <tr>
@@ -238,11 +237,11 @@ Items with an <font color='#990000'>*</font> are required.
         <td><span class='subdue'>NOTE: NO P.O. BOXES PLEASE</span></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> City:</td>
+        <th align='right'><font color='#990000'>*</font> City:</td>
         <td><input class='formbox' type=text name='ship_city' value='[% customer.ship_city %]' size=20 maxlength=20></td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> State/Province:</td>
+        <th align='right'><font color='#990000'>*</font> State</td>
         <td>
           <select name='ship_state' class='formbox'>
           <option value='[% customer.ship_state %]'>
@@ -256,7 +255,7 @@ Items with an <font color='#990000'>*</font> are required.
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Country:</td>
+        <th align='right'><font color='#990000'>*</font> Country:</td>
         <td>
           <select name='ship_country' class='formbox'>
             <option value='NULL'></option>
@@ -272,11 +271,11 @@ Items with an <font color='#990000'>*</font> are required.
         </td>
       </tr>
       <tr>
-        <td align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
+        <th align='right'><font color='#990000'>*</font> Zip/Postal Code:</td>
         <td><input class='formbox' type=text name='ship_zip_code' value='[% customer.ship_zip_code %]' maxlength=10></td>
       </tr>
       <tr>
-        <td align='right'>Phone:</td>
+        <th align='right'>Phone:</td>
         <td><input class='formbox' type=text name='ship_phone' value='[% customer.ship_phone %]' maxlength=14></td>
       </tr>
       <tr>
@@ -299,13 +298,6 @@ Items with an <font color='#990000'>*</font> are required.
 <tr>
   <td class='cartform' colspan="2" align="center">
 [% INCLUDE cart/checkout_view.tt2 %]
-  </td>
-</tr>
-<tr>
-  <td colspan='2' id='questions' valign='bottom'>
-    <a href='#'  onclick='javascript:window.open("/support/popup.html?pup=satisfaction", "notify", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=50,top=50,width=530,height=265")'><img src='/images/gfx_guaranteed.gif' width='110' height='25' border='0' alt='Satisfaction Guaranteed' align='right'></a>
-    <b>Questions?</b><br>Order 24 Hours Toll Free: 305-467-8027 
-    <br>Customer Service Toll Free: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
   </td>
 </tr>
 </table>

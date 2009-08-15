@@ -53,10 +53,10 @@ sub load : Chained('base') :PathPart('') :CaptureArgs(1) {
 
 sub add_item : Local {
     my ( $self, $c ) = @_;
-    
-    if ( $c->req->param('submit.x') && $c->req->param('submit.y') ) {
+ 
+    if ( $c->req->params->{'submitted'} ) {
     # Form submited
-    
+
         # Add items to the shopping cart
         my $add_to_cart = $c->model('Cart')->add_items_to_cart( {
             sku => $c->req->params->{sku},
@@ -71,7 +71,7 @@ sub add_item : Local {
 
         } else {
         # Item not added to cart
-
+            print "Item not added to cart\n";
         }
 
     } else {

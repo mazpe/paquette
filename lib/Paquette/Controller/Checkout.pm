@@ -154,15 +154,24 @@ sub shipping_info : Local {
 
 sub shipping_info_do : Local {
     my ( $self, $c ) = @_;
+    my @shipping_info;
     my $shipping;
 
     if ( $c->req->params->{submit} ) {
     # Form submited
      
-        # Set our shipping information
-        $shipping = $c->model('Cart')->set_shipping(
-            $c->req->params
-        );
+        my @shipping_info = split(/:/, $c->req->params->{shipping});
+
+        ## Set our shipping information
+        $shipping = $c->model('Cart')->set_shipping( {
+            shipping_type    => $shipping_info[0],
+            shipping_amount  => $shipping_info[1]
+        } );
+
+        # Forward to shipping information
+        $c->response->redirect(
+                $c->uri_for( $self->action_for('payment_info') )
+            . '/' );
 
     } else {
     # Form not subimited
@@ -170,6 +179,14 @@ sub shipping_info_do : Local {
     }
 
 
+}
+
+sub payment_info : Local {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{customer}
+        = $c->model('Customer')->get_customer($c->user->username);
+    $c->stash->{template} = 'checkout/payment_info.tt2';
 }
 
 =head1 AUTHOR

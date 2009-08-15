@@ -32,8 +32,8 @@ function submitItemDescForm()
         </a> 
         <br />
         <br />
-        <p>Breif description</p>
-                
+        <p>[% items.brief_description %]</p>
+        '[% items.sku  %]'
         <div id="content_item_price">
             $[% items.price %]
             <span id="content_item_sku">/ SKU: [% items.sku %]</span>
@@ -44,7 +44,9 @@ function submitItemDescForm()
                 c.controller('Cart').action_for('add_item')
             ) %]">
             <span class="content_atc_qty">
-                <input name="[% item.sku %]" value="1" type="text" size="5"/>
+                <input name="submitted" value="1" type="hidden">
+                <input name="sku" value="[% items.sku %]" type="hidden">
+                <input name="qty" value="1" type="text" size="5"/>
             </span>
             <span class="content_atc_text"> 
                 <a href="javascript:submitItemDetailsForm()">Add to cart</a> 
@@ -68,7 +70,10 @@ function submitItemDescForm()
            <form name="item_desc_form" method="post" action="[% c.uri_for(
                 c.controller('Cart').action_for('add_item')
             ) %]">
-            <span class="content_atc_qty">                                                      <input name="[% item.sku %]" value="1" type="text" size="5"/>
+            <span class="content_atc_qty">
+                <input name="submitted" value="1" type="hidden">
+                <input name="sku" value="[% items.sku %]" type="hidden">
+                <input name="qty" value="1" type="text" size="5"/>
             </span>
             <span class="content_atc_text">
                 <a href="javascript:submitItemDescForm()">Add to cart</a>
