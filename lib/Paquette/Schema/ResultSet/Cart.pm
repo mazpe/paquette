@@ -3,6 +3,7 @@ package Paquette::Schema::ResultSet::Cart;
 use strict;
 use warnings;
 use base 'DBIx::Class::ResultSet';
+use Data::Dumper;
 
 =head1 NAME
 
@@ -48,6 +49,13 @@ sub create {
     }
 
     return $cart;
+}
+
+sub delete {
+    my ( $self, $args ) = @_;
+
+    $self->find($args)->delete;
+
 }
 
 sub get_cart {
@@ -113,6 +121,31 @@ sub attach_cart_to_customer {
         $cart->update( { customer_id => $args->{customer_id} } );
     }
     
+}
+
+sub get_cart_by_cid {
+    my ( $self, $args ) = @_;
+    my %cart;
+
+    %cart = $self->find( $args, { key => 'customer_id' } )->get_columns;
+   
+    return \%cart;
+}
+
+sub set_cart_info {
+    my ( $self, $cart_id, $args ) = @_;
+    my $cart;
+
+    $cart = $self->find($cart_id);
+
+    delete $args->{id};
+    delete $args->{customer_id};
+    delete $args->{session_id};
+    delete $args->{created};
+    delete $args->{updated};
+
+    $cart->update( $args );
+
 }
 
 sub set_shipping_info {

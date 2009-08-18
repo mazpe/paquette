@@ -175,6 +175,46 @@ sub clear_cart {
 sub assign_cart {
     my $self            = shift;
     my $cart_id         = get_cart_id($self);
+    my $cart;
+    my $old_cart_id;
+
+
+    if ( $self->user ) {
+
+        # Check if user already has a cart
+        # Get a copy of the cart
+        $cart = $self->resultset('Cart')->get_cart_by_cid($self->user->id);
+
+        # Found cart and retrived ResultSet
+        # Update our new cart with found cart
+        if ( $cart ) {
+        # We merge
+            
+            $old_cart_id = $cart->{id};
+        
+            # Set our new cart info
+            $self->resultset('Cart')->set_cart_info( $cart_id, $cart );
+
+            # Update found cart_items with our new cart
+            $self->resultset('CartItem')->set_items_cart_id ( 
+                $cart_id, 
+                $old_cart_id,
+            );
+
+            # Setup items cart_sku
+            $self->resultset('CartItem')->set_items_cart_sku(
+                $cart_id,
+                $old_cart_id,
+            );
+
+            # Delete old cart;
+
+            $self->resultset('Cart')->delete($old_cart_id);
+
+
+        }
+
+    }
 
     # Attached Cart and Customer 
     $self->resultset('Cart')->attach_cart_to_customer( { 
