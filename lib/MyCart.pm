@@ -33,29 +33,17 @@ sub create_cart {
 
 sub get_cart {
     my $self            = shift;
-    my $customer_id     = $self->user->id if ($self->user);
-    my $session_id      = $self->session_id;
+    my $cart_id         = get_cart_id($self);
     my $cart;
 
-    my $args = {
-        customer_id => $customer_id,
-        session_id  => $session_id,
-    };
-
     # Check for a cart with the same session id
-    if ( $self->resultset('Cart')->get_cart($args) ) {
+    if ( $cart_id ) {
     # Found cart with the same Session ID
 
         # Get our cart id from database
-        $cart = $self->resultset('Cart')->get_cart($args);
+        $cart = $self->resultset('Cart')->get_cart($cart_id);
 
-    } else {
-    # Found no cart, creating one
-
-        # Create a new cart
-        $cart = create_cart( $self, $customer_id );
-
-    }
+    } 
 
     return $cart;
 }
@@ -205,6 +193,17 @@ sub set_shipping {
     
     # Set shipping
     $self->resultset('Cart')->set_shipping_info($args);
+}
+
+sub set_payment {
+    my ( $self, $args ) = @_;
+    my $cart_id         = get_cart_id($self);
+
+    $args->{id} = $cart_id;
+    delete $args->{submit};
+
+    # Set payment
+    $self->resultset('Cart')->set_payment_info($args);
 }
 
 1;
