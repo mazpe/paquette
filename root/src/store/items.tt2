@@ -83,8 +83,10 @@ function submitItemDescForm()
 
         <br>
         <p>[% items.description FILTER html_para %]</p>
-
+        <br />
     </div><!-- end of content_item_description -->
             
 </div><!-- end of content_product -->
+
+<div class="clear br">&nbsp;</div>
 

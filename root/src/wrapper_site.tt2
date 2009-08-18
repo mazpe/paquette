@@ -82,12 +82,12 @@
             - 
           [% IF c.user_exists %]
             <a href="[% c.uri_for(
-                c.controller('customers').action_for('logout')) %]">
+                c.controller('customers').action_for('index')) %]">
             my account
             </a>
              ( <span id="user_menu_aux">[% c.user.username %]</span> ) 
             <a href="[% c.uri_for(
-                c.controller('customers').action_for('index')) %]">
+                c.controller('customers').action_for('logout')) %]">
               logout 
             </a> 
           [% ELSE %]
@@ -97,14 +97,14 @@
             </a>
           [% END %]
         </div><!-- end of user_menu -->
-        <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" />
+        <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" usemap="#Map" />
       </div><!-- end of top_menu -->
 
       <div id="content">
         [% content %]
       </div><!-- end of content -->
 
-      <div if="support">
+      <div id="footer_support">
       <b>Questions?</b><br>
       Customer Service: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
       </div>
@@ -149,6 +149,29 @@
 
 
 </div><!-- end of wrapper -->
+        <map name="Map" id="Map">
+          <area shape="rect" coords="2,70,116,93" 
+            href="[% c.uri_for('/store/jamon_ham') %]" 
+            alt="Spanish Jamon / Ham" />
+          <area shape="rect" coords="116,70,182,93" 
+            href="[% c.uri_for('/store/spanish_food/iberico_sausages') %]" 
+            alt="Chorizo" />
+          <area shape="rect" coords="182,70,239,93" 
+            href="[% c.uri_for('/store/paella') %]" 
+            alt="Paella" />
+          <area shape="rect" coords="239,70,303,93" 
+            href="[% c.uri_for('/store/cheese') %]" 
+            alt="Cheese" />
+          <area shape="rect" coords="303,70,360,93" 
+            href="[% c.uri_for('/store/wine') %]" 
+            alt="Wine" />
+          <area shape="rect" coords="360,70,438,93" 
+            href="[% c.uri_for('/store/preserves') %]" 
+            alt="Preserves" />
+          <area shape="rect" coords="438,70,544,93" 
+            href="[% c.uri_for('/store/oils_and_vinegars') %]" 
+            alt="Oils and Vinegars" />
+        </map>
 
 </body>
 </html>

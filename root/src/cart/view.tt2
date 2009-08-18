@@ -1,3 +1,4 @@
+<h2> View Cart </h2>
 <script language="JavaScript">
 function submitForm()
 {
@@ -90,3 +91,6 @@ function submitForm()
 
 </tr>
 </table>
+ <br>
+<div class="clear br">&nbsp;</div>
+

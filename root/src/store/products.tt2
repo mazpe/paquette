@@ -45,7 +45,7 @@
   </span>
 </div><!-- end of content_category -->
 
-  [% IF !(i % 4) && i != 1 %]
+  [% IF !(i % 4) && i != 1 || loop.last %]
     <div class="clear br"></div>
   [% END %]
 
