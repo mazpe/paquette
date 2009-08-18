@@ -27,11 +27,54 @@ __PACKAGE__->add_columns(
     size => 32,
   },
   "shipping_amount",
-  { data_type => "DECIMAL", default_value => undef, is_nullable => 1, size => 5 },
+  {
+    data_type => "DECIMAL",
+    default_value => "0.00",
+    is_nullable => 1,
+    size => 9,
+  },
   "payment_type",
-  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 11,
+  },
   "payment_amount",
-  { data_type => "DECIMAL", default_value => undef, is_nullable => 1, size => 5 },
+  {
+    data_type => "DECIMAL",
+    default_value => "0.00",
+    is_nullable => 1,
+    size => 9,
+  },
+  "payment_card_number",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
+  "payment_expiration",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
+  "payment_cvv",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
+  "payment_paypal_email",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
   "created",
   {
     data_type => "DATETIME",
@@ -52,8 +95,8 @@ __PACKAGE__->add_unique_constraint("session_id", ["session_id"]);
 __PACKAGE__->add_unique_constraint("customer_id", ["customer_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-15 01:37:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dogjI3SdN1BdpTWIWOgLHw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-18 07:15:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kh7tpxQlDA4KUuuEWuEyIQ
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

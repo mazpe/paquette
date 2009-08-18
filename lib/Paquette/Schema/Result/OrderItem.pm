@@ -12,6 +12,13 @@ __PACKAGE__->add_columns(
   { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
   "order_id",
   { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
+  "cart_sku",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 64,
+  },
   "sku",
   {
     data_type => "VARCHAR",
@@ -27,20 +34,6 @@ __PACKAGE__->add_columns(
     default_value => "0.00",
     is_nullable => 0,
     size => 9,
-  },
-  "total",
-  {
-    data_type => "DECIMAL",
-    default_value => "0.00",
-    is_nullable => 0,
-    size => 9,
-  },
-  "description",
-  {
-    data_type => "VARCHAR",
-    default_value => undef,
-    is_nullable => 1,
-    size => 255,
   },
   "created",
   {
@@ -58,10 +51,11 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("cart_sku", ["cart_sku"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-15 01:37:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i9/FDAAY/KIJpn8JZkPt3g
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-18 07:15:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Mt5XH9UKPTLIfoETsm8ztA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
