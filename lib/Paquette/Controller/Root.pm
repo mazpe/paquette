@@ -3,6 +3,7 @@ package Paquette::Controller::Root;
 use strict;
 use warnings;
 use parent 'Catalyst::Controller';
+use Data::Dumper;
 
 #
 # Sets the actions in this controller to be registered with no prefix
@@ -24,19 +25,20 @@ Paquette::Controller::Root - Root Controller for Paquette
 
 sub auto : Local {
     my ( $self, $c ) = @_;
-
-    # How many items are in store in the session.
-    my $hash_ref = $c->session->{items};
-    my $cart_size = 0;
-    $cart_size += keys %$hash_ref;
+    my $cart_size;
 
     # Get all my parent categories
     my $categories = [$c->model('PaquetteDB::Categories')->search(
         { parent_id => 0 },
     )];
 
+    $cart_size = $c->model('PaquetteDB::CartItem')->search( {
+         cart_id => $c->session->{cart_id}
+    } );
 
-    $c->stash->{cart_size}  = $cart_size;
+    #$cart_size = $c->model('Cart')->total_items_in_cart;
+
+    $c->stash->{cart_size}  = $cart_size->count;
     $c->stash->{categories} = $categories;
 }
 

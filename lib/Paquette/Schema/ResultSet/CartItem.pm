@@ -51,6 +51,16 @@ sub get_items {
     return \@items;
 }
 
+sub count_items {
+    my ( $self, $args ) = @_;
+    my $items;
+
+    # Get all the items in the shopping cart
+    $items = $self->search({ 'cart_id' => $args });
+
+    return $items->count;
+}
+
 sub set_items_cart_id {
     my ( $self, $cart_id, $old_cart_id ) = @_;
     my $cart_items;

@@ -178,7 +178,6 @@ sub assign_cart {
     my $cart;
     my $old_cart_id;
 
-
     if ( $self->user ) {
 
         # Check if user already has a cart
@@ -187,7 +186,7 @@ sub assign_cart {
 
         # Found cart and retrived ResultSet
         # Update our new cart with found cart
-        if ( $cart ) {
+        if ( $cart == 1) {
         # We merge
             
             $old_cart_id = $cart->{id};
@@ -215,6 +214,7 @@ sub assign_cart {
         }
 
     }
+
 
     # Attached Cart and Customer 
     $self->resultset('Cart')->attach_cart_to_customer( { 
@@ -244,6 +244,16 @@ sub set_payment {
 
     # Set payment
     $self->resultset('Cart')->set_payment_info($args);
+}
+
+sub total_items_in_cart {
+    my $self            = shift;
+    my $cart_id         = get_cart_id($self);
+
+
+    my $total_items = $self->resultset('CartItem')->count_items($cart_id);
+
+    return $total_items;
 }
 
 1;
