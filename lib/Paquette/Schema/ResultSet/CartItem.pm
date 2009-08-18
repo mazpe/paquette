@@ -87,7 +87,7 @@ sub set_items_cart_sku {
         $cart_sku = $cart_id. '' .$item->sku;
 
         # Check If our item SKU is already on the database
-        if ( my $found_item = $self->find( $cart_sku, { key => 'cart_sku' } ) ) {
+        if (my $found_item = $self->find( $cart_sku, { key => 'cart_sku' } ) ) {
             
             # Delete old item if QTY is < new item QTY
             if ( $found_item->quantity > $item->quantity ) {
@@ -95,15 +95,15 @@ sub set_items_cart_sku {
                 # Delete 
                 $item->delete;
 
-            } else {
+            } 
+
+        } else {
 
                 $item->update( { cart_sku => $cart_sku } );
-
-            }
-
         }
 
    } 
+
 }
     
 

@@ -53,8 +53,11 @@ sub create {
 
 sub delete {
     my ( $self, $args ) = @_;
+    my $cart;
 
-    $self->find($args)->delete;
+    $cart = $self->find($args);
+
+    $cart->delete if ($cart);
 
 }
 

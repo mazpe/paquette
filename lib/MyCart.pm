@@ -186,7 +186,7 @@ sub assign_cart {
 
         # Found cart and retrived ResultSet
         # Update our new cart with found cart
-        if ( $cart == 1) {
+        if ( $cart ) {
         # We merge
             
             $old_cart_id = $cart->{id};
@@ -207,7 +207,6 @@ sub assign_cart {
             );
 
             # Delete old cart;
-
             $self->resultset('Cart')->delete($old_cart_id);
 
 
