@@ -184,10 +184,74 @@ sub shipping_info_do : Local {
 sub payment_info : Local {
     my ( $self, $c ) = @_;
 
+    if (!$c->user_exists) {
+        $c->response->redirect($c->uri_for('/customers/login'));
+        return 0;
+    }
+
     $c->stash->{customer}
         = $c->model('Customer')->get_customer($c->user->username);
     $c->stash->{template} = 'checkout/payment_info.tt2';
 }
+
+sub payment_info_do : Local {
+    my ( $self, $c ) = @_;
+    my @payment_info;
+    my $payment;
+
+    if (!$c->user_exists) {
+        $c->response->redirect($c->uri_for('/customers/login'));
+        return 0;
+    }
+
+    if ( $c->req->params->{submit} ) {
+    # Form submited
+
+        ## Set our shipping information
+        $payment = $c->model('Cart')->set_payment( $c->req->params );
+
+        # Forward to shipping information
+        $c->response->redirect(
+                $c->uri_for( $self->action_for('confirm_order') )
+            . '/' );
+
+    } else {
+    # Form not subimited
+
+    }
+
+}
+
+sub confirm_order : Local {
+    my ( $self, $c ) = @_;
+
+    if (!$c->user_exists) {
+        $c->response->redirect($c->uri_for('/customers/login'));
+        return 0;
+    }
+
+
+    # Load items from cart
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
+
+    $c->stash->{customer}
+        = $c->model('Customer')->get_customer($c->user->username);
+    $c->stash->{cart}
+        = $c->model('Cart')->get_cart;
+    $c->stash->{template} = 'checkout/confirm_order.tt2';
+
+}
+
+sub process_order : Local {
+    my ( $self, $c ) = @_;
+    my $order;
+
+    $order = $c->model('Checkout')->process_order;
+
+    print $order;
+
+}
+
 
 =head1 AUTHOR
 

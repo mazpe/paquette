@@ -321,6 +321,15 @@ body {
     font-weight: bold;
     font-size: 9pt;
     color: #000;
+}
+
+#footer_support {
+    background-color: #FF0;
+    text-align:center;
+    font-family: Arial, Gadget, sans-serif;
+    font-weight: bold;
+    font-size: 9pt;
+    color: #000;
     
 }
 

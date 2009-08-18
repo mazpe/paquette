@@ -54,11 +54,7 @@ sub get_cart {
     my ( $self, $args ) = @_;
     my $cart;
 
-    $cart = $self->search( { session_id => $args->{session_id} } )->first;
-
-    if ( !$cart && $args->{customer_id} ) {
-        $cart = $self->search( { customer_id => $args->{customer_id} } )->first;
-    }
+    $cart = $self->find($args);
 
     return $cart;
 }
@@ -134,6 +130,30 @@ sub set_shipping_info {
     }
 
 }
+
+sub set_payment_info {
+    my ( $self, $args ) = @_;
+
+    # Find our cart
+    my $cart = $self->search( { id => $args->{id} } );
+
+    # If we found our cart, update the shipping information
+    if ( $cart == 1 ) {
+        $cart->update( {
+            payment_type            => $args->{payment_type},
+            payment_amount          => $args->{payment_amount},
+            payment_card_number     => $args->{payment_card_number},
+            payment_expiration      => $args->{payment_expiration},
+            payment_cvv             => $args->{payment_cvv},
+            payment_paypal_email    => $args->{payment_paypal_email},
+    
+        } );
+    }
+
+}
+
+
+
 
 =head1 AUTHOR
 
