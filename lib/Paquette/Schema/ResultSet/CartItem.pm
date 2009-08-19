@@ -90,13 +90,13 @@ sub set_items_cart_id {
 }
 
 sub set_items_cart_sku {
-    my ( $self, $cart_id, $old_card_id ) = @_;
+    my ( $self, $cart_id, $old_cart_id ) = @_;
     my $rs;
     my $cart_sku;
     my $old_cart_sku;
 
     # Resulet with items in our new cart
-    $rs = $self->search( { cart_id => $cart_id } );
+    $rs = $self->search( { cart_id => $old_cart_id } );
 
     # Loop through all items in cart
     while ( my $item = $rs->next ) {
@@ -106,18 +106,14 @@ sub set_items_cart_sku {
 
         # Check If our item SKU is already on the database
         if (my $found_item = $self->find( $cart_sku, { key => 'cart_sku' } ) ) {
-            
-            # Delete old item if QTY is < new item QTY
-            if ( $found_item->quantity > $item->quantity ) {
 
-                # Delete 
-                $item->delete;
-
-            } 
+            # TODO: delete the item with the lowest quantity
+            # Delete 
+            $item->delete;
 
         } else {
 
-                $item->update( { cart_sku => $cart_sku } );
+            $item->update( { cart_id => $cart_id, cart_sku => $cart_sku } );
         }
 
    } 

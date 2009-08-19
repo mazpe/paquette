@@ -138,6 +138,19 @@ sub get_cart_by_cid {
     return \%cart;
 }
 
+sub get_cart_by_sid {
+    my ( $self, $args ) = @_;
+    my %cart;
+    my $rs;
+
+    $rs = $self->find( $args, { key => 'session_id' } );
+
+    %cart = $rs->get_columns if $rs;
+
+    return \%cart;
+}
+
+
 sub set_cart_info {
     my ( $self, $cart_id, $args ) = @_;
     my $cart;
@@ -153,6 +166,17 @@ sub set_cart_info {
     $cart->update( $args );
 
 }
+
+sub update {
+    my ( $self, $args ) = @_;
+    my $cart;
+
+    $cart = $self->find($args->{id});
+
+    $cart->update( $args );
+
+}
+
 
 sub set_shipping_info {
     my ( $self, $args ) = @_;
