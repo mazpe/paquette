@@ -1,4 +1,4 @@
-package Paquette::Schema::ResultSet::CartItem;
+package Paquette::Schema::ResultSet::OrdersItem;
 
 use strict;
 use warnings;
@@ -7,18 +7,18 @@ use Data::Dumper;
 
 =head1 NAME
 
-Paquette::Schema::ResultSet::CartItem - ResultSet 
+Paquette::Schema::ResultSet::OrdersItem - ResultSet 
 
 =head1 DESCRIPTION
 
-CartItems ResultSet
+OrdersItems ResultSet
 
 =cut
 
 sub add_item {
     my ( $self, $args ) = @_;
 
-    my $item = $self->find_or_new ( $args, { key => 'cart_sku' } );
+    my $item = $self->find_or_new ( $args, { key => 'order_sku' } );
 
     unless ( $item->in_storage ) {
     # Item not found in cart

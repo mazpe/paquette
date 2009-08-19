@@ -1,7 +1,0 @@
-[%- FOREACH name IN names -%]
-Hi, [% name %]!
-[%- END -%]
-
---
-Regards,
-Us

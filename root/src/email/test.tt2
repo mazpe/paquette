@@ -1,0 +1,112 @@
+<table width='100%' cellpadding='0' cellspacing='5' valign='top' align='left' border='0' id="customer_info">
+  <tr>
+    <td valign='top' width='50%'>
+            <table cellpadding='0' cellspacing='0' valign='top' align='left' border='0' width='100%'>
+              <tr>
+                <td>
+                  <table border=0 width='100%'>
+                    <tr>
+                      <th>BILL TO:</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td colspan=2>
+                      [% customer.bill_first_name %], 
+                      [% customer.bill_last_name %]<br />
+                      [% customer.bill_address1 %]<br />
+                      [% customer.bill_address2 %]<br />    
+                      [% customer.bill_city %], [% customer.bill_state %]
+                      [% customer.bill_zip %]<br />
+                      [% customer.bill_country %]<br />
+                      [% customer.bill_phone %]<br />
+                      [% customer.bill_email %]<br />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>
+                  <table border=0 width='100%'>
+                    <tr>
+                      <th>SHIP TO:</td>
+                      <td align='right' valign='top'>&nbsp; </td>
+                    </tr>
+                      <td colspan=2>
+                      [% customer.ship_first_name %],
+                      [% customer.ship_last_name %]<br />
+                      [% customer.ship_address1 %]<br />
+                      [% customer.ship_address2 %]<br />
+                      [% customer.ship_city %], [% customer.bill_state %]
+                      [% customer.ship_zip %]<br />
+                      [% customer.ship_country %]<br />
+                      [% customer.ship_phone %]<br />
+                      [% customer.ship_email %]<br />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+  <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
+      <!-- CELL: SHIPPING METHOD -->
+      <tr>
+      <th class='summarycell'>
+        PAYMENT
+      </th>
+      </tr>
+      <td>
+[% IF cart.payment_type == 'cc' %]
+<strong> Credit Card </strong>
+<table border=0>
+<tr>
+    <th nowrap>Credit Card # </td>
+    <td valign=top>[% cart.payment_card_number %]</td>
+</tr>
+<tr>
+    <th nowrap>Expiration Date (02/11)</td>
+    <td valign=top>[% cart.payment_expiration %]</td>
+</tr>
+<tr>
+    <th nowrap>CVV Code</td>
+    <td valign=top>[% cart.payment_cvv %] </td>
+</tr>
+</table>
+
+[% END %]
+
+[% IF cart.payment_type == 'paypal' %]
+
+<strong>Paypal</strong>
+<table border=0>
+<tr>
+    <th nowrap>Paypal Email </th>
+    <td valign=top>[% cart.payment_paypal_email %]</td>
+</tr>
+<tr>
+    <th nowrap>Paypal Password </th>
+    <td valign=top>***** </td>
+</tr>
+</table>
+[% END %]
+
+
+    </td>
+
+      </tr>       
+  </table>
+  </td>
+ </tr>
+<!-- CART -->
+
+<tr>
+  <td class='cartform' colspan="2" align="center">
+[% INCLUDE cart/checkout_view.tt2 %]
+  </td>
+</tr>
+
+</table>
+

@@ -87,17 +87,18 @@ function submitForm()
   <!-- RIGHT COLUMN -->
 
   <td valign=top width='50%'>
+    CHOOSE PAYMENT METHOD:<br>
     <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
       <!-- CELL: SHIPPING METHOD -->
       <tr>
-        <td class='summarycell'>
-        CHOOSE PAYMENT METHOD:<br>
+        <th class='summarycell'>
         AMOUNT: [% amount %]<br><br>
-        Please select a payment type:
         </td>
       </tr>
       <tr>
         <td>
+        Please select a payment type:
+<br>
 <br>
 <input type="radio" name="payment_type" value="cc"> Credit Card
 <table border=0>
@@ -121,6 +122,7 @@ function submitForm()
 </tr>
 </table>
 
+<br>
 <br>
 <input type="radio" name="payment_type" value="paypal"> Paypal
 <table border=0>
@@ -147,6 +149,14 @@ function submitForm()
   </table>
   </td>
  </tr>
+<!-- CART -->
+
+<tr>
+  <td class='cartform' colspan="2" align="center">
+[% INCLUDE cart/checkout_view.tt2 %]
+  </td>
+</tr>
+
 </table>
 </form>
 

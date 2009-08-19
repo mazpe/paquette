@@ -61,8 +61,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("name", ["name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-18 07:15:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lEiCvrcHbqxR89g9Ige22Q
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-19 03:00:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uQxtAYE/BtqJ0D+mPd+bwg
 
 __PACKAGE__->has_one(parent => 'Paquette::Schema::Result::Categories', 
     { 'foreign.id' => 'self.parent_id' },

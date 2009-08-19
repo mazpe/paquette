@@ -135,6 +135,14 @@ function submitForm()
   </table>
   </td>
  </tr>
+<!-- CART -->
+
+<tr>
+  <td class='cartform' colspan="2" align="center">
+[% INCLUDE cart/checkout_view.tt2 %]
+  </td>
+</tr>
+
 </table>
 </form>
 

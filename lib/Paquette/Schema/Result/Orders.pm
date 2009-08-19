@@ -30,7 +30,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "bill_address1",
@@ -44,7 +44,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "bill_city",
@@ -79,7 +79,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "ship_first_name",
@@ -100,7 +100,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "ship_address1",
@@ -114,7 +114,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "ship_city",
@@ -149,7 +149,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 255,
   },
   "email",
@@ -163,71 +163,64 @@ __PACKAGE__->add_columns(
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 0,
+    is_nullable => 1,
     size => 32,
   },
   "shipping_amount",
   {
     data_type => "DECIMAL",
     default_value => "0.00",
-    is_nullable => 0,
+    is_nullable => 1,
     size => 9,
   },
   "payment_type",
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 0,
+    is_nullable => 1,
     size => 11,
   },
   "payment_amount",
   {
     data_type => "DECIMAL",
     default_value => "0.00",
-    is_nullable => 0,
+    is_nullable => 1,
     size => 9,
   },
   "payment_card_number",
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 128,
   },
   "payment_expiration",
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 128,
   },
   "payment_cvv",
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 128,
   },
   "payment_paypal_email",
   {
     data_type => "VARCHAR",
     default_value => undef,
-    is_nullable => 1,
+    is_nullable => 0,
     size => 128,
   },
   "payment_total",
   {
     data_type => "DECIMAL",
     default_value => "0.00",
-    is_nullable => 0,
+    is_nullable => 1,
     size => 9,
-  },
-  "status",
-  {
-    data_type => "VARCHAR",
-    default_value => "Pending",
-    is_nullable => 0,
-    size => 32,
   },
   "created",
   {
@@ -247,8 +240,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-18 07:15:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eb/OMmh3r9nXJWM9j2KaNg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-19 03:00:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3eJlwhPteJ+6fTWR8O2P6Q
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

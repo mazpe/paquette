@@ -115,6 +115,17 @@ sub add_items_to_cart {
 
 }
 
+sub sum_items_in_cart {
+    my $self = shift;
+    my $cart_id         = get_cart_id($self);
+    my $total_amount;
+
+    $total_amount
+        = $self->resultset('CartItem')->sum_items($cart_id);
+
+    return $total_amount;
+}
+
 # Return list of items
 sub get_items_in_cart { 
     my $self            = shift;

@@ -41,41 +41,23 @@ our $VERSION = '0.05';
 __PACKAGE__->config( 
     name        => 'Paquette',
     session     => {flash_to_stash => 1},
-#    'View::Email' => {
-#        # Where to look in the stash for the email information.
-#        # 'email' is the default, so you don't have to specify it.
-#        stash_key => 'email',
-#        # Define the defaults for the mail
-#        default => {
-#            # Defines the default content type (mime type). Mandatory
-#            content_type => 'text/plain',
-#            # Defines the default charset for every MIME part with the 
-#            # content type text.
-#            # According to RFC2049 a MIME part without a charset should
-#            # be treated as US-ASCII by the mail client.
-#            # If the charset is not set it won't be set for all MIME parts
-#            # without an overridden one.
-#            # Default: none
-#            charset => 'utf-8'
-#        },
-#        # Setup how to send the email
-#        # all those options are passed directly to Email::Send
-#        sender => {
-#            mailer => 'SMTP',
-#            # mailer_args is passed directly into Email::Send 
-#            mailer_args => {
-#                Host     => 'mail.gbrnd.com', # defaults to localhost
-#                username => 'web71_admin',
-#                password => '4dm1n',
-#            }
-#        }
-#    },
-#    'View::Email::Template' => {
-#        template_prefix => 'src/email',
-#        default => {
-#            view => 'TT',
-#        },
-#    },
+    default_view    => 'TT',
+    'View::Email::Template' => {
+        default => {
+            content_type => 'text/html',
+            charset => 'utf-8',
+            view => 'TTEmail',
+        },
+        sender => {
+            mailer => 'SMTP',
+            mailer_args => {
+                Host     => 'mail.gbrnd.com', # defaults to localhost
+                username => 'web71_admin',
+                password => '4dm1n',
+            }
+        },
+        template_prefix => 'email',
+    }
 
 );
 

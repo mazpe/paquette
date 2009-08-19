@@ -146,6 +146,7 @@ sub customer_info_do : Local {
 sub shipping_info : Local {
     my ( $self, $c ) = @_;
 
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
     $c->stash->{customer} 
         = $c->model('Customer')->get_customer($c->user->username);
     $c->stash->{template} = 'checkout/shipping_info.tt2';
@@ -189,6 +190,8 @@ sub payment_info : Local {
         return 0;
     }
 
+    $c->stash->{amount}     = $c->model('Cart')->sum_items_in_cart;
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
     $c->stash->{customer}
         = $c->model('Customer')->get_customer($c->user->username);
     $c->stash->{template} = 'checkout/payment_info.tt2';
@@ -248,7 +251,38 @@ sub process_order : Local {
 
     $order = $c->model('Checkout')->process_order;
 
-    print $order;
+        $c->response->redirect(
+                $c->uri_for( $self->action_for('send_email') )
+            . '/' );
+
+
+}
+
+sub send_email : Local {
+    my ( $self, $c ) = @_;
+
+    # Load items from cart
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
+    $c->stash->{customer}
+        = $c->model('Customer')->get_customer($c->user->username);
+    $c->stash->{cart}
+        = $c->model('Cart')->get_cart;
+
+
+    # Send email
+    $c->stash->{email} = {
+            to      => $c->stash->{customer}->{email},
+            bcc      => 'info@saborespanol.com',
+            from    => 'sales@saborespanol.com',
+            subject => 'Order',
+            template => 'test.tt2',
+            content_type => 'multipart/alternative'
+        };
+        
+        $c->forward( $c->view('Email::Template') );
+
+        $c->response->redirect( $c->uri_for( '/' ) );
+
 
 }
 
