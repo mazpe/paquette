@@ -1,0 +1,5 @@
+<div id="content_image">
+  <img src="/static/images/[% random_image.name %]"
+    alt="" width="540" height="150" />
+</div>
+

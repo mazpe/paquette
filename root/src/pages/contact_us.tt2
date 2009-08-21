@@ -1,9 +1,73 @@
 <h2>Contact Us</h2>
 
-<table id="hor-minimalist-a">
+<div id="content_block">
+<form method="post" action="[% c.uri_for(
+    c.controller('Pages').action_for('contact_us')
+) %]" name="infocollect">
+
+<table width="530" border="0" align="center" cellpadding="0" cellspacing="0" id="hor-minimalist-a" >
   <tr>
-    <td>&nbsp;</td>
+    <td colspan="2" align="left">
+Please use this form to let us know your requests or comments. We will get back to you as quickly as possible, usually within one business day. If you have an urgent request, please give us a call.
+<br />
+<br />
+      <div align="center">
+      Fiels with * are required.
+      </div>
+<br />
+   </td>
   </tr>
-</table>
+
+          <tr>
+            <th width="265" align="right">First Name: *</th>
+            <td width="265"><label>
+              <input name="first_name" type="text" id="first_name" size="20" />
+            </label></td>
+          </tr>
+          <tr>
+            <th align="right">Last Name: *</th>
+            <td><input name="last_name" type="text" id="last_name" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">Email: *</th>
+            <td><input name="email" type="text" id="email" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">Address 1: </th>
+            <td><input name="address_1" type="text" id="address_1" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">Address 2: </th>
+            <td><input name="address_2" type="text" id="address_2" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">City: </th>
+            <td><input name="city" type="text" id="city" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">State: </th>
+            <td><input name="state" type="text" id="state" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">Country: </th>
+            <td><input name="country" type="text" id="country" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right">Zip Code: </th>
+            <td><input name="zip_code" type="text" id="zip_code" size="20" /></td>
+          </tr>
+          <tr>
+            <th align="right" valign="bottom">Message: *</th>
+            <td><textarea name="message" cols="20" rows="5" id="message"></textarea></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center"><label>
+              <input type="submit" name="submit" id="submit" value="Submit" />
+              <input type="reset" name="reset" id="reset" value="Reset" />
+            </label></td>
+            </tr>
+        </table>
+
+</div>
 
 <br>

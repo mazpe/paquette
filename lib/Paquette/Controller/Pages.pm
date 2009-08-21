@@ -25,7 +25,6 @@ sub auto : Local {
 
 }
 
-
 =head2 index
 
 =cut
@@ -45,9 +44,31 @@ sub about_us : Path('/about_us') {
 
 sub contact_us : Path('/contact_us') {
     my ( $self, $c ) = @_;
+    my $full_name;
 
+    if (  $c->req->params->{submit} ) {
+
+        $full_name 
+            = $c->req->params->{first_name} .', '. $c->req->params->{last_name};
+
+       # Send email
+        $c->stash->{email} = {
+            to      => 'info@saborespanol.com',
+            from    => $c->req->params->{email},
+            subject => 'Contact Us: '. $full_name,
+            template => 'contact_us.tt2',
+            content_type => 'multipart/alternative'
+        };
+
+        $c->forward( $c->view('Email::Template') );
+
+        $c->stash->{template} = 'pages/contact_us_confirm.tt2';
+
+    } else {
 
     $c->stash->{template} = 'pages/contact_us.tt2';
+    
+    }
 }
 
 sub privacy_policy : Path('/privacy_policy') {
