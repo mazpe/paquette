@@ -64,7 +64,7 @@ function submitForm()
 
 //-->
 </script>
-
+<h2>Checkout :: Customer Information</h2>
 <form method="post" action="[% c.uri_for(
     c.controller('Checkout').action_for('customer_info_do')
 ) %]" name="infocollect">
@@ -79,19 +79,12 @@ function submitForm()
   </td>
 </tr>
 <tr>
-  <td colspan=2>
-    <br><font class='error'>You did not submit a valid billing State/Province 
-    for the billing country selected.</font><br>&nbsp;
-  </td>
-</tr>
-<tr>
   <td valign='top'>
-    <img src='/images/titleinginfo.gif' width='280' height='20' border='0' alt='Bill To Information'><br>
-Items with an <font color='#990000'>*</font> are required.
+    <strong>Bill To Information</strong><br>
+    Items with an <font color='#990000'>*</font> are required.
   </td>
   <td valign='top'>
-    <img src='/images/title_shippinginfo.gif' width='280' height='20' border='0'
-      alt='Ship To Information'><br>
+    <strong>Ship To Information</strong><br>
     <div align=right>
       <input type='submit' name='submit' value='Continue Checkout'
         onClick="submitForm()"  >
@@ -114,17 +107,17 @@ Items with an <font color='#990000'>*</font> are required.
       <tr>
         <th align='right'>Company:</td>
         <td><input class='formbox' type=text name='bill_company' 
-            value='[% customer.bill_company %]' maxlength=40></td>
+            value='[% customer.bill_company %]' maxlength='30'></td>
       </tr>
       <tr>
         <th align='right'><font color='#990000'>*</font> Address 1:</td>
         <td><input class='formbox' type=text name='bill_address1' 
-            value='[% customer.bill_address1 %]' maxlength=40></td>
+            value='[% customer.bill_address1 %]' maxlength='30'></td>
       </tr>
       <tr>
         <th align='right'>Address 2:</td>
         <td><input class='formbox' type=text name='bill_address2' 
-            value='[% customer.bill_address2 %]' maxlength=40></td>
+            value='[% customer.bill_address2 %]' maxlength='30'></td>
       </tr>
       <tr>
         <th align='right'><font color='#990000'>*</font> City:</td>
@@ -222,15 +215,15 @@ Items with an <font color='#990000'>*</font> are required.
       </tr>
       <tr>
         <th align='right'>Company:</td>
-        <td><input class='formbox' type=text name='ship_company' value='[% customer.ship_company %]' maxlength=40></td>
+        <td><input class='formbox' type=text name='ship_company' value='[% customer.ship_company %]' maxlength='30'></td>
       </tr>
       <tr>
         <th align='right'><font color='#990000'>*</font> Address 1:</td>
-        <td><input class='formbox' type=text name='ship_address1' value='[% customer.ship_address1 %]' maxlength=40></td>
+        <td><input class='formbox' type=text name='ship_address1' value='[% customer.ship_address1 %]' maxlength='30'></td>
       </tr>
       <tr>
         <th align='right'>Address 2:</td>
-        <td><input class='formbox' type=text name='ship_address2' value='[% customer.ship_address2 %]' maxlength=40></td>
+        <td><input class='formbox' type=text name='ship_address2' value='[% customer.ship_address2 %]' maxlength='30'></td>
       </tr>
       <tr>
         <td>&nbsp;</td>
@@ -282,10 +275,8 @@ Items with an <font color='#990000'>*</font> are required.
         <td align='right'>&nbsp;</td>
         <td>
           <div align=right>
-            <input type="button" name="continue" value="Continue Checkout"
-              onClick="window.location='[%
-              c.uri_for(c.controller('Checkout').action_for('customer_info_do'))
-            %]'" >
+             <input type='submit' name='submit' value='Continue Checkout'
+               onClick="submitForm()"  >
           </div>
         </td>
       </tr>
@@ -303,3 +294,4 @@ Items with an <font color='#990000'>*</font> are required.
 </table>
 </form>
 
+<br>

@@ -182,10 +182,10 @@ sub set_shipping_info {
     my ( $self, $args ) = @_;
 
     # Find our cart
-    my $cart = $self->search( { id => $args->{id} } );
+    my $cart = $self->find( $args->{id}  );
 
     # If we found our cart, update the shipping information
-    if ( $cart == 1 ) { 
+    if ( $cart ) { 
         $cart->update( {
             shipping_type   => $args->{shipping_type},
             shipping_amount => $args->{shipping_amount},
@@ -198,10 +198,10 @@ sub set_payment_info {
     my ( $self, $args ) = @_;
 
     # Find our cart
-    my $cart = $self->search( { id => $args->{id} } );
+    my $cart = $self->find( $args->{id} );
 
     # If we found our cart, update the shipping information
-    if ( $cart == 1 ) {
+    if ( $cart ) {
         $cart->update( {
             payment_type            => $args->{payment_type},
             payment_amount          => $args->{payment_amount},

@@ -207,6 +207,17 @@ body {
     border: solid #FF0;
     border-width: 0 1px 1px 1px 
 }
+.content_category_price p {
+    display:block;
+    background-color:#F00;
+    font-family: Arial, Gadget, sans-serif;
+    color: #FF0;
+    font-size: 8pt;
+    text-align: center;
+    font-weight:bold;
+    border: solid #FF0;
+    border-width: 0 1px 0px 1px
+}
 
 #content_product {
     margin: 0 auto;
@@ -362,6 +373,41 @@ body {
 #hor-minimalist-a tbody tr:hover td
 {
     color: #F00;
+}
+
+
+#content_block {
+    font-family: Arial, Gadget, sans-serif;
+    font-size: 12px;
+    background: #fff;
+    width: 530px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 5px 5px 5px 8px;
+}
+
+#content_block p {
+    color: #000;
+}
+
+#content_image {
+    font-family: Arial, Gadget, sans-serif;
+    font-size: 12px;
+    background: #fff;
+    width: 540px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0px 0px 0px 0px;
+
+}
+
+
+.about_us_content {
+    font-family: Akbar, Arial;
+    font-size: 8.5pt;
+    font-style: normal;
+    font-weight: normal;
+    color: #000;
 }
 
 

@@ -10,13 +10,13 @@
 </p>
 
 <!-- Login form -->
-
+<h2>Login</h2>
 <form method="post" action="[% c.uri_for('/customers/login') %]">
 <table border="0" width="100%" cellspacing="0" cellpadding="2" 
-    style="margin-top:9px">
+    style="margin-top:9px" id="hor-minimalist-a">
 <tr>
-  <td class="main" width="50%" valign="top"><b>New Customer</b></td>
-  <td class="main" width="50%" valign="top"><b>Returning Customer</b></td>
+  <th class="main" width="50%" valign="top"><b>New Customer</b></th>
+  <th class="main" width="50%" valign="top"><b>Returning Customer</b></th>
 </tr>
 <tr>
   <td width="50%" height="100%" valign="top">
@@ -27,10 +27,7 @@
           <table border="0" width="100%" height="100%" cellspacing="0" 
             cellpadding="2">
             <tr>
-              <td>
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                  height="10">
-              </td>
+              <td>&nbsp; </td>
             </tr>
                 <tr>
               <td class="main" valign="top">
@@ -42,8 +39,7 @@
             </tr>
             <tr>
               <td>
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                height="10">
+                &nbsp;
               </td>
             </tr>
             <tr>
@@ -51,20 +47,17 @@
                 <table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
                     <td width="10">
-                      <img src="images/pixel_trans.gif" border="0" alt="" 
-                        width="10" height="1">
+                    &nbsp;
                     </td>
                     <td align="right">
                       <a href="[% c.uri_for(
                         c.controller('Customer').action_for('register')
                       ) %]">
-                        <img src="continue.gif" border="0" alt="Continue" 
-                          title=" Continue " width="63" height="16">
+                        Continue
                       </a>
                     </td>
                     <td width="10">
-                      <img src="images/pixel_trans.gif" border="0" alt="" 
-                        width="10" height="1">
+                    &nbsp;
                     </td>
                   </tr>
                 </table>
@@ -84,8 +77,7 @@
             cellpadding="2">
             <tr>
               <td colspan="2">
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                 height="10">
+&nbsp;
               </td>
             </tr>
             <tr>
@@ -93,8 +85,7 @@
             </tr>
             <tr>
               <td colspan="2">
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                  height="10">
+&nbsp;
               </td>
             </tr>
             <tr>
@@ -109,21 +100,19 @@
             </tr>
             <tr>
               <td colspan="2">
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                  height="10">
+&nbsp;
               </td>
             </tr>
             <tr>
               <td class="smallText" colspan="2">
-                <a href="http://www.tiresxpress.com/password_forgotten.php">
+                <a href="http://www.saborespanol.com/customer/password">
                   Password forgotten? Click here.
                 </a>
               </td>
             </tr>
             <tr>
               <td colspan="2">
-                <img src="images/pixel_trans.gif" border="0" alt="" width="100%"
-                  height="10">
+&nbsp;
               </td>
             </tr>
             <tr>
@@ -131,16 +120,13 @@
                 <table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
                     <td width="10">
-                      <img src="images/pixel_trans.gif" border="0" alt="" 
-                        width="10" height="1">
+&nbsp;
                     </td>
                     <td align="right">
-                      <input type="image" src="button_login.gif" border="0" 
-                        alt="Sign In" title=" Sign In ">
+<input type="submit" name="submit" value="Login">
                     </td>
                     <td width="10">
-                      <img src="images/pixel_trans.gif" border="0" alt="" 
-                        width="10" height="1">
+&nbsp;
                     </td>
                   </tr>
                 </table>
@@ -153,5 +139,6 @@
   </td>
 </tr>
 </table>
+<br><br>
 </form>
 

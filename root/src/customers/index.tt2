@@ -1,4 +1,5 @@
-<table border='0'>
+<h2>My Account</h2>
+<table border='0' id="hor-minimalist-a">
   <tr>
     <td>
       <a href="[% c.uri_for(c.controller.action_for('logout')) %]">
@@ -28,3 +29,5 @@
   </tr>
 
 </table>
+
+<br>

@@ -7,35 +7,32 @@ function submitForm()
 
 //-->
 </script>
-
+<h2>Checkout :: Shipping Information</h2>
 <form method="post" action="[% c.uri_for(
     c.controller('Checkout').action_for('shipping_info_do') 
 ) %]" name='billing'>
 
-<table width='540' cellpadding='0' cellspacing='5' valign='top' align='left' border='0' id="customer_info">
+
+<table width='540' cellpadding='0' cellspacing='0' valign='top' border='0' id="customer_info">
   <tr>
-    <td colspan='2' class='breadcrumbs' align="center">
-      1. CUSTOMER&nbsp;&nbsp; 
-      <font color='#990000'><b>2. SHIPPING</b></font>&nbsp;&nbsp; 
-      3. PAYMENT&nbsp;&nbsp; 
+    <td colspan="2">
+    <div align="center">
+      1. CUSTOMER&nbsp;&nbsp;
+      <font color='#990000'><b>2. SHIPPING</b></font>&nbsp;&nbsp;
+      3. PAYMENT&nbsp;&nbsp;
       4. CONFIRMATION
+    </div>
     </td>
   </tr>
   <tr>
-    <td valign='top'>&nbsp;</td>
-    <td valign='bottom' align="right">
-     <input type='submit' name='submit' value='Continue Checkout'
+    <td colspan="2" align="right">
+      <input type='submit' name='submit' value='Continue Checkout'
         onClick="submitForm()"  >
+
     </td>
   </tr>
   <tr>
-    <td valign='top' width='50%'>
-      <table cellpadding='0' valign='top' align='left' border='0' width='100%'>
-        <tr>
-          <td>
-            <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
-              <tr>
-                <td>
+    <td valign="top">
                   <table border=0 width='100%'>
                     <tr>
                       <th>BILL TO:</td>
@@ -43,10 +40,10 @@ function submitForm()
                     </tr>
                     <tr>
                       <td colspan=2>
-                      [% customer.bill_first_name %], 
+                      [% customer.bill_first_name %],
                       [% customer.bill_last_name %]<br />
                       [% customer.bill_address1 %]<br />
-                      [% customer.bill_address2 %]<br />    
+                      [% customer.bill_address2 %]<br />
                       [% customer.bill_city %], [% customer.bill_state %]
                       [% customer.bill_zip %]<br />
                       [% customer.bill_country %]<br />
@@ -55,13 +52,7 @@ function submitForm()
                       </td>
                     </tr>
                   </table>
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>
+<br>
                   <table border=0 width='100%'>
                     <tr>
                       <th>SHIP TO:</td>
@@ -79,70 +70,56 @@ function submitForm()
                     [% customer.ship_email %]<br />
                     </td>
               </tr>
-          </table></td>
-          </tr>
-  </table></td></td>
-      </tr>
-  </table></td>
-  <!-- RIGHT COLUMN -->
+          </table>
 
-  <td valign=top width='50%'>
-  <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
-      <!-- CELL: SHIPPING METHOD -->
-      <tr>
-      <td class='summarycell'>
-      CHOOSE SHIPPING METHOD:<br>
-
+    </td>
+    <td valign="top">
 <table border=0>
+<tr>
+    <th colspan="2">CHOOSE SHIPPING METHOD:</th>
 <tr>
     <td valign=top>
         <input type=radio name='shipping' value='USPS:5.95'>
     </td>
-    <td nowrap>US Mail ($5.95) 
-        <br><i>Estimated Arrival 3 to 7 days 
+    <td nowrap>US Mail ($5.95)
+        <br><i>Estimated Arrival 3 to 7 days
     </td>
 </tr>
 <tr>
     <td valign=top>
         <input type=radio name='shipping' value='UPS:6.12'>
     </td>
-    <td nowrap>Ground ($6.12) 
-        <br><i>Estimated Arrival Thursday 08/13 
+    <td nowrap>Ground ($6.12)
+        <br><i>Estimated Arrival Thursday 08/13
     </td>
 </tr>
 <tr>
     <td valign=top>
         <input type=radio name='shipping' value='UPS-NEXTDAY:22.43'>
     </td>
-    <td nowrap>Next Day Air ($22.43) 
+    <td nowrap>Next Day Air ($22.43)
         <br><i>Estimated Arrival Wednesday 08/12 </a></i>
     </td>
 </tr>
 </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-     <input type='submit' name='submit' value='Continue Checkout'
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">
+      <input type='submit' name='submit' value='Continue Checkout'
         onClick="submitForm()"  >
-      </td>
-    </tr>
-      </td>
-
-      </tr>
+    </td>
+  </tr>
 <tr>
-      </tr>       
-  </table>
-  </td>
- </tr>
-<!-- CART -->
-
-<tr>
-  <td class='cartform' colspan="2" align="center">
+  <td  colspan="2" align="center">
 [% INCLUDE cart/checkout_view.tt2 %]
   </td>
 </tr>
 
 </table>
+
+
 </form>
 
+<br>

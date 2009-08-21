@@ -35,7 +35,9 @@
     [% product.description FILTER truncate(55) %]
     </a>
   </div><!-- end of content_category_desc -->
-
+<span class="content_category_price">
+<p>$[% product.price %]</p>
+</span>
   <span class="content_category_read_more">
     <a href="[% c.uri_for(
       c.controller.action_for('item'),
