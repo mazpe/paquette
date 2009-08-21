@@ -53,8 +53,8 @@ __PACKAGE__->add_unique_constraint("email", ["email"]);
 __PACKAGE__->add_unique_constraint("user_id", ["user_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-19 03:00:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rOo79S9qwjcRibyEBboD6g
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-21 15:18:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:q1pEnhDR9X6MlFQ62soJpg
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

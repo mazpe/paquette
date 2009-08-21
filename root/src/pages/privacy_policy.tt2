@@ -1,10 +1,5 @@
 <h2>Privacy Policy</h2>
 
-<div id="content_image">
-  <img src="[% c.uri_for('/static/images/ri_city_of_arts_valencia.jpg') %]"
-    alt="" width="540" height="150" />
-</div>
-
 <div id="content_block">
 <strong>SECURITY & PRIVACY</strong>
 <p>

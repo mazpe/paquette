@@ -1,10 +1,5 @@
 <h2>Contact Us</h2>
 
-<div id="content_image">
-  <img src="[% c.uri_for('/static/images/ri_casares_malaga.jpg') %]"
-    alt="" width="540" height="150" />
-</div>
-
 <table id="hor-minimalist-a">
   <tr>
     <td>&nbsp;</td>

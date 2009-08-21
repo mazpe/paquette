@@ -17,6 +17,14 @@ Catalyst Controller.
 
 =cut
 
+sub auto : Local {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{random_image} = $c->subreq(
+        '/webtools/random_images', { template => 'webtools/random_image.tt2' }
+    );
+
+}
 
 =head2 index
 
@@ -82,6 +90,11 @@ sub subcategories_base : Chained('base') :PathPart('') : CaptureArgs(1) {
 
     $c->stash->{category_id}    = $category->id;
     $c->stash->{category_name}  = $category->name;
+
+    #$c->stash->{random_image} = $c->subreq(
+    #    '/webtools/random_images', { template => 'webtools/random_image.tt2' }
+    #);
+
 
     # Get all subcategories under this category
     $c->stash->{subcategories} = [$c->model('PaquetteDB::Categories')->search({

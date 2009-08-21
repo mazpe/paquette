@@ -16,8 +16,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("product_id", "tag_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-19 03:00:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7lTvX2nSBhcwCR1+wvLVrA
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-21 15:18:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XhbHw+LIPoWP35xNLufHaA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
