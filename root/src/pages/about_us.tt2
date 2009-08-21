@@ -1,0 +1,39 @@
+<h2>About Us</h2>
+
+<div id="content_image">
+  <img src="[% c.uri_for('/static/images/ri_plaza_de_espana_sevilla.jpg') %]" 
+    alt="" width="540" height="150" />
+</div>
+
+<div id="content_block">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2"><p>We bring you one step closer to Spain by delivering the best variety of the Spanish food and products to your home including the exquisite Black Hoof (pata negra) Ham. Una gran variedad de los mejores productos espanoles de maxima calidad llevados a tu hogar a los majores precios del Mercado.
+      </p>
+      <p><br />
+      </p></td>
+  </tr>
+  <tr>
+    <td width="138"><img src="[% c.uri_for('/static/images/red.gif') %]" width="138" height="109" align="absmiddle" /></td>
+    <td align="left" valign="middle" nowrap="nowrap"><span class="about_us_content">Red is associated with blood, heat, and vigor.<br />
+Red is passionate, intense, and fierce.<br />
+Red has been known to increase appetite in restaurants.</span></td>
+  </tr>
+  <tr>
+    <td width="138"><img src="[% c.uri_for('/static/images/yelllow.gif') %]" width="138" height="122" /></td>
+    <td align="left" valign="middle" class="about_us_content">Yellow can give you self-confidence<br />
+      is a color of personal power.<br />
+      a symbol of generosity.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="[% c.uri_for('/static/images/saborespanol.jpg') %]" width="527" height="108" /></td>
+    </tr>
+  <tr>
+    <td colspan="2" align="center"><br />      <img src="[% c.uri_for('/static/images/sabor_espanol_main_logo.gif') %]" width="129" height="118" /></td>
+    </tr>
+</table>
+
+</div> <!-- end of content_block -->
+
+<br>

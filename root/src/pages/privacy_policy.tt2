@@ -1,0 +1,50 @@
+<h2>Privacy Policy</h2>
+
+<div id="content_image">
+  <img src="[% c.uri_for('/static/images/ri_city_of_arts_valencia.jpg') %]"
+    alt="" width="540" height="150" />
+</div>
+
+<div id="content_block">
+<strong>SECURITY & PRIVACY</strong>
+<p>
+Thanks for shopping at Sabor Espanol.com. We have implemented every possible safeguard to ensure the security and privacy of your transactions with us.
+</p>
+<br>
+<strong>Secure Shopping</strong>
+<p>
+All of your order information is confidential and encrypted so it cannot be accessed by anyone outside of SaborEspanol.com. We use the industry leading technology called Secure Sockets Layer (SSL) to ensure that your information and credit card number are safely transported online. Our security supplier is Verisign. Their logo is prominent on all of our shopping cart pages when you are ordering. Click on their logo and they will show proof of our secure certificate.
+</p>
+<br>
+<p>
+Another way to find out if your transaction is guarded by SSL is this: when you click CHECKOUT in your shopping cart, look for the picture of the unbroken key or closed lock in your browser window (Microsoft Internet Explorer, Netscape Navigator and most other browsers use SSL). Either indicator means SSL is hard at work.
+</p>
+<br>
+<p>
+Still another easy way you can tell if SSL is guarding your transaction is to check the URL address at the top of the page. It should change from "http" to "https" when processing secure transactions.
+</p>
+<br>
+<p>
+Lastly, we have hired the services of "Hacker Safe" and "Protect Point". Hacker Safe continually scans our ports, looking for a chink in our armour and then immediately alerts us if any vulnerabilities are found. Protect Point is a hardware device that filters all incoming webtraffic, blocking any suspicious page requests.
+</p>
+<br>
+<strong>Cookies</strong>
+<p>
+Cookies are tiny pieces of information that are temporarily stored by your hard drive, and used for record keeping purposes (for instance, to save what you put in your shopping cart). We use cookies to make visiting and using our site easier. Most web browsers accept cookies. You can enable cookies as shown below, or you can call us at our toll free number.
+</p>
+<br>
+<strong>To Change Your 'Cookies' Settings:</strong>
+<p>
+You can change your browser option to accept cookies by: Internet Explorer - on your top menu bar, select "Tools" and "Internet Options". Select the "Privacy" tab and then click "Advanced". Under "First Party Cookies", click "Accept" and hit "OK".
+</p>
+<br>
+<p>
+Netscape Navigator/Communicator - on your top menu bar, select "Edit" and "Preferences". Select "Privacy and Security" and click "Cookies". Click "Enable All Cookies" then "OK".
+</p>
+<br>
+<p>
+Firefox - on your top menu bar, select "Tools" and then "Options". Select the "Cookies" area and check the box to say "Allow Sites to Set Cookies" then "OK".
+</p>
+
+</div>
+<br>

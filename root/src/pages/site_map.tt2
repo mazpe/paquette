@@ -1,0 +1,14 @@
+<h2>Site Map</h2>
+
+<div id="content_image">
+  <img src="[% c.uri_for('/static/images/ri_consuegra_la_mancha.jpg') %]"
+    alt="" width="540" height="150" />
+</div>
+
+<table id="hor-minimalist-a">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<br>
