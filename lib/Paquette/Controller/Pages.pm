@@ -85,11 +85,25 @@ sub site_map : Path('/site_map') {
     $c->stash->{template} = 'pages/site_map.tt2';
 }
 
-sub promo_signup : Path('/promotions/signup') {
+sub aux_signup : Path('/aux/signup') {
     my ( $self, $c ) = @_;
 
 
-    $c->stash->{template} = 'pages/promo_signup.tt2';
+    $c->stash->{template} = 'pages/aux_signup.tt2';
+}
+
+sub aux_order_catalog : Path('/aux/order_catalog') {
+    my ( $self, $c ) = @_;
+
+
+    $c->stash->{template} = 'pages/aux_order_catalog.tt2';
+}
+
+sub aux_cooking_lessons : Path('/aux/cooking_lessons') {
+    my ( $self, $c ) = @_;
+
+
+    $c->stash->{template} = 'pages/aux_cooking_lessons.tt2';
 }
 
 sub promo_opening : Path('/promotions/opening_special') {

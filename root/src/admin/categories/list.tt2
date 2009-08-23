@@ -17,7 +17,7 @@
     <tr>
       <td>[% category.parent.name %] &nbsp;</td>
       <td>[% category.name %] &nbsp;</td>
-      <td>[% category.description FILTER truncate(64) %] &nbsp;</td>
+      <td>[% category.brief_description FILTER truncate(64) %] &nbsp;</td>
       <td>[% category.photo %] &nbsp;</td>
       <td>
         <a href="[% c.uri_for(

@@ -29,8 +29,8 @@ sub index :Chained('base') :Path :Args(0) {
     my $products = [$c->model('PaquetteDB::Product')->search(
         undef,
         {
-            page => $page,
-            rows => 100
+            prefetch    => 'category',
+            order_by    => { -asc =>  'category.name' },
         }
     )];
 

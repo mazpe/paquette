@@ -41,8 +41,9 @@
     <th>Description</th>
     <td>
       <textarea name="description"
-        cols="30">[%- category.description -%]</textarea>
+        cols="50" rows="10">[%- category.description -%]</textarea>
     </td>
+
   <tr>
   <tr>
     <th>Photo</th>

@@ -65,9 +65,18 @@
       </div><!-- end of left_menu_categories -->
       <br />
       <div id="left_aux">
-        <img src="[% c.uri_for('/static/images/aux_sign_up.gif') %]" width="119" height="73" /><br />
-        <img src="[% c.uri_for('/static/images/aux_order_free_catalog.gif') %]" width="119" height="64" /><br />
-        <img src="[% c.uri_for('/static/images/aux_you_tube.gif') %]" width="119" height="61" /><br />
+        <a href="[% c.uri_for('/aux/signup') %]" >
+          <img src="[% c.uri_for('/static/images/aux_sign_up.gif') %]" 
+            width="119" height="73" border="0" />
+        </a><br />
+        <a href="[% c.uri_for('/aux/order_catalog') %]" >
+          <img src="[% c.uri_for('/static/images/aux_order_free_catalog.gif')%]"
+            width="119" height="64" border="0" />
+        </a><br />
+        <a href="[% c.uri_for('/aux/cooking_lessons') %]" >
+          <img src="[% c.uri_for('/static/images/aux_you_tube.gif') %]" 
+            width="119" height="61" border="0" />
+        </a><br />
       </div>
     </div><!-- end of left_menu -->
     
@@ -99,15 +108,22 @@
         </div><!-- end of user_menu -->
         <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" usemap="#Map" />
       </div><!-- end of top_menu -->
+[% IF errror || status %]
 
+<div id="error_status">
+</div>
+
+[% END %]
       <div id="content">
         [% random_image %]
         [% content %]
       </div><!-- end of content -->
 
       <div id="footer_support">
-      <b>Questions?</b><br>
-      Customer Service: 305-467-8027, 9-5, M-F, ET or <a href='mailto:contact@saborespanol.com'>send us an Email</a>.
+        <b>Questions?</b><br>
+        Customer Service: <a href='mailto:contact@saborespanol.com'>Send us an 
+        Email</a> or submit the contact us form by clicking 
+        <a href="[% c.uri_for('/contact_us') %]">here</a>
       </div>
 
       <div id="center_banners">

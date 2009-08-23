@@ -9,8 +9,8 @@
       <th>SKU</th>
       <th>Category</th>
       <th>Name</th>
-      <th>Brief Description</th>
       <th>Price</th>
+      <th>Photo</th>
       <th>Edit / Delete</th>
     </tr>
 
@@ -19,8 +19,8 @@
       <td>[% product.sku %] &nbsp;</td>
       <td>[% product.category.name %] &nbsp;</td>
       <td>[% product.name %] &nbsp;</td>
-      <td>[% product.brief_description %] &nbsp;</td>
       <td>[% product.price %] &nbsp;</td>
+      <td>[% product.photo %] &nbsp;</td>
       <td>
         <a href="[% c.uri_for(
           c.controller.action_for('edit'), [product.id]
