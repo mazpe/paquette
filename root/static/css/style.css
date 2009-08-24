@@ -434,4 +434,11 @@ body {
     padding: 5px 1px 0px 8px;
 }
 
+.row_a {
+    background: #FFFFCC;
+}
+
+.row_b {
+    background: #fff;
+}
 

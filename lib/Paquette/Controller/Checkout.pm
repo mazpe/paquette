@@ -233,7 +233,6 @@ sub confirm_order : Local {
         return 0;
     }
 
-
     # Load items from cart
     $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
 
@@ -275,7 +274,7 @@ sub send_email : Local {
             bcc      => 'info@saborespanol.com',
             from    => 'sales@saborespanol.com',
             subject => 'Order',
-            template => 'test.tt2',
+            template => 'order_formation.tt2',
             content_type => 'multipart/alternative'
         };
         

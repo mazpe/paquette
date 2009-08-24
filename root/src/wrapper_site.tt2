@@ -108,12 +108,14 @@
         </div><!-- end of user_menu -->
         <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" usemap="#Map" />
       </div><!-- end of top_menu -->
+
 [% IF errror || status %]
 
 <div id="error_status">
 </div>
 
 [% END %]
+
       <div id="content">
         [% random_image %]
         [% content %]
@@ -205,6 +207,7 @@
             alt="Oils and Vinegars" />
         </map>
 
+<div align="center" style="color: white">Powered by gbRND</div>
 </body>
 </html>
 

@@ -88,8 +88,17 @@ sub site_map : Path('/site_map') {
 sub aux_signup : Path('/aux/signup') {
     my ( $self, $c ) = @_;
 
+    if (  $c->req->params->{submit} ) {
 
-    $c->stash->{template} = 'pages/aux_signup.tt2';
+        $c->model('Pages')->join_mailing_list( $c->req->params );        
+
+        $c->stash->{template} = 'pages/contact_us_confirm.tt2';
+
+    } else {
+
+        $c->stash->{template} = 'pages/aux_signup.tt2';
+
+    }
 }
 
 sub aux_order_catalog : Path('/aux/order_catalog') {

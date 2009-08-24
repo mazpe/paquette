@@ -9,11 +9,11 @@ function submitForm()
     c.controller('Cart').action_for('update')
 )  %]">
 
-<table width="540" id="hor-minimalist-a" border="0">
+<table width="540" id="hor-minimalist-a" border="0" cellspacing="0" cellpadding="0">
 <thead>
   <tr>
-    <th scope="col" width="50">Remove</th> 
-    <th scope="col">SKU</th>
+    <th scope="col">Remove</th> 
+    <th scope="col" width="80">SKU</th>
     <th scope="col" width="450">Product Name</th>
     <th scope="col" align="center">Quantity</th>
     <th scope="col" width="50" align="center">Price</th>
@@ -23,10 +23,17 @@ function submitForm()
 <tbody>
 [% total = 0%]
 [% subtotal = 0%]
+[% i = 0 %]
 [% FOREACH item IN cart_items %]
 [% subtotal = item.quantity * item.product.price %]
 [% total = total + subtotal %]
-  <tr>
+[% i = i + 1 %]
+
+[% IF i % 2 %]
+  <tr class="row_a">
+[% ELSE %]
+  <tr class="row_b">
+[% END %]
     <td>
       <input type="checkbox" name="remove" 
         onClick="window.location='[% 
@@ -36,10 +43,10 @@ function submitForm()
     <td>[% item.sku %]</td>
     <td>[% item.product.name %]</td>
     <td align="center">
-      <input type="text" size="2" name="[% item.sku %]" value="[% item.quantity %]">
+      <input type="text" size="1" name="[% item.sku %]" value="[% item.quantity %]">
     </td>
-    <td align="right">$[% item.product.price %]</td>
-    <td align="right">$[% subtotal %]</td>
+    <td align="right">$[% item.product.price | format('%0.2f') %]</td>
+    <td align="right">$[% subtotal | format('%0.2f') %]</td>
   </tr>
 [% END %]
 </tbody>
@@ -48,7 +55,7 @@ function submitForm()
     <td></td>
     <td></td>
     <td colspan="2" align="right">SUBTOTAL</td>
-    <td align="right">$[% total %]</td>
+    <td align="right">$[% total | format('%0.2f') %]</td>
 </tfoor>
 </table>
 </form>

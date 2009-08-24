@@ -45,8 +45,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("product_attribute_name", ["product_id", "name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-21 15:18:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bWwtUrmaFuKg+yfjc/jQjA
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RrpzIcwIe4nu26q/DhPCEw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
