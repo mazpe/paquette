@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("role");
 __PACKAGE__->add_columns(
   "id",
@@ -21,8 +21,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:98Yh0q2D3zoJ/Qxw7BKr4Q
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RdHeMM/HYmtUYh87xMttaw
 
 __PACKAGE__->has_many(map_user_roles => 
     'Paquette::Schema::Result::UserRole', 

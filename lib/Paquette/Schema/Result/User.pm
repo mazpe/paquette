@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("EncodedColumn", "InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("user");
 __PACKAGE__->add_columns(
   "id",
@@ -38,13 +38,45 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 19,
   },
+  "age",
+  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  "birthdate",
+  { data_type => "DATE", default_value => undef, is_nullable => 1, size => 10 },
+  "hobbies",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 128,
+  },
+  "address",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 128,
+  },
+  "city",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 128,
+  },
+  "state",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 128,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("username", ["username"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cpIiE3Akovdzb/rqTHWcjg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-24 23:56:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9mmJtyISD3WLuqnS5p0qjg
 
 # Have the 'password' column use a SHA-1 hash and 10-character salt
 # with hex encoding; Generate the 'check_password" method

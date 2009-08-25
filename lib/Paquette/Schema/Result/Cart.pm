@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("cart");
 __PACKAGE__->add_columns(
   "id",
@@ -95,8 +95,8 @@ __PACKAGE__->add_unique_constraint("session_id", ["session_id"]);
 __PACKAGE__->add_unique_constraint("customer_id", ["customer_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JpE+uh+cheiytP/m0A+XQQ
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H/J5nKY4LMODH6V6SS9p9Q
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

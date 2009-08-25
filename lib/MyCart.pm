@@ -36,6 +36,8 @@ sub get_cart {
     my $cart_id         = get_cart_id($self);
     my $cart;
 
+print "here ". $cart_id;
+
     # Check for a cart with the same session id
     if ( $cart_id ) {
     # Found cart with the same Session ID

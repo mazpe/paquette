@@ -1,8 +1,13 @@
 package Paquette::Controller::Admin::Products;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+;use strict;
+;use warnings;
+;use parent 'Catalyst::Controller';
+
+use Moose;
+BEGIN { extends 'Catalyst::Controller' }
+use Paquette::Form::Product;
+
 use Data::Dumper;
 
 =head1 NAME
@@ -137,6 +142,20 @@ sub create: Local {
 }
 
 sub edit : Chained('load') : PathPart('edit') : Args(0) {
+    my ( $self, $c ) = @_;
+
+    my $form = Paquette::Form::Product->new;
+
+    $c->stash( form => $form, template => 'admin/products/edit_test.tt2' );
+
+    return unless $form->process( item => $c->stash->{product},
+        params => $c->req->parameters );
+
+    $c->res->redirect( $c->uri_for('list') );
+
+}
+
+sub edit2 : Chained('load') : PathPart('edit2') : Args(0) {
     my ( $self, $c ) = @_;
     my $photo;
     my $id;

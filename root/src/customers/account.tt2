@@ -1,1 +1,191 @@
-<h1>Account Information</h1>
+<script language="JavaScript">
+<!--
+function copyFields() {
+    if(self.document.infocollect.same_as.checked==true) {
+        self.document.infocollect.ship_first_name.value 
+            = self.document.infocollect.bill_first_name.value;
+        self.document.infocollect.ship_last_name.value
+            = self.document.infocollect.bill_last_name.value;
+        self.document.infocollect.ship_company.value
+            = self.document.infocollect.bill_company.value;
+        self.document.infocollect.ship_address1.value
+            = self.document.infocollect.bill_address1.value;
+        self.document.infocollect.ship_address2.value 
+            = self.document.infocollect.bill_address2.value;
+        self.document.infocollect.ship_city.value 
+            = self.document.infocollect.bill_city.value;
+        self.document.infocollect.ship_state.value 
+            = self.document.infocollect.bill_state.value;
+        self.document.infocollect.ship_country.value 
+            = self.document.infocollect.bill_country.value;
+        self.document.infocollect.ship_zip_code.value 
+            = self.document.infocollect.bill_zip_code.value;
+        self.document.infocollect.ship_phone.value 
+            = self.document.infocollect.bill_phone.value;
+        
+        // Verify address with QAS.
+        verifyShippingAddress();
+    }
+}
+
+function updateShipping() {
+    //retrieve the selected value
+    shipselect = document.infocollect.addressbk;
+    chosenaddress = shipselect.options[shipselect.selectedIndex].value;
+
+    self.document.infocollect.ship_first_name.value 
+        = addressbook[chosenaddress][0];
+    self.document.infocollect.ship_last_name.value 
+        = addressbook[chosenaddress][1];
+    self.document.infocollect.ship_company.value 
+        = addressbook[chosenaddress][2];
+    self.document.infocollect.ship_address1.value 
+        = addressbook[chosenaddress][3];
+    self.document.infocollect.ship_address2.value
+        = addressbook[chosenaddress][4];
+    self.document.infocollect.ship_city.value
+        = addressbook[chosenaddress][5];
+    self.document.infocollect.ship_state.value 
+        = addressbook[chosenaddress][6];
+    self.document.infocollect.ship_country.value 
+        = addressbook[chosenaddress][7];
+    self.document.infocollect.ship_zip_code.value 
+        = addressbook[chosenaddress][8];
+    self.document.infocollect.ship_phone.value 
+        = addressbook[chosenaddress][9];
+
+    // Verify address with QAS.
+    verifyShippingAddress();
+}
+function submitForm()
+{
+    document.infocollect.submit();
+}
+
+//-->
+</script>
+<h2>Customer :: Customer Information</h2>
+<form method="post" action="[% c.uri_for(
+    c.controller('Customers').action_for('add')
+) %]" name="infocollect">
+<table width='540' cellpadding='0' cellspacing='0' valign='top' align='center' 
+  border='0' id="customer_info">
+<tr>
+  <td valign='top'>
+    <strong>Bill To Information</strong><br>
+    Items with an <font color='#990000'>*</font> are required.
+  </td>
+  <td valign='top'>
+    <strong>Ship To Information</strong><br>
+    <div align=right>
+      <input type='submit' name='submit' value='Continue'
+        onClick="submitForm()"  >
+    </div>
+  </td>
+</tr>
+<tr>
+
+<!-- LEFT COLUMN, BILLING -->
+
+  <td class='cartform' valign=top>
+    <table cellpadding='0' cellspacing='0' valign='top' align='left' border='0'>
+      <tr>
+        <td>[% form.render_field('bill_first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_last_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_address1') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_address2') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_city') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_state') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_country') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_zip_code') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_phone') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('email') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('password') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('password_conf') %]</td>
+      </tr>
+      <tr>
+        <td align="center">
+          <input type=checkbox name='same_as' onClick='copyFields();'>
+            Ship to my billing address
+        </td>
+      </tr>
+    </table>
+  </td>
+
+<!-- RIGHT COLUMN -->
+
+  <td class='cartform' valign=top>
+    <table cellpadding='0' cellspacing='0' valign='top' align='left' border='0'>
+      <tr>
+        <td>[% form.render_field('ship_first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_last_name') %]</td>
+      </tr>
+      <tr>
+        <td align="center">NOTE: NO P.O. BOXES PLEASE</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_address1') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_address2') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_city') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_state') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_country') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_zip_code') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_phone') %]</td>
+      </tr>
+    </table>
+    
+  <tr>
+     <td align='right'>&nbsp;</td>
+     <td>
+       <div align=right>
+         <input type='submit' name='submit' value='Continu '
+           onClick="submitForm()"  >
+       </div>
+     </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<!-- CART -->
+
+</table>
+</form>
+
+<br>

@@ -232,6 +232,9 @@ sub confirm_order : Local {
         $c->response->redirect($c->uri_for('/customers/login'));
         return 0;
     }
+    
+    #$c->stash->{shipping_total} = $c->model('Cart')->get_cart;
+    print $c->model('Cart')->get_cart;
 
     # Load items from cart
     $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;

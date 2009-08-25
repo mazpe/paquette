@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("profile");
 __PACKAGE__->add_columns(
   "id",
@@ -53,8 +53,8 @@ __PACKAGE__->add_unique_constraint("email", ["email"]);
 __PACKAGE__->add_unique_constraint("user_id", ["user_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W9lldkBaO+f6UffgjqUlEQ
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kY42HWioQi7wqj0gThycmw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

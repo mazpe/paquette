@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("product");
 __PACKAGE__->add_columns(
   "id",
@@ -76,8 +76,8 @@ __PACKAGE__->add_unique_constraint("sku", ["sku"]);
 __PACKAGE__->add_unique_constraint("url_name", ["url_name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:72UD0HDUkD/fmEx4hICSVw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nJqcQf5+8sxUfHbH8bN+Qw
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

@@ -442,3 +442,41 @@ body {
     background: #fff;
 }
 
+.form_col_a {
+    float: left;
+    width: 240px;
+    font-family: Arial, Gadget, sans-serif;
+    font-size: 12px;
+
+}
+
+.form_col_a label {
+    width: 80px;
+    float: left;
+    text-align: right;
+    margin-right: 0.5em;
+    display: block
+}
+.form_col_a input {
+    color: #781351;
+    background: #fee3ad;
+    border: 1px solid #781351
+}
+.error label {
+    width: 80px;
+    float: left;
+    text-align: right;
+    margin-right: 0.5em;
+    display: block
+}
+
+.error input {
+    color: #781351;
+    background: #ff0;
+    border: 1px solid #781351
+}
+.error_message {
+    color: #f00;
+    display: block
+}
+

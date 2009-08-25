@@ -1,16 +1,21 @@
 package Paquette::Controller::Customers;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+#use strict;
+#use warnings;
+#use parent 'Catalyst::Controller';
+
+use Moose;
+BEGIN { extends 'Catalyst::Controller' }
+use Paquette::Form::Customer;
 use Data::Dumper;
+
 
 =head1 NAME
 
 Paquette::Controller::Customers - Catalyst Controller
 
 =head1 DESCRIPTION
-
+:
 Catalyst Controller.
 
 =head1 METHODS
@@ -71,15 +76,35 @@ sub logout : Local {
 
 }
 
-sub register : Local {
+sub add : Local : Path('register') {
     my ( $self, $c ) = @_;
+
+    # Create the empty customer row for the form.
+    $c->stash( 
+        customer => $c->model('PaquetteDB::Customer')->new_result({}) 
+    );
 
     # Get countries and states from database and set them in stash 
     $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
     $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
 
-    # Set template to be used
-    $c->stash->{template}   = 'customers/register.tt2';
+    return $self->form($c);
+}
+
+sub form
+{
+    my ( $self, $c ) = @_;
+
+    my $form = Paquette::Form::Customer->new;
+
+    $c->stash( form => $form, template => 'customers/account.tt2' );
+
+    return unless $form->process( 
+        item => $c->stash->{customer},
+        params => $c->req->parameters, 
+    );
+
+   $c->res->redirect( $c->uri_for($self->action_for('account')) );
 }
 
 sub register_do : Local {
@@ -176,8 +201,28 @@ if ($first_name && $email) {
 sub account : Local {
     my ( $self, $c ) = @_;
 
-    # Set our template
-    $c->stash->{template} = 'customers/account.tt2';
+    $c->stash( 
+        customer => $c->model('Customer')->get_customer_row($c->user->username),
+    );
+
+    return $self->form($c);
+}
+
+sub account_edit : Local {
+    my ( $self, $c ) = @_;
+
+    $c->stash( template => 'customers/account_edit.tt2' );
+
+    return unless $self->form->process( 
+        action  => 'account_edit',
+        item_id => $c->user->customer->id,
+        schema  => $c->model('PaquetteDB')->schema
+    );
+
+    # Form validated.
+    #$c->stash( user => $form->item );
+    #$c->res->redirect($c->uri_for('account'));
+
 }
 
 sub orders : Local {

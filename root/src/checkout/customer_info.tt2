@@ -188,8 +188,7 @@ function submitForm()
       </tr>
 [% END %]
       <tr>
-        <td>&nbsp</td>
-        <td>
+        <td colspan="2" align="right">
           <input type=checkbox name='same_as' onClick='copyFields();'>
             Ship to my billing address
         </td>

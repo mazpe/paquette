@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
 __PACKAGE__->table("wishlist");
 __PACKAGE__->add_columns(
   "id",
@@ -44,8 +44,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-23 10:52:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3J56oqaE5H7F62LFNVBlUQ
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-24 23:56:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dzZD7qSZEs0gy/3osIdy9Q
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
