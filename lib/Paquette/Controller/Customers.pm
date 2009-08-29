@@ -94,7 +94,11 @@ sub logout : Local {
 
 sub account : Local {
     my ( $self, $c ) = @_;
+    my $auth;
     my $customer;
+    my $username;
+    my $password;
+    my $form;
 
     # Check if we are logged in
     if ($c->user_exists) {
@@ -116,10 +120,9 @@ sub account : Local {
     );
     
     # Process our form
-    my $form =  $self->form->process (
+    $form =  $self->form->process (
         item            => $customer,
         params          => $c->req->params,
-        change_password => $change_password,
     );
 
     # If the form is processed then automatically authenticate the user. 
@@ -128,8 +131,8 @@ sub account : Local {
     # The form was processed
 
         # Set our username and password for authentication
-        my $username    = $c->req->params->{email};
-        my $password    = $c->req->params->{password};
+        $username    = $c->req->params->{email};
+        $password    = $c->req->params->{password};
 
         # If username and password are set then authenticate user.
         # Else we would give an error_msg
