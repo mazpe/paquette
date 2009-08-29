@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
 __PACKAGE__->table("product_attribute");
 __PACKAGE__->add_columns(
   "id",
@@ -45,8 +45,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("product_attribute_name", ["product_id", "name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RLYLoyMdHhi/8AwyRbHfnw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gbOB6g3Jg0MYrrFuClzy/Q
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

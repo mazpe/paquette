@@ -462,6 +462,13 @@ body {
     background: #fee3ad;
     border: 1px solid #781351
 }
+.form_col_a select {
+    width: 145px;
+    color: #781351;
+    background: #fee3ad;
+    border: 1px solid #781351
+}
+
 .error label {
     width: 80px;
     float: left;

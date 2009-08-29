@@ -57,37 +57,18 @@ sub create_customer {
     }
 
 } 
-# get customer
+
 sub get_customer { # Return list of items
     my ( $self, $args ) = @_;
-    my $a_customer;
+    my $customer;
 
 
     if ( $args ) {
     # we have arguments
-        $a_customer 
-            = $self->resultset('Customer')->get_customer_by_email($args);
-                
 
-    } else {    
-    # we have no arguments
-
-
-    }
-
-    return $a_customer ? $a_customer : 0;
-}
-
-sub get_customer_row { # Return list of items
-    my ( $self, $args ) = @_;
-    my $a_customer;
-
-
-    if ( $args ) {
-    # we have arguments
-        $a_customer
-            = $self->resultset('Customer')->get_customer($args);
-
+        # Find our customer
+        $customer
+            = $self->resultset('Customer')->find_customer($args);
 
     } else {
     # we have no arguments
@@ -95,7 +76,7 @@ sub get_customer_row { # Return list of items
 
     }
 
-    return $a_customer ? $a_customer : 0;
+    return $customer
 }
 
 

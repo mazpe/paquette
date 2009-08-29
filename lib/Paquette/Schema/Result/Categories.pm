@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
 __PACKAGE__->table("categories");
 __PACKAGE__->add_columns(
   "id",
@@ -61,8 +61,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("name", ["name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Bnh80BYojTEJI4DFOI1q2g
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eJt9uZtBFkoKgJnMd2Uwqw
 
 __PACKAGE__->has_one(parent => 'Paquette::Schema::Result::Categories', 
     { 'foreign.id' => 'self.parent_id' },

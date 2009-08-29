@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Sabor Espanol - Authentic Spanish Food from Spain</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="robots" content="noindex">
-    <meta name="keywords" content="alimentos espaanoles, alimentos tipicos espanoles, comprar alimentos espanoles, tienda de productos espanoles, alimentos, espanoles, alimentos tipicos, tipicos espanoles, comprar alimentos, comprar, tienda, tienda de productos, tienda alimentos, tienda comida espanola, gourmet, gastronomia, gastronomia espanola, productos tipicos, productos espanoles, delicatessen, exquisiteces, productos delicatessen, conservas, quesos, jamones, original spain, spain, vinos, venta de vinos de calidad, venta de productos delicatessen, venta de embutidos ibericos, tiendas gourmet, jamon Serrano, serrano, jamon iberico">
-    <meta name="description" content="We bring you one step closer to Spain by delivering the best variety of the Spanish food and products to your home including the exquisite Black Hoof (pata negra) Ham. Una gran variedad de los mejores productos espanoles de maxima calidad llevados a tu hogar a los majores precios del Mercado.">
+    <meta name="robots" content="noindex" />
+    <meta name="keywords" content="alimentos espaanoles, alimentos tipicos espanoles, comprar alimentos espanoles, tienda de productos espanoles, alimentos, espanoles, alimentos tipicos, tipicos espanoles, comprar alimentos, comprar, tienda, tienda de productos, tienda alimentos, tienda comida espanola, gourmet, gastronomia, gastronomia espanola, productos tipicos, productos espanoles, delicatessen, exquisiteces, productos delicatessen, conservas, quesos, jamones, original spain, spain, vinos, venta de vinos de calidad, venta de productos delicatessen, venta de embutidos ibericos, tiendas gourmet, jamon Serrano, serrano, jamon iberico" />
+    <meta name="description" content="We bring you one step closer to Spain by delivering the best variety of the Spanish food and products to your home including the exquisite Black Hoof (pata negra) Ham. Una gran variedad de los mejores productos espanoles de maxima calidad llevados a tu hogar a los majores precios del Mercado." />
     <link href="[% c.uri_for('/static/css/style.css') %]" rel="stylesheet"
         type="text/css" />
 </head>
@@ -20,15 +20,15 @@
     <div id="left_menu">
       <a href="[% c.uri_for('/') %]">
       <img src="[% c.uri_for('/static/images/sabor_espanol_logo.gif') %]" 
-        width="134" height="125" border="0"/>
+        width="134" height="125" border="0" alt="" />
       </a>
       <div id="left_menu_search">
-        <span id="">SEARCH FOR OUR PRODUCTS</span>
-        <input name="search" type="text" id="search" size="15" />
+        <span id="search">SEARCH FOR OUR PRODUCTS</span>
+        <input name="search_box" type="text" id="search_box" size="15" alt="" />
       </div><!-- end of left_menu_search -->
       <br />
       <div id="left_menu_categories">
-        <dt>Full Category Lists</dt>
+        Full Category Lists
 [% i = 0 %]
 [% FOREACH category IN categories %]
 
@@ -67,15 +67,15 @@
       <div id="left_aux">
         <a href="[% c.uri_for('/aux/signup') %]" >
           <img src="[% c.uri_for('/static/images/aux_sign_up.gif') %]" 
-            width="119" height="73" border="0" />
+            width="119" height="73" border="0" alt="" />
         </a><br />
         <a href="[% c.uri_for('/aux/order_catalog') %]" >
           <img src="[% c.uri_for('/static/images/aux_order_free_catalog.gif')%]"
-            width="119" height="64" border="0" />
+            width="119" height="64" border="0" alt="" />
         </a><br />
         <a href="[% c.uri_for('/aux/cooking_lessons') %]" >
           <img src="[% c.uri_for('/static/images/aux_you_tube.gif') %]" 
-            width="119" height="61" border="0" />
+            width="119" height="61" border="0" alt="" />
         </a><br />
       </div>
     </div><!-- end of left_menu -->
@@ -94,7 +94,7 @@
                 c.controller('customers').action_for('index')) %]">
             my account
             </a>
-             ( <span id="user_menu_aux">[% c.user.username %]</span> ) 
+             ( <span id="user_menu_aux">[% c.user.email %]</span> ) 
             <a href="[% c.uri_for(
                 c.controller('customers').action_for('logout')) %]">
               logout 
@@ -106,7 +106,7 @@
             </a>
           [% END %]
         </div><!-- end of user_menu -->
-        <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" usemap="#Map" />
+        <img src="[% c.uri_for('/static/images/top_menu.gif') %]" width="547" height="96" hspace="0" vspace="0" border="0" usemap="#Map" alt="" />
       </div><!-- end of top_menu -->
 
 [% IF errror || status %]
@@ -122,14 +122,14 @@
       </div><!-- end of content -->
 
       <div id="footer_support">
-        <b>Questions?</b><br>
+        <b>Questions?</b><br />
         Customer Service: <a href='mailto:contact@saborespanol.com'>Send us an 
         Email</a> or submit the contact us form by clicking 
         <a href="[% c.uri_for('/contact_us') %]">here</a>
       </div>
 
       <div id="center_banners">
-        <img src="[% c.uri_for('/static/images/center_banner.jpg') %]" width="514" height="62" />
+        <img src="[% c.uri_for('/static/images/center_banner.jpg') %]" width="514" height="62" alt="" />
       </div> <!-- end of center_banner -->
 
 
@@ -137,7 +137,7 @@
     
     <div id="specials">
       <div id="shield">
-        <img src="[% c.uri_for('/static/images/espana_escudo.gif') %]" width="119" height="96" hspace="0" vspace="0" border="0" />
+        <img src="[% c.uri_for('/static/images/espana_escudo.gif') %]" width="119" height="96" hspace="0" vspace="0" border="0" alt="" />
       </div><!-- end of shield -->
       <div id="special_ads">
 
@@ -145,26 +145,26 @@
         <div class="special_ad_single">
           <a href="[% c.uri_for('/promotions/opening_special') %]" >
             <img src="[% c.uri_for('/static/images/specials_celebrate.jpg') %]" 
-              width="104" height="223" border="0"/>
+              width="104" height="223" border="0" alt="" />
           </a><br />
           <img src="[% c.uri_for('/static/images/spacer_line.png') %]" 
-            width="100" height="5" />
+            width="100" height="5" alt="" />
         </div>
         <div class="special_ad_single">
           <a href="[% c.uri_for('/promotions/wines') %]" >
             <img src="[% c.uri_for('/static/images/specials_wines.jpg') %]" 
-              width="104" height="115" border="0" />
+              width="104" height="115" border="0" alt="" />
           </a><br />
           <img src="[% c.uri_for('/static/images/spacer_line.png') %]" 
-            width="100" height="5" />
+            width="100" height="5" alt="" />
         </div>
         <div class="special_ad_single">
           <a href="[% c.uri_for('/promotions/share_recipe') %]" >
             <img src="[% c.uri_for('/static/images/specials_share.jpg') %]" 
-              width="104" height="115" border="0"/>
+              width="104" height="115" border="0" alt="" />
           </a><br />
             <img src="[% c.uri_for('/static/images/spacer_line.png') %]" 
-              width="100" height="5" />
+              width="100" height="5" alt="" />
         </div>
 
       </div><!-- end of special_ads -->

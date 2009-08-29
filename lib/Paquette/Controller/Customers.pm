@@ -1,27 +1,28 @@
 package Paquette::Controller::Customers;
 
-#use strict;
-#use warnings;
-#use parent 'Catalyst::Controller';
-
 use Moose;
 BEGIN { extends 'Catalyst::Controller' }
 use Paquette::Form::Customer;
 use Data::Dumper;
 
+has 'form' => ( 
+    isa => 'Paquette::Form::Customer', 
+    is => 'ro',
+    lazy => 1, 
+    default => sub { Paquette::Form::Customer->new },
+);
 
 =head1 NAME
 
 Paquette::Controller::Customers - Catalyst Controller
 
 =head1 DESCRIPTION
-:
+
 Catalyst Controller.
 
 =head1 METHODS
 
 =cut
-
 
 =head2 index
 
@@ -43,17 +44,32 @@ sub login : Local {
 
     # If the username and password values were found in form
     if ($username && $password) {
+
         # Attempt to log the user in
-        if ($c->authenticate({ username => $username,
-                               password => $password  } )) {
+        # Using searchargs to authenticate because of non-standard table layout
+        # We can also use it to accept username or nickname
+        my $auth = $c->authenticate(
+            {
+                password    => $password,
+                'dbix_class' => {
+                    searchargs => [
+                        {
+                            'email' => $username,
+                        }
+                    ]
+                },
+            }
+        );
+    
+        if ($auth) {
 
             # Assign cart_id/session_id to user
-            $c->model('Cart')->assign_cart;
+            #$c->model('Cart')->assign_cart;
 
             # If successful, then let them use the application
             $c->response->redirect($c->uri_for(
                 $c->controller('Customers')->action_for('index')));
-            return;
+
         } else {
             # Set an error message
             $c->stash->{error_msg} = "Bad username or password.";
@@ -76,35 +92,83 @@ sub logout : Local {
 
 }
 
-sub add : Local : Path('register') {
+sub account : Local {
     my ( $self, $c ) = @_;
+    my $customer;
 
-    # Create the empty customer row for the form.
+    # Check if we are logged in
+    if ($c->user_exists) {
+    # Customer is logged in
+        
+        # Get our customer object row
+        $customer = $c->model('Customer')->get_customer($c->user->id)
+    } else {
+    # Custmer is not logged it
+
+        # Hold a new row in the database for our record
+        $customer = $c->model('PaquetteDB::Customer')->new_result({})
+    }
+
+    # Set our template and form to use
     $c->stash( 
-        customer => $c->model('PaquetteDB::Customer')->new_result({}) 
+        template    => 'customers/account.tt2',
+        form        => $self->form,
+    );
+    
+    # Process our form
+    my $form =  $self->form->process (
+        item            => $customer,
+        params          => $c->req->params,
+        change_password => $change_password,
     );
 
-    # Get countries and states from database and set them in stash 
-    $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
-    $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
+    # If the form is processed then automatically authenticate the user. 
+    # Else return the form with errors.
+    if ( $form ) { 
+    # The form was processed
 
-    return $self->form($c);
-}
+        # Set our username and password for authentication
+        my $username    = $c->req->params->{email};
+        my $password    = $c->req->params->{password};
 
-sub form
-{
-    my ( $self, $c ) = @_;
+        # If username and password are set then authenticate user.
+        # Else we would give an error_msg
+        if ($username && $password) {
+        # The username and password are set
 
-    my $form = Paquette::Form::Customer->new;
+            # Attempt to log the user in
+            # Using searchargs to authenticate cause non-standard table layout
+            # We can also use it to accept username or nickname
+            my $auth = $c->authenticate(
+            {   
+                password    => $password,
+                'dbix_class' => {
+                    searchargs => [
+                        {   
+                            'email' => $username,
+                        }
+                    ]
+                },
+            }
+            );
+        }
 
-    $c->stash( form => $form, template => 'customers/account.tt2' );
+        # If customer was authenticated, then redirect him to his account
+        if ($auth) {
+            $c->res->redirect( $c->uri_for($self->action_for('index')) );
+        }
 
-    return unless $form->process( 
-        item => $c->stash->{customer},
-        params => $c->req->parameters, 
-    );
+    } else { 
+    # Username or password were not defined 
 
-   $c->res->redirect( $c->uri_for($self->action_for('account')) );
+        # TODO: display error message via ->flash->{error_msg} ?
+        # Mean while we will display a message in debug
+        $c->log->debug("not submited");
+
+        return;
+
+    }
+
 }
 
 sub register_do : Local {
@@ -195,33 +259,6 @@ if ($first_name && $email) {
 
     # Redirect visitors to the pre_registration page
     $c->response->redirect($c->uri_for($self->action_for('pre_registration')));    
-
-}
-
-sub account : Local {
-    my ( $self, $c ) = @_;
-
-    $c->stash( 
-        customer => $c->model('Customer')->get_customer_row($c->user->username),
-    );
-
-    return $self->form($c);
-}
-
-sub account_edit : Local {
-    my ( $self, $c ) = @_;
-
-    $c->stash( template => 'customers/account_edit.tt2' );
-
-    return unless $self->form->process( 
-        action  => 'account_edit',
-        item_id => $c->user->customer->id,
-        schema  => $c->model('PaquetteDB')->schema
-    );
-
-    # Form validated.
-    #$c->stash( user => $form->item );
-    #$c->res->redirect($c->uri_for('account'));
 
 }
 

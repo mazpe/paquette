@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
 __PACKAGE__->table("states");
 __PACKAGE__->add_columns(
   "id",
@@ -28,9 +28,11 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-25 10:22:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3XEiQ+geNMo0yIIEkMoKTw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1i2PvrRKd7ff403OfM7jfQ
 
+# Set ResultSet Class
+__PACKAGE__->resultset_class('Paquette::Schema::ResultSet::States');
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;

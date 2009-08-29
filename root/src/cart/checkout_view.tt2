@@ -1,10 +1,11 @@
-<table width="500">
+<h2> Shopping Cart </h2>
+<table width="540" id="hor-minimalist-a" border="0" cellspacing="0" cellpadding="0">
 <thead>
   <tr>
     <th scope="col" width="80">SKU</th>
-    <th scope="col">Product Name</th>
+    <th scope="col" width="450">Product Name</th>
     <th scope="col" align="center">Quantity</th>
-    <th scope="col" align="center">Price</th>
+    <th scope="col" width="50" align="center">Price</th>
     <th scope="col" align="center">Total</th>
   </tr>
 </thead>
@@ -22,19 +23,26 @@
 [% ELSE %]
   <tr class="row_b">
 [% END %]
-
-    <td align="left">[% item.sku %]</td>
-    <td align="left">[% item.product.name %]</td>
-    <td align="center">[% item.quantity %]</td>
-    <td align="right">$[% item.product.price | format ('%0.2f') %]</td>
-    <td align="right">$[% subtotal | format ('%0.2f') %]</td>
+    <td>[% item.sku %]</td>
+    <td>[% item.product.name %]</td>
+    <td align="center">
+      <input type="text" size="1" name="[% item.sku %]" value="[% item.quantity %]">
+    </td>
+    <td align="right">$[% item.product.price | format('%0.2f') %]</td>
+    <td align="right">$[% subtotal | format('%0.2f') %]</td>
   </tr>
 [% END %]
 </tbody>
 <tfoot>
     <td></td>
     <td></td>
-    <td colspan="2">SUBTOTAL</td>
-    <td align="right">$[% total | format ('%0.2f') %]</td>
+    <td colspan="2" align="right">SUBTOTAL</td>
+    <td align="right">$[% total | format('%0.2f') %]</td>
 </tfoor>
 </table>
+</form>
+<table width="500" id="hor-minimalist-a">
+</table>
+ <br>
+<div class="clear br">&nbsp;</div>
+

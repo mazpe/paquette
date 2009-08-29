@@ -197,9 +197,7 @@ sub assign_cart {
 
         # Get our customer id
         $customer_id
-            = $self->resultset('Customer')->get_customer_by_email(
-                $self->user->username
-              )->{id};
+            = $self->resultset('Customer')->get_customer($self->user->id);
 
         # Do we own a cart? whats our cart_id
         $customer_cart_id 
@@ -271,10 +269,7 @@ sub assign_cart2 {
 
         # Get our customer id
         $customer_id 
-            = $self->resultset('Customer')->get_customer_by_email(
-                $self->user->username
-              )->{id};
-        #$customer_id = $customer_id->{id};
+            = $self->resultset('Customer')->get_customer($self->user->id);
 
         # Check if user already has a cart
         # Get a copy of the cart

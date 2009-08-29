@@ -5,10 +5,10 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("EncodedColumn", "InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "EncodedColumn", "Core");
 __PACKAGE__->table("user");
 __PACKAGE__->add_columns(
-  "id",
+  "user_id",
   { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
   "username",
   {
@@ -71,12 +71,12 @@ __PACKAGE__->add_columns(
     size => 128,
   },
 );
-__PACKAGE__->set_primary_key("id");
+__PACKAGE__->set_primary_key("user_id");
 __PACKAGE__->add_unique_constraint("username", ["username"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-24 23:56:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9mmJtyISD3WLuqnS5p0qjg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ibICyrDFzZZFhiRZZpSSyw
 
 # Have the 'password' column use a SHA-1 hash and 10-character salt
 # with hex encoding; Generate the 'check_password" method
@@ -92,10 +92,12 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->has_many(
-    map_user_roles => 'Paquette::Schema::Result::UserRole', 
+    map_user_roles => 'Paquette::Schema::Result::UserRole',
     'user_id'
 );
+
 __PACKAGE__->many_to_many(roles => 'map_user_roles', 'role');
+
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;

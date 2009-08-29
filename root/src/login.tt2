@@ -2,7 +2,7 @@
 
 <p>
 [% IF c.user_exists %]
-    Please Note: You are already logged in as '[% c.user.username %]'.
+    Please Note: You are already logged in as '[% c.user.email %]'.
     You can <a href="[% c.uri_for('/logout') %]">logout</a> here.
 [% ELSE %]
     You need to log in to use this application.

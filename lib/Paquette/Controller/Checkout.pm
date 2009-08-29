@@ -1,9 +1,31 @@
 package Paquette::Controller::Checkout;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose;
+BEGIN { extends 'Catalyst::Controller' }
+use Paquette::Form::Checkout::Customer;
 use Data::Dumper;
+
+has 'customer_form' => ( 
+    isa => 'Paquette::Form::Checkout::Customer', 
+    is => 'rw',
+    lazy => 1, 
+    default => sub { Paquette::Form::Checkout::Customer->new } 
+);
+has 'shipping_form' => (
+    isa => 'Paquette::Form::Checkout::Shipping',
+    is => 'rw',
+    lazy => 1,
+    default => sub { Paquette::Form::Checkout::Shipping->new }
+);
+has 'payment_form' => (
+    isa => 'Paquette::Form::Checkout::Payment',
+    is => 'rw',
+    lazy => 1,
+    default => sub { Paquette::Form::Checkout::Payment->new }
+);
+
+
+
 
 =head1 NAME
 
@@ -57,6 +79,44 @@ sub index :Path :Args(0) {
 sub customer_info : Local {
     my ( $self, $c ) = @_;
 
+    # Create the empty customer row for the form.
+    $c->stash(
+        customer    => $c->model('PaquetteDB::Customer')->new_result({}),
+        cart_items  => $c->model('Cart')->get_items_in_cart,
+    );
+
+    return $self->customer_info_form($c);
+}
+
+sub customer_info_form {
+    my ( $self, $c ) = @_;
+    my $customer_id;
+    my $form;
+
+    if ($c->user) {
+        $customer_id
+            = $c->model('Customer')->get_customer($c->user->id);
+    } else {
+        #$customer_id;
+    }
+
+    $form           = Paquette::Form::Customer->new;
+
+    $c->stash( form => $form, template => 'checkout/customer.tt2' );
+
+    return unless $form->process(
+#        item => $c->stash->{customer},
+        item_id     => $customer_id->{id},
+        schema      => $c->model('PaquetteDB')->schema,
+        params      => $c->req->parameters,
+    );
+
+   $c->res->redirect( $c->uri_for($self->action_for('account')) );
+}
+
+sub customer_info1 : Local {
+    my ( $self, $c ) = @_;
+
     # Load our countries and states
     $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
     $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
@@ -68,7 +128,7 @@ sub customer_info : Local {
         
         # pull customer information from db
         my $a_customer 
-            = $c->model('Customer')->get_customer($c->user->username);
+            = $c->model('Customer')->get_customer($c->user->id);
 
         # fill form with customer info
         $c->stash->{customer} = $a_customer;

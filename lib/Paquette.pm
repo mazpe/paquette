@@ -64,7 +64,7 @@ __PACKAGE__->config(
 __PACKAGE__->config->{'Plugin::Authentication'} = {
         default => {
             class           => 'SimpleDB',
-            user_model      => 'PaquetteDB::User',
+            user_model      => 'PaquetteDB::Customer',
             password_type   => 'self_check',
         },
 

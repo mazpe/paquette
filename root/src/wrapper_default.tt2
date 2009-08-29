@@ -118,7 +118,7 @@
           
           <div class="clear"></div>
           <div id="footer">
-           [% c.user.username %] - [% c.session.cart_id %]  Web Development by gbRND
+           [% c.user.email %] - [% c.session.cart_id %]  Web Development by gbRND
 <div id="footnav">
           <a href="/legal">Legal</a> | <a href="/privacy">Privacy Policy</a>
         </div><!-- end footnav -->

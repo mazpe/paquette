@@ -81,13 +81,13 @@ sub get_customer_by_email {
     return %customer ? \%customer : 0;
 }
 
-sub get_customer {
-    my ( $self, $email ) = @_;
-    my $rs;
+sub find_customer {
+    my ( $self, $args ) = @_;
+    my $row;
 
-    $rs = $self->find( $email, { key => 'email' } );
+    $row = $self->find($args);
 
-    return $rs;
+    return $row;
 }
     
 
