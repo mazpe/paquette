@@ -63,8 +63,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:AFARbtI3Z8pyxsVbQuMm9A
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-28 23:18:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tCDGAldaEtIHNXQrzeCHog
 #
 # Enable automatic date handling
 #

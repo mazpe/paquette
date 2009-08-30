@@ -462,6 +462,12 @@ body {
     background: #fee3ad;
     border: 1px solid #781351
 }
+.form_col_a textarea {
+    color: #781351;
+    background: #fee3ad;
+    border: 1px solid #781351
+}
+
 .form_col_a select {
     width: 145px;
     color: #781351;
@@ -477,11 +483,12 @@ body {
     display: block
 }
 
-.error input {
+.error input, textarea, select {
     color: #781351;
     background: #ff0;
     border: 1px solid #781351
 }
+
 .error_message {
     color: #f00;
     display: block

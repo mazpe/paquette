@@ -54,8 +54,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("order_sku", ["order_sku"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-27 17:47:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H4d3EVujKYp3vRLt5iU0gA
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-28 23:18:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GNeMQM67hQnXPVZ4XDX1Hw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -1,8 +1,16 @@
 package Paquette::Controller::Pages;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose;
+BEGIN { extends 'Catalyst::Controller' }
+use Paquette::Form::Pages::Contact;
+use Data::Dumper;
+
+has 'contact_form' => (
+    isa => 'Paquette::Form::Pages::Contact',
+    is => 'ro',
+    lazy => 1,
+    default => sub { Paquette::Form::Pages::Contact->new },
+);
 
 =head1 NAME
 
@@ -43,6 +51,39 @@ sub about_us : Path('/about_us') {
 }
 
 sub contact_us : Path('/contact_us') {
+    my ( $self, $c ) = @_;
+    my $row;
+    my $form;
+
+    $row = $c->model('PaquetteDB::Lead')->new_result({});
+    
+    $c->log->debug($row);
+    # Set our template and form to use
+    $c->stash(
+        template    => 'pages/contact.tt2',
+        form        => $self->contact_form,
+    );
+
+    # Process our form
+    $form =  $self->contact_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
+    
+    if ($form) {
+        $c->res->redirect( $c->uri_for($self->action_for('contact_confirm')) );
+    }
+}
+
+sub contact_confirm : Path('/contact_us_confirm') {
+    my ( $self, $c ) = @_;
+
+    # Set our template
+    $c->stash->{template} = 'pages/contact_thank_you.tt2';
+
+}
+
+sub contact_us1 : Path('/contact_us1') {
     my ( $self, $c ) = @_;
     my $full_name;
 

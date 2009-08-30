@@ -1,0 +1,96 @@
+<h2>Contact Us</h2>
+
+<div id="content_block">
+<form method="post" action="[% c.uri_for(
+    c.controller('Pages').action_for('contact_us')
+) %]" name="infocollect">
+
+<table width="530" border="0" align="center" cellpadding="0" cellspacing="0" id="hor-minimalist-a" >
+  <tr>
+    <td colspan="2" align="left">
+Please use this form to let us know your requests or comments. We will get back to you as quickly as possible, usually within one business day. If you have an urgent request, please give us a call.
+<br />
+<br />
+      <div align="center">
+      Fiels with * are required.
+      </div>
+<br />
+   </td>
+  </tr>
+
+      <tr>
+        <td>[% form.render_field('first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('last_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('email') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('company') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('address1') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('address2') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('city') %]</td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('state') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="state" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a State -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]" 
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %] 
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('country') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="country" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a Country -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]"
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %]
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('zip_code') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('phone') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('message') %]</td>
+      </tr>
+          <tr>
+            <td colspan="2" align="center"><label>
+              <input type="submit" name="submit" id="submit" value="Submit" />
+              <input type="reset" name="reset" id="reset" value="Reset" />
+            </label></td>
+            </tr>
+        </table>
+
+</form>
+</div>
+
+<br>
