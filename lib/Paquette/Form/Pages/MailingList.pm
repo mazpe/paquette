@@ -42,4 +42,4 @@ has_field 'opt_in'        => (
 has_field 'submit'       => ( type => 'Submit', value => 'Save' );
 
 no HTML::FormHandler::Moose;
-1;
+
