@@ -3,6 +3,7 @@ package Paquette::Controller::Pages;
 use Moose;
 BEGIN { extends 'Catalyst::Controller' }
 use Paquette::Form::Pages::Contact;
+use Paquette::Form::Pages::MailingList;
 use Data::Dumper;
 
 has 'contact_form' => (
@@ -11,6 +12,13 @@ has 'contact_form' => (
     lazy => 1,
     default => sub { Paquette::Form::Pages::Contact->new },
 );
+has 'mailing_list_form' => (
+    isa => 'Paquette::Form::Pages::MailingList',
+    is => 'ro',
+    lazy => 1,
+    default => sub { Paquette::Form::Pages::MailingList->new },
+);
+
 
 =head1 NAME
 
@@ -55,9 +63,9 @@ sub contact_us : Path('/contact_us') {
     my $row;
     my $form;
 
+    # Get a new empty row
     $row = $c->model('PaquetteDB::Lead')->new_result({});
     
-    $c->log->debug($row);
     # Set our template and form to use
     $c->stash(
         template    => 'pages/contact.tt2',
@@ -70,6 +78,7 @@ sub contact_us : Path('/contact_us') {
         params          => $c->req->params,
     );
     
+    # If the form has been submited sucessfully, then redirect to confirm page
     if ($form) {
         $c->res->redirect( $c->uri_for($self->action_for('contact_confirm')) );
     }
@@ -81,35 +90,6 @@ sub contact_confirm : Path('/contact_us_confirm') {
     # Set our template
     $c->stash->{template} = 'pages/contact_thank_you.tt2';
 
-}
-
-sub contact_us1 : Path('/contact_us1') {
-    my ( $self, $c ) = @_;
-    my $full_name;
-
-    if (  $c->req->params->{submit} ) {
-
-        $full_name 
-            = $c->req->params->{first_name} .', '. $c->req->params->{last_name};
-
-       # Send email
-        $c->stash->{email} = {
-            to      => 'info@saborespanol.com',
-            from    => $c->req->params->{email},
-            subject => 'Contact Us: '. $full_name,
-            template => 'contact_us.tt2',
-            content_type => 'multipart/alternative'
-        };
-
-        $c->forward( $c->view('Email::Template') );
-
-        $c->stash->{template} = 'pages/contact_us_confirm.tt2';
-
-    } else {
-
-    $c->stash->{template} = 'pages/contact_us.tt2';
-    
-    }
 }
 
 sub privacy_policy : Path('/privacy_policy') {
@@ -126,21 +106,43 @@ sub site_map : Path('/site_map') {
     $c->stash->{template} = 'pages/site_map.tt2';
 }
 
-sub aux_signup : Path('/aux/signup') {
+sub mailing_list : Path('/mailing_list') {
+    my ( $self, $c ) = @_;
+    my $row;
+    my $form;
+
+    # Get a new row 
+    $row = $c->model('PaquetteDB::Lead')->new_result({});
+
+    # Set our template and form to use
+    $c->stash(
+        template    => 'pages/mailing_list.tt2',
+        form        => $self->mailing_list_form,
+    );
+
+    # Process our form
+    $form =  $self->mailing_list_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
+
+    # if the form has been submited succesfully, the redirect to confirm page
+    if ($form) {
+        $c->res->redirect( 
+            $c->uri_for($self->action_for('mailing_list_confirm')) 
+        );
+    }
+
+}
+
+sub mailing_list_confirm : Path('/mailing_list_confirm') {
     my ( $self, $c ) = @_;
 
-    if (  $c->req->params->{submit} ) {
+    # Set our template
+    $c->stash->{template} = 'pages/mailing_list_confirm.tt2';
 
-        $c->model('Pages')->join_mailing_list( $c->req->params );        
-
-        $c->stash->{template} = 'pages/contact_us_confirm.tt2';
-
-    } else {
-
-        $c->stash->{template} = 'pages/aux_signup.tt2';
-
-    }
 }
+
 
 sub aux_order_catalog : Path('/aux/order_catalog') {
     my ( $self, $c ) = @_;

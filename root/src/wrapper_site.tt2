@@ -65,7 +65,7 @@
       </div><!-- end of left_menu_categories -->
       <br />
       <div id="left_aux">
-        <a href="[% c.uri_for('/aux/signup') %]" >
+        <a href="[% c.uri_for('/mailing_list') %]" >
           <img src="[% c.uri_for('/static/images/aux_sign_up.gif') %]" 
             width="119" height="73" border="0" alt="" />
         </a><br />

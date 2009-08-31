@@ -77,12 +77,21 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 65535,
   },
+  "type",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 25,
+  },
+  "opt_in",
+  { data_type => "TINYINT", default_value => undef, is_nullable => 0, size => 1 },
 );
 __PACKAGE__->set_primary_key("lead_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-28 23:18:36
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OrieJ2s0uvHYW+aAH2/ihQ
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 00:54:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Hb9m0qmSQ5NeamNOVtVKUw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

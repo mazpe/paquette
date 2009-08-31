@@ -1,0 +1,50 @@
+<h2>Signup for Specials</h2>
+
+<div id="content_block">
+
+<form method="post" action="[% c.uri_for(
+    c.controller('Pages').action_for('aux_signup')
+) %]" name="infocollect">
+
+<table width="530" border="0" align="center" cellpadding="0" cellspacing="0" 
+  id="hor-minimalist-a" >
+  <tr>
+    <td colspan="2" align="left">
+      Sign up now for special offers, recipes and mores
+      <br />
+      <br />
+      <div align="center">
+        Fiels with * are required.
+      </div>
+      <br />
+    </td>
+  </tr>
+  <tr>
+    <th width="265" align="right">First Name: *</th>
+    <td width="265">
+      <label>
+      <input name="first_name" type="text" id="first_name" size="20" />
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <th align="right">Last Name: *</th>
+    <td><input name="last_name" type="text" id="last_name" size="20" /></td>
+  </tr>
+  <tr>
+    <th align="right">Email: *</th>
+    <td><input name="email" type="text" id="email" size="20" /></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <label>
+      <input type="submit" name="submit" id="submit" value="Submit" />
+      <input type="reset" name="reset" id="reset" value="Reset" />
+      </label>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+<br>

@@ -1,0 +1,41 @@
+<h2>Mailing List</h2>
+
+<div id="content_block">
+<form method="post" action="[% c.uri_for(
+    c.controller('Pages').action_for('mailing_list')
+) %]" name="infocollect">
+<input type="hidden" name="type" value="mailing_list">
+<input type="hidden" name="opt_in" value="1">
+
+
+<table width="530" border="0" align="center" cellpadding="0" cellspacing="0" id="hor-minimalist-a" >
+  <tr>
+    <td colspan="2" align="left">
+Please use this form to join our mailing list.
+<br />
+<br />
+<br />
+   </td>
+  </tr>
+
+      <tr>
+        <td>[% form.render_field('first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('last_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('email') %]</td>
+      </tr>
+          <tr>
+            <td colspan="2" align="center"><label>
+              <input type="submit" name="submit" id="submit" value="Submit" />
+              <input type="reset" name="reset" id="reset" value="Reset" />
+            </label></td>
+            </tr>
+        </table>
+
+</form>
+</div>
+
+<br>
