@@ -76,43 +76,96 @@ sub index :Path :Args(0) {
     
 }
 
-sub customer_info : Local {
+sub customer : Local {
     my ( $self, $c ) = @_;
-
-    # Create the empty customer row for the form.
-    $c->stash(
-        customer    => $c->model('PaquetteDB::Customer')->new_result({}),
-        cart_items  => $c->model('Cart')->get_items_in_cart,
-    );
-
-    return $self->customer_info_form($c);
-}
-
-sub customer_info_form {
-    my ( $self, $c ) = @_;
-    my $customer_id;
+    my $auth;
+    my $customer;
+    my $username;
+    my $password;
     my $form;
 
-    if ($c->user) {
-        $customer_id
-            = $c->model('Customer')->get_customer($c->user->id);
+    # Load our countries and states
+    $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
+    $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
+
+    # Get our items in the cart
+    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
+
+    # Check if we are logged in
+    if ($c->user_exists) {
+    # Customer is logged in
+        
+        # Get our customer object row
+        $customer = $c->model('Customer')->get_customer($c->user->id)
     } else {
-        #$customer_id;
+    # Custmer is not logged it
+
+        # Hold a new row in the database for our record
+        $customer = $c->model('PaquetteDB::Customer')->new_result({})
     }
 
-    $form           = Paquette::Form::Customer->new;
-
-    $c->stash( form => $form, template => 'checkout/customer.tt2' );
-
-    return unless $form->process(
-#        item => $c->stash->{customer},
-        item_id     => $customer_id->{id},
-        schema      => $c->model('PaquetteDB')->schema,
-        params      => $c->req->parameters,
+    # Set our template and form to use
+    $c->stash( 
+        template    => 'checkout/customer.tt2',
+        form        => $self->customer_form,
+    );
+    
+    # Process our form
+    $form =  $self->customer_form->process (
+        item            => $customer,
+        params          => $c->req->params,
     );
 
-   $c->res->redirect( $c->uri_for($self->action_for('account')) );
+    # If the form is processed then automatically authenticate the user. 
+    # Else return the form with errors.
+    if ( $form ) { 
+    # The form was processed
+
+        # Set our username and password for authentication
+        $username    = $c->req->params->{email};
+        $password    = $c->req->params->{password};
+
+        # If username and password are set then authenticate user.
+        # Else we would give an error_msg
+        if ($username && $password) {
+        # The username and password are set
+
+            # Attempt to log the user in
+            # Using searchargs to authenticate cause non-standard table layout
+            # We can also use it to accept username or nickname
+            my $auth = $c->authenticate(
+            {   
+                password    => $password,
+                'dbix_class' => {
+                    searchargs => [
+                        {   
+                            'email' => $username,
+                        }
+                    ]
+                },
+            }
+            );
+        }
+
+        # If customer was authenticated, then redirect him to his account
+        if ($auth) {
+            $c->res->redirect( $c->uri_for($self->action_for('shipping')) );
+        }
+
+    } else { 
+    # Username or password were not defined 
+
+        # TODO: display error message via ->flash->{error_msg} ?
+        # Mean while we will display a message in debug
+        $c->log->debug("not submited");
+
+        return;
+
+    }
+
 }
+
+
 
 sub customer_info1 : Local {
     my ( $self, $c ) = @_;

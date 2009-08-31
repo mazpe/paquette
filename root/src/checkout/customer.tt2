@@ -1,0 +1,262 @@
+<script language="JavaScript" type="text/javascript" >
+<!--
+var ShipFirstName = "";
+var ShipLastName = "";
+var ShipCompany = "";
+var ShipAddress1 = "";
+var ShipAddress2 = "";
+var ShipCity = "";
+var ShipState = "";
+var ShipStateIndex = 0;
+var ShipZipCode = "";
+var ShipPhone = "";
+
+function InitSaveVariables(form) {
+    ShipFirstName = form.ship_first_name.value;
+    ShipLastName= form.ship_last_name.value;
+    ShipCompany = form.ship_company.value;
+    ShipAddress1 = form.ship_address1.value;
+    ShipAddress2 = form.ship_address2.value;
+    ShipCity = form.ship_city.value;
+    ShipZipCode = form.ship_zip_code.value;
+    ShipStateIndex = form.ship_state.selectedIndex;
+    ShipState = form.ship_state[ShipStateIndex].value;
+    ShipPhone = form.ship_phone.value;
+}
+
+function ShipToBillPerson(form) {
+    if (form.copy.checked) {
+        InitSaveVariables(form);
+        form.ship_first_name.value = form.bill_first_name.value;
+        form.ship_last_name.value = form.bill_last_name.value;
+        form.ship_company.value = form.bill_company.value;
+        form.ship_address1.value = form.bill_address1.value;
+        form.ship_address2.value = form.bill_address2.value;
+        form.ship_city.value = form.bill_city.value;
+        form.ship_zip_code.value = form.bill_zip_code.value;
+        form.ship_state.selectedIndex = form.bill_state.selectedIndex;
+        form.ship_phone.value = form.bill_phone.value;
+    } else {
+        form.ship_first_name.value = ShipFirstName;
+        form.ship_last_name.value = ShipLastName;
+        form.ship_company.value = ShipCompany;
+        form.ship_address1.value = ShipAddress1;
+        form.ship_address2.value = ShipAddress2;
+        form.ship_city.value = ShipCity;
+        form.ship_zip_code.value = ShipZipCode;       
+        form.ship_state.selectedIndex = ShipStateIndex;
+        form.ship_phone.value = ShipPhone;       
+   }
+}
+//  End -->
+
+function submitForm()
+{
+    document.infocollect.submit();
+}
+
+//-->
+</script>
+<h2>Customer :: Customer Information</h2>
+<form method="post" action="[% c.uri_for(
+    c.controller('Checkout').action_for('customer')
+) %]" name="infocollect">
+<table width='540' cellpadding='0' cellspacing='0' align='center' border='0' 
+    id="customer_info">
+<tr>
+  <td colspan='2' align="center">
+    <font color='#990000'><b>1 CUSTOMER</b></font>&nbsp;&nbsp;
+    2 SHIPPING&nbsp;&nbsp;
+    3 PAYMENT&nbsp;&nbsp;
+    4 CONFIRMATION
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <strong>Bill To Information</strong><br />
+    Items with an <font color='#990000'>*</font> are required.
+  </td>
+  <td>
+    <strong>Ship To Information</strong><br />
+    <div align='right'>
+      <input type='submit' name='submit' value='Continue'
+        onclick="submitForm()"  />
+    </div>
+  </td>
+</tr>
+<tr>
+
+<!-- LEFT COLUMN, BILLING -->
+
+  <td class='cartform'>
+    <table cellpadding='0' cellspacing='0' align='left' border='0'>
+      <tr>
+        <td>[% form.render_field('bill_first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_last_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_company') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_address1') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_address2') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_city') %]</td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('bill_state') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="bill_state" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a State -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]" 
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %] 
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('bill_country') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="bill_country" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a Country -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]"
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %]
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_zip_code') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('bill_phone') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('email') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('password') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('password_conf') %]</td>
+      </tr>
+      <tr>
+        <td align="center">
+          <input type='checkbox' name='copy' value="checkbox" 
+            onclick="javascript:ShipToBillPerson(this.form);" />
+            Ship to my billing address
+        </td>
+      </tr>
+    </table>
+  </td>
+
+<!-- RIGHT COLUMN -->
+
+  <td class='cartform'>
+    <table cellpadding='0' cellspacing='0' align='left' border='0'>
+      <tr>
+        <td>[% form.render_field('ship_first_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_last_name') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_company') %]</td>
+      </tr>
+      <tr>
+        <td align="center">NOTE: NO P.O. BOXES PLEASE</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_address1') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_address2') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_city') %]</td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('ship_state') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="ship_state" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a State -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]"
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %]
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        [% f = form.field('ship_country') %]
+        <div class="form_col_a">
+        <label class="label" for="[% f.name %]">[% f.label %]: </label>
+        <select id="ship_country" name="[% f.name %]" class="[% f.css_class %]">
+          <option value="">- Choose a Country -</option>
+          [% FOR option IN f.options %]
+          <option value="[% option.value %]"
+            [% IF option.value == f.fif %]selected="selected"[% END %]>
+            [% option.label | html %]
+          </option>
+          [% END %]
+        </select>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_zip_code') %]</td>
+      </tr>
+      <tr>
+        <td>[% form.render_field('ship_phone') %]</td>
+      </tr>
+    </table>
+    
+  <tr>
+     <td align='right'>&nbsp;</td>
+     <td>
+       <div align='right'>
+         <input type='submit' name='submit' value='Continue '
+           onclick="submitForm()"  />
+       </div>
+     </td>
+  </tr>
+  </table>
+  </td>
+</tr>
+
+<!-- CART -->
+
+<tr>
+  <td colspan="2" align="center">
+[% INCLUDE cart/checkout_view.tt2 %]
+  </td>
+</tr>
+
+</table>
+</form>
+
+<br />

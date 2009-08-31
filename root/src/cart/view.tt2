@@ -90,7 +90,7 @@ function submitForm()
     <br>
       <input type="button" name="clear" value="Checkout"
         onClick="window.location='[%
-            c.uri_for(c.controller('Checkout').action_for('customer_info'))
+            c.uri_for(c.controller('Checkout').action_for('customer'))
          %]'" >
     <br>
     <br>
