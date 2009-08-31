@@ -29,6 +29,7 @@
       <br />
       <div id="left_menu_categories">
         Full Category Lists
+<dl>
 [% i = 0 %]
 [% FOREACH category IN categories %]
 
