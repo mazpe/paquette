@@ -9,7 +9,7 @@ function submitForm()
 </script>
 <h2>Checkout :: Shipping Information</h2>
 <form method="post" action="[% c.uri_for(
-    c.controller('Checkout').action_for('shipping_info_do') 
+    c.controller('Checkout').action_for('shipping') 
 ) %]" name='billing'>
 
 
@@ -22,6 +22,11 @@ function submitForm()
       3. PAYMENT&nbsp;&nbsp;
       4. CONFIRMATION
     </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+    <span id="form_error">[% c.flash.form_error %]</span>
     </td>
   </tr>
   <tr>
@@ -74,34 +79,42 @@ function submitForm()
 
     </td>
     <td valign="top">
-<table border=0>
-<tr>
-    <th colspan="2">CHOOSE SHIPPING METHOD:</th>
-<tr>
-    <td valign=top>
-        <input type=radio name='shipping' value='USPS:5.95'>
-    </td>
-    <td nowrap>US Mail ($5.95)
-        <br><i>Estimated Arrival 3 to 7 days
-    </td>
-</tr>
-<tr>
-    <td valign=top>
-        <input type=radio name='shipping' value='UPS:6.12'>
-    </td>
-    <td nowrap>Ground ($6.12)
-        <br><i>Estimated Arrival Thursday 08/13
-    </td>
-</tr>
-<tr>
-    <td valign=top>
-        <input type=radio name='shipping' value='UPS-NEXTDAY:22.43'>
-    </td>
-    <td nowrap>Next Day Air ($22.43)
-        <br><i>Estimated Arrival Wednesday 08/12 </a></i>
-    </td>
-</tr>
-</table>
+
+      <table border="0">
+        <tr>
+          <th colspan="2">CHOOSE SHIPPING METHOD:</th>
+        </tr>
+        <tr>
+          <td colspan="2" valign=top>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td valign=top>
+            <input type=radio name='shipping' value='USPS:5.95'>
+          </td>
+          <td nowrap>US Mail ($5.95)
+            <br><i>Estimated Arrival 3 to 7 days
+          </td>
+        </tr>
+        <tr>
+          <td valign=top>
+            <input type=radio name='shipping' value='UPS:6.12'>
+          </td>
+          <td nowrap>Ground ($6.12)
+            <br><i>Estimated Arrival Thursday 08/13
+          </td>
+        </tr>
+        <tr>
+          <td valign=top>
+            <input type=radio name='shipping' value='UPS-NEXTDAY:22.43'>
+          </td>
+          <td nowrap>Next Day Air ($22.43)
+            <br><i>Estimated Arrival Wednesday 08/12 </a></i>
+          </td>
+        </tr>
+      </table>
 
     </td>
   </tr>

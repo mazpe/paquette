@@ -126,16 +126,17 @@ sub attach_cart_to_customer {
     
 }
 
-sub get_cart_by_cid {
+sub get_cart_by_customer_id {
     my ( $self, $args ) = @_;
     my %cart;
-    my $rs;
+    my $row;
 
-    $rs = $self->find( $args, { key => 'customer_id' } );
+    $row = $self->find( $args, { key => 'customer_id' } );
 
-    %cart = $rs->get_columns if $rs;
+    #%cart = $rs->get_columns if $rs;
    
-    return \%cart;
+    #return \%cart;
+    return $row;
 }
 
 sub get_cart_by_sid {

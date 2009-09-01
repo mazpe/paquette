@@ -6,16 +6,20 @@ use Data::Dumper;
 
 with 'HTML::FormHandler::Render::Simple'; # if you want to render the form
 
-before 'setup_form' => sub {
+after 'setup_form' => sub {
     my $self = shift;
 
-    #if (1) {
-        #$self->field('password')->inactive(1);
-        #$self->field('password_conf')->inactive(1);
-    #}
+    if ( !$self->params->{password} ) {
+        $self->field('password')->inactive(1);
+        $self->field('password_conf')->inactive(1);
+    } else {
+        $self->field('password')->inactive(0);
+        $self->field('password_conf')->inactive(0);
+    }
+
 };
 
-has '+item_class' => ( default => 'Customer' );
+has '+item_class' => ( default => 'Customert' );
 
 has_field 'bill_first_name'        => ( 
     type                => 'Text', 
@@ -83,7 +87,6 @@ has_field 'bill_phone'        => (
     required_message    => 'You must enter your Phone',
     css_class           => 'form_col_a',
 );
-
 has_field 'ship_first_name'        => (
     type                => 'Text',
     label               => 'First Name',
@@ -154,7 +157,7 @@ has_field 'email'        => (
     type                => 'Email',
     label               => 'Email',
     required            => 1,
-    required_message    => 'You must enter your first name',
+    required_message    => 'You must enter your email address2',
     unique              => 1,
     unique_message      => 'Your email address is already in database',
     css_class           => 'form_col_a',

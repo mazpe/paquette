@@ -32,20 +32,31 @@ sub create_cart {
 }
 
 sub get_cart {
-    my $self            = shift;
-    my $cart_id         = get_cart_id($self);
+    my ( $self, $args ) = @_;
     my $cart;
 
-print "here ". $cart_id;
+    # Check how we are going to find our cart
+    if ($args->{customer_id}) {
+    # by cusomter id
+        
+        $cart = $self->resultset('Cart')->get_cart_by_customer_id(
+            $args->{customer_id}
+        );
 
-    # Check for a cart with the same session id
-    if ( $cart_id ) {
-    # Found cart with the same Session ID
+    } elsif ($args->{cart_id}) {
 
-        # Get our cart id from database
-        $cart = $self->resultset('Cart')->get_cart($cart_id);
+        $cart = $self->resultset('Cart')->get_cart_by_cart_id(
+            $args->{cart_id}
+        );
 
-    } 
+    } elsif ($args->{session_id}) {
+
+        $cart = $self->resultset('Cart')->get_cart_by_session_id(
+            $args->{session_id}
+        );
+
+    }
+
 
     return $cart;
 }
@@ -197,11 +208,13 @@ sub assign_cart {
 
         # Get our customer id
         $customer_id
-            = $self->resultset('Customer')->get_customer($self->user->id);
+            = $self->resultset('Customer')->find_customer($self->user->id)->id;
 
         # Do we own a cart? whats our cart_id
         $customer_cart_id 
-            = $self->resultset('Cart')->get_cart_by_cid($customer_id)->{id};
+            = $self->resultset('Cart')->get_cart_by_customer_id(
+                $customer_id
+              )->{id};
 
         # Do we have an anonymous cart? what our anonymous cart id
         $anon_cart_id
@@ -273,7 +286,7 @@ sub assign_cart2 {
 
         # Check if user already has a cart
         # Get a copy of the cart
-        $cart = $self->resultset('Cart')->get_cart_by_cid($customer_id);
+        $cart = $self->resultset('Cart')->get_cart_by_customer_id($customer_id);
 
         # Found cart and retrived ResultSet
         # Update our new cart with found cart

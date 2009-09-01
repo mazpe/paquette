@@ -64,7 +64,7 @@ sub login : Local {
         if ($auth) {
 
             # Assign cart_id/session_id to user
-            #$c->model('Cart')->assign_cart;
+            $c->model('Cart')->assign_cart;
 
             # If successful, then let them use the application
             $c->response->redirect($c->uri_for(
@@ -158,6 +158,9 @@ sub account : Local {
 
         # If customer was authenticated, then redirect him to his account
         if ($auth) {
+            # Assign cart_id/session_id to user
+            $c->model('Cart')->assign_cart;
+
             $c->res->redirect( $c->uri_for($self->action_for('index')) );
         }
 

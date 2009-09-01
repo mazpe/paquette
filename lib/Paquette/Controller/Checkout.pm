@@ -1,9 +1,10 @@
 package Paquette::Controller::Checkout;
 
 use Moose;
+use Data::Dumper;
 BEGIN { extends 'Catalyst::Controller' }
 use Paquette::Form::Checkout::Customer;
-use Data::Dumper;
+use Paquette::Form::Checkout::Shipping;
 
 has 'customer_form' => ( 
     isa => 'Paquette::Form::Checkout::Customer', 
@@ -84,13 +85,6 @@ sub customer : Local {
     my $password;
     my $form;
 
-    # Load our countries and states
-    $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
-    $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
-
-    # Get our items in the cart
-    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-
     # Check if we are logged in
     if ($c->user_exists) {
     # Customer is logged in
@@ -106,6 +100,9 @@ sub customer : Local {
 
     # Set our template and form to use
     $c->stash( 
+        cart_items  => $c->model('Cart')->get_items_in_cart,
+        countries   => [$c->model('PaquetteDB::Countries')->all],
+        states      => [$c->model('PaquetteDB::States')->all],
         template    => 'checkout/customer.tt2',
         form        => $self->customer_form,
     );
@@ -148,7 +145,12 @@ sub customer : Local {
         }
 
         # If customer was authenticated, then redirect him to his account
-        if ($auth) {
+        if ($auth || $c->user_exists) {
+
+            # Assign cart_id/session_id to user
+            $c->model('Cart')->assign_cart;
+
+            # Forward to shipping
             $c->res->redirect( $c->uri_for($self->action_for('shipping')) );
         }
 
@@ -165,135 +167,80 @@ sub customer : Local {
 
 }
 
-
-
-sub customer_info1 : Local {
+sub shipping : Local {
     my ( $self, $c ) = @_;
-
-    # Load our countries and states
-    $c->stash->{countries}  = [$c->model('PaquetteDB::Countries')->all];
-    $c->stash->{states}     = [$c->model('PaquetteDB::States')->all];
-
-    # If customer is already logged in pull his customer information or load
-    # registration page
-    if ( $c->user_exists ) {
-    # Customer logged in 
-        
-        # pull customer information from db
-        my $a_customer 
-            = $c->model('Customer')->get_customer($c->user->id);
-
-        # fill form with customer info
-        $c->stash->{customer} = $a_customer;
-
-        # Load items from cart
-        $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-        # Set the template to use
-        $c->stash->{template} = 'checkout/customer_info.tt2';
-
-    } else {
-    # Customer not logged in
-        
-        # register
-        # Load items from cart
-        $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-        # Set the template to use
-        $c->stash->{template}   = 'checkout/customer_info.tt2';
-
-        # login
-    }
-
-}
-
-sub customer_info_do : Local {
-    my ( $self, $c ) =  @_;
-    my $cart;
+    my $auth;
     my $customer;
+    my $cart;
+    my $username;
+    my $password;
+    my $form;
 
-    if ( $c->req->params->{submit} ) {
+    # If shipping has not been defined and the form has been submited,
+    # display an error in the form.
+    # Else parse the shipping parameter.
+    if (!$c->req->params->{shipping} && $c->req->params->{submit}) {
+        
+        $c->flash->{form_error} = "Please select a shipping method";
 
-        if ( $c->user_exists ) {
-        # Customer logged in
-            
-            # Assign our user the cart with we are working on
-            $cart = $c->model('Cart')->assign_cart;
-
-        } else {
-        # Customer not logged in
-
-            my $username = $c->req->params->{email};
-            my $password = $c->req->params->{password};
-
-            # Create customer object
-            $customer = $c->model('Customer')->create_customer(
-                $c->req->params
-            );
-            
-            # Login customer
-            if ( !$c->authenticate( { 
-                username => $username, password => $password, 
-            } ) ) 
-            { 
-                print "Authentication Failed\n";
-                    
-            }
-
-            # Assign our user to the cart we are workig on
-            $cart = $c->model('Cart')->assign_cart;
-
-        }
-
-        # Forward to shipping information
-        $c->response->redirect(
-                $c->uri_for( $self->action_for('shipping_info') )
-            . '/' );
-
+        $c->res->redirect( $c->uri_for($self->action_for('shipping')) );
     } else {
 
-
-
-    }
-    
-}
-
-sub shipping_info : Local {
-    my ( $self, $c ) = @_;
-
-    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-    $c->stash->{customer} 
-        = $c->model('Customer')->get_customer($c->user->username);
-    $c->stash->{template} = 'checkout/shipping_info.tt2';
-
-}
-
-sub shipping_info_do : Local {
-    my ( $self, $c ) = @_;
-    my @shipping_info;
-    my $shipping;
-
-    if ( $c->req->params->{submit} ) {
-    # Form submited
-     
         my @shipping_info = split(/:/, $c->req->params->{shipping});
 
-        ## Set our shipping information
-        $shipping = $c->model('Cart')->set_shipping( {
-            shipping_type    => $shipping_info[0],
-            shipping_amount  => $shipping_info[1]
-        } );
-
-        # Forward to shipping information
-        $c->response->redirect(
-                $c->uri_for( $self->action_for('payment_info') )
-            . '/' );
-
-    } else {
-    # Form not subimited
+        $c->req->params->{shipping_type}    = $shipping_info[0];
+        $c->req->params->{shipping_amount}  = $shipping_info[1];
 
     }
 
+    if ($c->user_exists) {
+    # Customer is logged in
+       
+        # Get our customer object row
+        $customer = $c->model('Customer')->get_customer($c->user->id)
+    } 
+
+    # Get the customer cart by his id
+    $cart = $c->model('Cart')->get_cart({
+        customer_id => $customer->id,
+    });
+
+    # Set our template and form to use
+    $c->stash( 
+        cart_items  => $c->model('Cart')->get_items_in_cart,
+        customer    => $customer,
+        template    => 'checkout/shipping.tt2',
+        form        => $self->shipping_form,
+    );
+ 
+    # Process our form
+    $form =  $self->shipping_form->process (
+        item            => $cart,
+        params          => $c->req->params,
+    );
+
+    # If the form is processed then we move to payment information. 
+    # Else return the form with errors.
+    if ( $form ) { 
+    # The form was processed
+
+        # Redirect to payment information
+        $c->res->redirect( $c->uri_for($self->action_for('payment')) );
+
+    } else { 
+    # Username or password were not defined 
+
+        # TODO: display error message via ->flash->{error_msg} ?
+        # Mean while we will display a message in debug
+        $c->log->debug("not submited");
+
+        return;
+
+    }
 
 }
+
+
 
 sub payment_info : Local {
     my ( $self, $c ) = @_;
