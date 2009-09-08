@@ -75,8 +75,8 @@ __PACKAGE__->set_primary_key("user_id");
 __PACKAGE__->add_unique_constraint("username", ["username"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 00:54:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:o4H/G0TUPSWZ+yrWhG+2Kg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RN++D+/3+5xMnD0LP2AIHg
 
 # Have the 'password' column use a SHA-1 hash and 10-character salt
 # with hex encoding; Generate the 'check_password" method

@@ -47,8 +47,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("cart_sku", ["cart_sku"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 00:54:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jwd0AzeDi4Oj7mOIE3iYbg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jI1nXzPzlIn4NRyHFWg94A
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

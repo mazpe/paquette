@@ -76,8 +76,8 @@ __PACKAGE__->add_unique_constraint("sku", ["sku"]);
 __PACKAGE__->add_unique_constraint("url_name", ["url_name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 00:54:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:znfAY9ZhyMYjrQ1HaUOV1Q
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D6YdIl/u0HdtBdyQ6YhZ7A
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

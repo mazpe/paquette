@@ -47,28 +47,28 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 9,
   },
-  "payment_card_number",
+  "credit_card_number",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_expiration",
+  "credit_card_expiration",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_cvv",
+  "credit_card_cvv",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_paypal_email",
+  "paypal_email",
   {
     data_type => "VARCHAR",
     default_value => undef,
@@ -95,8 +95,8 @@ __PACKAGE__->add_unique_constraint("session_id", ["session_id"]);
 __PACKAGE__->add_unique_constraint("customer_id", ["customer_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 00:54:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oBBh7f8GY8nzjS7LOXPvSg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nyhFA215hUbULD+xgGPVHg
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

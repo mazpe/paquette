@@ -9,8 +9,9 @@ function submitForm()
 </script>
 <h2>Checkout :: Payment </h2>
 <form method="post" action="[% c.uri_for(
-    c.controller('Checkout').action_for('payment_info_do') 
+    c.controller('Checkout').action_for('payment') 
 ) %]" name='payment'>
+<input type='hidden' name="payment_amount" value="[% amount %]" />
 
 <table width='540' cellpadding='0' cellspacing='0' valign='top' border='0' id="customer_info">
   <tr>
@@ -89,37 +90,25 @@ function submitForm()
         Please select a payment type:
 <br>
 <br>
-<input type="radio" name="payment_type" value="cc"> Credit Card
+<input type="radio" name="payment_type" value="CC"> Credit Card
 <table border=0>
 <tr>
-    <th nowrap>Credit Card # </td>
-    <td valign=top>
-        <input type=text name='payment_card_number'>
-    </td>
+    <td> [% form.render_field('credit_card_number') %] </td>
 </tr>
 <tr>
-    <th nowrap>Expiration Date (02/11)</td>
-    <td valign=top>
-        <input type=text name='payment_expiration'>
-    </td>
+    <td> [% form.render_field('credit_card_expiration') %] </td>
 </tr>
 <tr>
-    <th nowrap>CVV Code</td>
-    <td valign=top>
-        <input type=text name='payment_cvv'>
-    </td>
+    <td>[% form.render_field('credit_card_cvv') %] </td>
 </tr>
 </table>
 
 <br>
 <br>
-<input type="radio" name="payment_type" value="paypal"> Paypal
+<input type="radio" name="payment_type" value="PayPal"> Paypal
 <table border=0>
 <tr>
-    <th nowrap>PayPal Email </td>
-    <td valign=top>
-        <input type=text name='payment_paypal_email' >
-    </td>
+    <td colspan="2"> [% form.render_field('paypal_email') %] </td>
 </tr>
 </table>
       </td>
