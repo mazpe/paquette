@@ -187,28 +187,28 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 9,
   },
-  "payment_card_number",
+  "credit_card_number",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_expiration",
+  "credit_card_expiration",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_cvv",
+  "credit_card_cvv",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 0,
     size => 128,
   },
-  "payment_paypal_email",
+  "paypal_email",
   {
     data_type => "VARCHAR",
     default_value => undef,
@@ -221,6 +221,13 @@ __PACKAGE__->add_columns(
     default_value => "0.00",
     is_nullable => 1,
     size => 9,
+  },
+  "status",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 12,
   },
   "created",
   {
@@ -240,8 +247,15 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-08 17:20:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Vr969niGgd96THASFann2A
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-09 08:43:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8LoF0HBTd3vinx/xOf7Oiw
+__PACKAGE__->add_columns(
+    "created",
+    { data_type => 'datetime', set_on_create => 1 },
+    "updated",
+    { data_type => 'datetime', set_on_create => 1, set_on_update => 1 },
+);
+
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

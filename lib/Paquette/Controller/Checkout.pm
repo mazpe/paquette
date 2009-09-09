@@ -275,9 +275,9 @@ sub payment : Local {
     # Else return the form with errors.
     if ( $form ) {
     # The form was processed
-$c->log->debug($form);
+
         # Redirect to payment information
-        $c->res->redirect( $c->uri_for($self->action_for('payment')) );
+        $c->res->redirect( $c->uri_for($self->action_for('confirmation')) );
 
     } else {
     # Username or password were not defined
@@ -292,53 +292,27 @@ $c->log->debug($form);
 
 }
 
-sub payment_info_do : Local {
+sub confirmation : Local {
     my ( $self, $c ) = @_;
-    my @payment_info;
-    my $payment;
+    my $customer;
+    my $cart;
 
     if (!$c->user_exists) {
         $c->response->redirect($c->uri_for('/customers/login'));
         return 0;
     }
 
-    if ( $c->req->params->{submit} ) {
-    # Form submited
+    # Get the customer cart by his id
+    $cart = $c->model('Cart')->get_cart({ customer_id => $c->user->id, });
 
-        ## Set our shipping information
-        $payment = $c->model('Cart')->set_payment( $c->req->params );
-
-        # Forward to shipping information
-        $c->response->redirect(
-                $c->uri_for( $self->action_for('confirm_order') )
-            . '/' );
-
-    } else {
-    # Form not subimited
-
-    }
-
-}
-
-sub confirm_order : Local {
-    my ( $self, $c ) = @_;
-
-    if (!$c->user_exists) {
-        $c->response->redirect($c->uri_for('/customers/login'));
-        return 0;
-    }
-    
-    #$c->stash->{shipping_total} = $c->model('Cart')->get_cart;
-    print $c->model('Cart')->get_cart;
-
-    # Load items from cart
-    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-
-    $c->stash->{customer}
-        = $c->model('Customer')->get_customer($c->user->username);
-    $c->stash->{cart}
-        = $c->model('Cart')->get_cart;
-    $c->stash->{template} = 'checkout/confirm_order.tt2';
+    # Set our template and form to use
+    $c->stash(
+        customer    => $c->model('Customer')->get_customer($c->user->id),
+        cart        => $cart,
+        cart_items  => $c->model('Cart')->get_items_in_cart,
+        amount      => $c->model('Cart')->sum_items_in_cart,
+        template    => 'checkout/confirmation.tt2',
+    );
 
 }
 
@@ -364,7 +338,6 @@ sub send_email : Local {
         = $c->model('Customer')->get_customer($c->user->username);
     $c->stash->{cart}
         = $c->model('Cart')->get_cart;
-
 
     # Send email
     $c->stash->{email} = {

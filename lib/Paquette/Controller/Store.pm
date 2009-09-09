@@ -88,8 +88,11 @@ sub subcategories_base : Chained('base') :PathPart('') : CaptureArgs(1) {
         url_name => $c->stash->{category_url_name}
      })->single;
 
-    $c->stash->{category_id}    = $category->id;
-    $c->stash->{category_name}  = $category->name;
+    # If our category was retreived then we set parameters
+    if ($category) {
+        $c->stash->{category_id}    = $category->id;
+        $c->stash->{category_name}  = $category->name;
+    }
 
     #$c->stash->{random_image} = $c->subreq(
     #    '/webtools/random_images', { template => 'webtools/random_image.tt2' }
@@ -139,8 +142,11 @@ sub products_base : Chained('subcategories_base') :PathPart('') : CaptureArgs(1)
         url_name => $c->stash->{subcategory_url_name}
      })->single;
 
-    $c->stash->{subcategory_id}     = $subcategory->id;
-    $c->stash->{subcategory_name}   = $subcategory->name;
+    # If our subcategory was found then we set parameters
+    if ($subcategory) {
+        $c->stash->{subcategory_id}     = $subcategory->id;
+        $c->stash->{subcategory_name}   = $subcategory->name;
+    }
 
     # query database to create array of subcats
     $c->stash->{products} = [$c->model('PaquetteDB::Product')->search({

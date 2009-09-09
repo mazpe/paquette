@@ -82,8 +82,13 @@ function submitForm()
         SHIPPING 
       </th>
       </tr>
+      <tr><td><strong>Shipping Type:</strong></td></tr>
       <tr>
-        <td>$[% shipping_total %]</td>
+        <td>[% cart.shipping_type %]</td>
+      </tr>
+      <tr><td><strong>Shipping Amount:</strong></td></tr>
+      <tr>
+        <td>$[% cart.shipping_amount %]</td>
       </tr>
       <tr>
       <th class='summarycell'>
@@ -91,36 +96,32 @@ function submitForm()
       </th>
       </tr>
       <td>
-[% IF cart.payment_type == 'cc' %]
+[% IF cart.payment_type == 'CC' %]
 <strong> Credit Card </strong>
 <table border=0>
 <tr>
     <th nowrap>Credit Card # </td>
-    <td valign=top>[% cart.payment_card_number %]</td>
+    <td valign=top>[% cart.credit_card_number %]</td>
 </tr>
 <tr>
     <th nowrap>Expiration Date (02/11)</td>
-    <td valign=top>[% cart.payment_expiration %]</td>
+    <td valign=top>[% cart.credit_card_expiration %]</td>
 </tr>
 <tr>
     <th nowrap>CVV Code</td>
-    <td valign=top>[% cart.payment_cvv %] </td>
+    <td valign=top>[% cart.credit_card_cvv %] </td>
 </tr>
 </table>
 
 [% END %]
 
-[% IF cart.payment_type == 'paypal' %]
+[% IF cart.payment_type == 'PayPal' %]
 
 <strong>Paypal</strong>
 <table border=0>
 <tr>
     <th nowrap>Paypal Email </th>
-    <td valign=top>[% cart.payment_paypal_email %]</td>
-</tr>
-<tr>
-    <th nowrap>Paypal Password </th>
-    <td valign=top>***** </td>
+    <td valign=top>[% cart.paypal_email %]</td>
 </tr>
 </table>
 
@@ -134,7 +135,7 @@ function submitForm()
       </th>
       </tr>
       <tr>
-        <td>[% total_amount %]</td>
+        <td>$[% amount + cart.shipping_amount %]</td>
       </tr>
 
 </table>

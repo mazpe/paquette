@@ -26,7 +26,7 @@ function submitForm()
   </tr>
   <tr>
     <td colspan="2" align="center">
-    <span id="form_error">[% c.flash.form_error %]</span>
+    <span class="error_message">[% c.flash.form_error %]</span>
     </td>
   </tr>
   <tr>

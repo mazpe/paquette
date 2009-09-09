@@ -41,44 +41,38 @@ sub create_customer {
 
 sub get_customer_by_id {
     my ( $self, $id ) = @_;
-    my $rs;
-    my %customer;
+    my $row;
 
     if ( $id ) {
     # We have arguments
 
         # Get our customer
-        $rs = $self->find( $id );
+        $row = $self->find( $id );
 
     } else {
     # No arguments submited
 
     }
 
-    %customer = $rs->get_columns if $rs;
-
-    return \%customer;
+    return $row
 }
 
 sub get_customer_by_email {
     my ( $self, $email ) = @_;
-    my $rs;
-    my %customer;
+    my $row;
 
     if ( $email) {
     # We have arguments
     
         # Get our customer
-        $rs = $self->find( $email, { key => 'email' } );
+        $row = $self->find( $email, { key => 'email' } );
 
     } else {
     # No arguments submited
 
     }
 
-    %customer = $rs->get_columns if $rs;
-
-    return %customer ? \%customer : 0;
+    return $row;
 }
 
 sub find_customer {
