@@ -1,14 +1,16 @@
 package Paquette::Controller::Admin::Products;
 
-;use strict;
-;use warnings;
-;use parent 'Catalyst::Controller';
-
 use Moose;
 BEGIN { extends 'Catalyst::Controller' }
-use Paquette::Form::Product;
-
+use Paquette::Form::Admin::Product;
 use Data::Dumper;
+
+has 'product_form' => (
+    isa => 'Paquette::Form::Admin::Product',
+    is => 'ro',
+    lazy => 1,
+    default => sub { Paquette::Form::Admin::Product->new },
+);
 
 =head1 NAME
 
@@ -27,6 +29,14 @@ Catalyst Controller.
 
 =cut
 
+sub auto : Private {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{wrapper_admin}  = "1";
+}
+
+
+
 sub index :Chained('base') :Path :Args(0) {
     my ( $self, $c ) = @_;
 
@@ -41,7 +51,7 @@ sub index :Chained('base') :Path :Args(0) {
 
     $c->stash->{'products'}    = $products;
     $c->stash->{wrapper_admin}  = "1";
-    $c->stash->{template} = 'admin/products/list.tt2';
+    $c->stash->{template} = 'admin/products_list.tt2';
 
     return;
 }
@@ -55,15 +65,11 @@ sub base :Chained('/') :PathPart('admin/products') :CaptureArgs(0) {
 sub load : Chained('base') :PathPart('') :CaptureArgs(1) {
     my ( $self, $c, $id ) = @_;
     my $product;
-    my $attributes;
     
     if($id) {
 
         $c->stash->{product_id} = $id;
         $product    = $c->model('PaquetteDB::Product')->find($id);
-        $attributes = [$c->model('PaquetteDB::ProductAttribute')->search({
-            product_id => $id
-        })];
 
     } else {
 
@@ -83,79 +89,67 @@ sub load : Chained('base') :PathPart('') :CaptureArgs(1) {
 
     }
 
-    $c->stash->{'attributes'} = $attributes if ($attributes);
-
     return;
 }
 
-sub create: Local {
+sub create : Local {
     my ( $self, $c ) = @_;
-    my $cmd;
-    my $upload;
-    my $photo = 0;
-    my $item_photos_path
-        = '/mnt/www/www.saborespanol.com/Paquette/root/static/item_photos';
-    my $item_photos_fullpath
-        = $item_photos_path . '/' . $c->req->param('url_name') . '.jpg';
+    my $row;
+    my $form;
 
-    if ($c->req->param('submit')) {
+    # Get a new empty row
+    $row = $c->model('PaquetteDB::Product')->new_result({});
 
-       # upload photo
-        $upload = $c->request->upload('item_photo');
-        if ($upload) {
-            # copy the photo to our photo gallery
-            $cmd = '/bin/mv '.$upload->tempname.' '.$item_photos_fullpath;
-            system($cmd);
+    # Set our template and form to use
+    $c->stash(
+        template    => 'admin/product.tt2',
+        form        => $self->product_form,
+    );
 
-            $photo = 1;
-        }
+    # Process our form
+    $form =  $self->product_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
 
-        # keep photo value if it already has a photo
-        if ($c->req->param('has_photo')) { $photo = 1 }
-
-        my $product = $c->model('PaquetteDB::Product')->create(
-            {
-                category_id         => $c->req->param('category_id'),
-                sku                 => $c->req->param('sku'),
-                name                => $c->req->param('name'),
-                url_name            => $c->req->param('url_name'),
-                brief_description   => $c->req->param('brief_description'),
-                description         => $c->req->param('description'),
-                price               => $c->req->param('price'),
-                photo               => $photo,
-            }
-        );
-
-        $c->response->redirect(
-            $c->uri_for( $self->action_for('edit'), [ $product->id ] )
-              . '/' );
-
-    } else {
-
-        $c->stash->{categories} = [$c->model('PaquetteDB::Categories')->all];
-        $c->stash->{wrapper_admin}  = "1";
-        $c->stash->{template} = 'admin/products/create.tt2';
-
+    # If the form has been submited sucessfully, then redirect to confirm page
+    if ($form) {
+        $c->res->redirect( $c->uri_for($self->action_for('index')) );
     }
 
-    return;
 }
 
 sub edit : Chained('load') : PathPart('edit') : Args(0) {
     my ( $self, $c ) = @_;
+    my $product_id;
+    my $row;
+    my $form;
 
-    my $form = Paquette::Form::Product->new;
+    $product_id = $c->stash->{product_id};
 
-    $c->stash( form => $form, template => 'admin/products/edit_test.tt2' );
+    # Get a new empty row
+    $row = $c->model('PaquetteDB::Product')->find_product($product_id);
 
-    return unless $form->process( item => $c->stash->{product},
-        params => $c->req->parameters );
+    # Set our template and form to use
+    $c->stash(
+        template    => 'admin/product.tt2',
+        form        => $self->product_form,
+    );
 
-    $c->res->redirect( $c->uri_for('list') );
+    # Process our form
+    $form =  $self->product_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
 
+    # If the form has been submited sucessfully, then redirect to confirm page
+    if ($form) {
+        $c->res->redirect( $c->uri_for($self->action_for('index')) );
+    }
 }
 
-sub edit2 : Chained('load') : PathPart('edit2') : Args(0) {
+
+sub photo_upload : Chained('load') : PathPart('photo_upload') : Args(0) {
     my ( $self, $c ) = @_;
     my $photo;
     my $id;
@@ -174,6 +168,7 @@ sub edit2 : Chained('load') : PathPart('edit2') : Args(0) {
 
         # upload photo
         $upload = $c->request->upload('item_photo');
+
         if ($upload) {
             # copy the photo to our photo gallery
             $cmd = '/bin/mv '.$upload->tempname.' '.$item_photos_fullpath;
@@ -188,13 +183,6 @@ sub edit2 : Chained('load') : PathPart('edit2') : Args(0) {
         # update database with new values
         $product->update(
             {
-                category_id         => $c->req->param('category_id'),
-                sku                 => $c->req->param('sku'),
-                name                => $c->req->param('name'),
-                url_name            => $c->req->param('url_name'),
-                brief_description   => $c->req->param('brief_description'),
-                description         => $c->req->param('description'),
-                price               => $c->req->param('price'),
                 photo               => $photo,
             }
         );        

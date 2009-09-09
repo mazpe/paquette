@@ -21,7 +21,7 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
+sub index : Local {
     my ($self, $c) = @_;
 
     # Get the username and password from form
@@ -30,22 +30,40 @@ sub index :Path :Args(0) {
 
     # If the username and password values were found in form
     if ($username && $password) {
+
         # Attempt to log the user in
-        if ($c->authenticate({ username => $username,
-                               password => $password  } )) {
+        # Using searchargs to authenticate because of non-standard table layout
+        # We can also use it to accept username or nickname
+        my $auth = $c->authenticate(
+            {
+                password    => $password,
+                'dbix_class' => {
+                    searchargs => [
+                        {
+                            'email' => $username,
+                        }
+                    ]
+                },
+            }
+        );
+
+        if ($auth) {
+
             # If successful, then let them use the application
             $c->response->redirect($c->uri_for(
-                $c->controller('admin')->action_for('index')));
-            return;
+                $c->controller('Admin')->action_for('index')));
+
         } else {
             # Set an error message
             $c->stash->{error_msg} = "Bad username or password.";
         }
+
     }
 
     # If either of above don't work out, send to the login page
     $c->stash->{wrapper_admin} = 1;
-    $c->stash->{template} = 'login.tt2';
+    $c->stash->{template} = 'admin/login.tt2';
+
 }
 
 

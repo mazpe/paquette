@@ -16,8 +16,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("user_id", "role_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:k7oLcIGdCdPXEWbDQK2ZOw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-08 17:20:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OTxm7bxUgmX20flDRS61Hg
 
 __PACKAGE__->belongs_to(user => 'Paquette::Schema::Result::User', 'user_id');
 __PACKAGE__->belongs_to(role => 'Paquette::Schema::Result::Role', 'role_id');

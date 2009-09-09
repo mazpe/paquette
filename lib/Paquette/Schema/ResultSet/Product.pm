@@ -23,6 +23,16 @@ sub get_item_by_sku {
     return $item;
 }
 
+sub find_product {
+    my ( $self, $args ) = @_;
+    my $row;
+
+    $row = $self->find($args);
+
+    return $row;
+}
+
+
 =head1 AUTHOR
 
 Lester Ariel Mesa,,305-402-6717,

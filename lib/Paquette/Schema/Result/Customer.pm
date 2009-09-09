@@ -163,8 +163,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("email", ["email"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZEnG99Co0XmWWa1uaRZTYw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-08 17:20:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1lH//OYVgLCxIv+WEKMQnw
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },

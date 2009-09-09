@@ -10,7 +10,7 @@
 </p>
 
 <!-- Login form -->
-<form method="post" action="[% c.uri_for('/login') %]">
+<form method="post" action="[% c.uri_for('/admin/login') %]">
   <table>
     <tr>
       <td>Username:</td>

@@ -28,8 +28,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xcHTd30nUNqncZrxJpMZ2Q
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-08 17:20:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hpe7Zm7RMCnGKhywOxwW6w
 
 # Set ResultSet Class
 __PACKAGE__->resultset_class('Paquette::Schema::ResultSet::States');

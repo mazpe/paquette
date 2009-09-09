@@ -1,5 +1,6 @@
 [% META title = 'List Products' -%]
 
+
 <div id="products_block">
 <a href="[% c.uri_for(c.controller.action_for('create')) %]">
 <h3>Create a Product</h3>

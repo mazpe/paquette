@@ -95,8 +95,8 @@ __PACKAGE__->add_unique_constraint("session_id", ["session_id"]);
 __PACKAGE__->add_unique_constraint("customer_id", ["customer_id"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-08-31 23:58:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nyhFA215hUbULD+xgGPVHg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-08 17:20:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+JXfp3qCz/m/DsDEccpyMA
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },
