@@ -128,27 +128,20 @@ sub attach_cart_to_customer {
 
 sub get_cart_by_customer_id {
     my ( $self, $args ) = @_;
-    my %cart;
     my $row;
 
     $row = $self->find( $args, { key => 'customer_id' } );
 
-    #%cart = $rs->get_columns if $rs;
-   
-    #return \%cart;
     return $row;
 }
 
 sub get_cart_by_sid {
     my ( $self, $args ) = @_;
-    my %cart;
-    my $rs;
+    my $row;
 
-    $rs = $self->find( $args, { key => 'session_id' } );
+    $row = $self->find( $args, { key => 'session_id' } );
 
-    %cart = $rs->get_columns if $rs;
-
-    return \%cart;
+    return $row;
 }
 
 sub set_cart_info {

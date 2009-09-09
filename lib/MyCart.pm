@@ -199,62 +199,62 @@ sub clear_cart {
 sub assign_cart {
     my $self = shift;
     my $customer_id;
-    my $customer_cart_id;
-    my $anon_cart_id;
+    my $cart_by_cid;
+    my $cart_by_sid;
     my %cart_args;
 
     if ( $self->user ) {
     # Logged in
 
         # Get our customer id
-        $customer_id
-            = $self->resultset('Customer')->find_customer($self->user->id)->id;
+        $customer_id = $self->user->id;
 
         # Do we own a cart? whats our cart_id
-        $customer_cart_id 
+        $cart_by_cid
             = $self->resultset('Cart')->get_cart_by_customer_id(
                 $customer_id
-              )->{id};
+              );
 
         # Do we have an anonymous cart? what our anonymous cart id
-        $anon_cart_id
+        $cart_by_sid
             = $self->resultset('Cart')->get_cart_by_sid(
                 $self->session_id
-              )->{id};
+              );
 
         # Check that we have 2 seperate carts
-        if ( $customer_cart_id ) {
+        if ($cart_by_cid) {
         # Found customer cart
 
-            if ( $customer_cart_id ne $anon_cart_id ) {
+            if ( $cart_by_cid->id ne $cart_by_sid->id ) {
             # Seperate carts
 
                 # Update Cart Items to the customer_cart
                 $self->resultset('CartItem')->set_items_cart_sku(
-                    $customer_cart_id,
-                    $anon_cart_id,
+                    $cart_by_cid->id,
+                    $cart_by_sid->id,
                 );
 
                 # Delete anonymous cart
-                $self->resultset('Cart')->delete($anon_cart_id);
+                $self->resultset('Cart')->delete($cart_by_sid->id);
 
                 # Update our customer cart with our current session
                 %cart_args = (
-                    id          => $customer_cart_id,
+                    id          => $cart_by_cid->id,
                     session_id  => $self->session_id,
                 );
                 $self->resultset('Cart')->update(\%cart_args);
 
             }
 
-        } else {
-        # No customer
+        } elsif ($cart_by_sid) {
+        # Found session cart
             # Update our customer cart with our current session
             %cart_args = (
-                id              => $anon_cart_id,
+                id              => $cart_by_sid->id,
                 session_id      => $self->session_id,
                 customer_id     => $customer_id,
             );
+
             $self->resultset('Cart')->update(\%cart_args);
 
         }
@@ -264,77 +264,6 @@ sub assign_cart {
     # Not logged in
 
 
-    }
-
-}
-
-sub assign_cart2 {
-    my $self            = shift;
-    my $cart_id;
-    my $customer_id;
-    my $new_cart_id;
-    my $cart;
-    my $old_cart_id;
-    my %cart_args;
-
-    if ( $self->user ) {
-    # User is logged in
-
-        # Get our customer id
-        $customer_id 
-            = $self->resultset('Customer')->get_customer($self->user->id);
-
-        # Check if user already has a cart
-        # Get a copy of the cart
-        $cart = $self->resultset('Cart')->get_cart_by_customer_id($customer_id);
-
-        # Found cart and retrived ResultSet
-        # Update our new cart with found cart
-        if ( $cart ) {
-        # We found a cart 
-            
-            $old_cart_id = $cart->{id};
-            
-            %cart_args = (
-                session_id  => $self->session_id,
-                customer_id => $customer_id,
-                id          => $cart_id,
-            );        
-
-            # Set our new cart info
-            $new_cart_id = 
-                $self->resultset('Cart')->set_cart_info( $cart_id, $cart );
-
-            # Update found cart_items with our new cart
-            $self->resultset('CartItem')->set_items_cart_id ( 
-                $cart_id, 
-                $old_cart_id,
-            );
-
-            # Setup items cart_sku
-            $self->resultset('CartItem')->set_items_cart_sku(
-                $cart_id,
-                $old_cart_id,
-            );
-
-            if ( $new_cart_id ne $old_cart_id ) {
-                # Delete old cart;
-                $self->resultset('Cart')->delete($old_cart_id);
-            }
-
-        } else {
-        # No cart found
-
-        }
-
-    } else {
-    # Anonymous user 
-
-        # Attached Cart and Customer 
-        $self->resultset('Cart')->attach_cart_to_customer( { 
-            customer_id => $self->user->id,
-            cart_id     => $cart_id,
-        } );
     }
 
 }
