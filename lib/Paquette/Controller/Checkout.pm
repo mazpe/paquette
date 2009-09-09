@@ -322,6 +322,8 @@ sub process_order : Local {
 
     $order = $c->model('Checkout')->process_order;
 
+    $c->model('Cart')->destroy_cart;
+
         $c->response->redirect(
                 $c->uri_for( $self->action_for('send_email') )
             . '/' );

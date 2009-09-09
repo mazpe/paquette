@@ -300,4 +300,17 @@ sub total_items_in_cart {
     return $total_items;
 }
 
+sub destroy_cart {
+    my $self            = shift;
+    my $cart_id         = get_cart_id($self);
+
+    # Destroy the cart items
+    $self->resultset('CartItems')->clear_items($cart_id);
+    
+    # Destroy the cart;
+    $self->resultset('Cart')->delete($cart_id);
+
+
+}
+
 1;
