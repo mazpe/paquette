@@ -199,8 +199,10 @@ sub clear_cart {
 sub assign_cart {
     my $self = shift;
     my $customer_id;
-    my $cart_by_cid;
-    my $cart_by_sid;
+    my $cart_by_customer_id;
+    my $cart_id_by_customer_id;
+    my $cart_by_session_id;
+    my $cart_id_by_session_id;
     my %cart_args;
 
     if ( $self->user ) {
@@ -210,47 +212,47 @@ sub assign_cart {
         $customer_id = $self->user->id;
 
         # Do we own a cart? whats our cart_id
-        $cart_by_cid
-            = $self->resultset('Cart')->get_cart_by_customer_id(
-                $customer_id
-              );
+        $cart_by_customer_id
+            = $self->resultset('Cart')->get_cart_by_customer_id( $customer_id);
+        $cart_id_by_customer_id 
+            = $cart_by_customer_id->id if $cart_by_customer_id;
 
         # Do we have an anonymous cart? what our anonymous cart id
-        $cart_by_sid
-            = $self->resultset('Cart')->get_cart_by_sid(
-                $self->session_id
-              );
+        $cart_by_session_id
+            = $self->resultset('Cart')->get_cart_by_sid( $self->session_id);
+        $cart_id_by_session_id 
+            = $cart_by_session_id->id if $cart_by_session_id;
 
         # Check that we have 2 seperate carts
-        if ($cart_by_cid) {
+        if ($cart_id_by_customer_id) {
         # Found customer cart
 
-            if ( $cart_by_cid->id ne $cart_by_sid->id ) {
+            if ( $cart_id_by_customer_id ne $cart_id_by_session_id ) {
             # Seperate carts
 
                 # Update Cart Items to the customer_cart
                 $self->resultset('CartItem')->set_items_cart_sku(
-                    $cart_by_cid->id,
-                    $cart_by_sid->id,
+                    $cart_id_by_customer_id,
+                    $cart_id_by_session_id,
                 );
 
                 # Delete anonymous cart
-                $self->resultset('Cart')->delete($cart_by_sid->id);
+                $self->resultset('Cart')->delete($cart_id_by_session_id);
 
                 # Update our customer cart with our current session
                 %cart_args = (
-                    id          => $cart_by_cid->id,
+                    id          => $cart_id_by_customer_id,
                     session_id  => $self->session_id,
                 );
                 $self->resultset('Cart')->update(\%cart_args);
 
             }
 
-        } elsif ($cart_by_sid) {
+        } elsif ($cart_id_by_session_id) {
         # Found session cart
             # Update our customer cart with our current session
             %cart_args = (
-                id              => $cart_by_sid->id,
+                id              => $cart_id_by_session_id,
                 session_id      => $self->session_id,
                 customer_id     => $customer_id,
             );
@@ -305,7 +307,7 @@ sub destroy_cart {
     my $cart_id         = get_cart_id($self);
 
     # Destroy the cart items
-    $self->resultset('CartItems')->clear_items($cart_id);
+    $self->resultset('CartItem')->clear_items($cart_id);
     
     # Destroy the cart;
     $self->resultset('Cart')->delete($cart_id);
