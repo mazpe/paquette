@@ -322,39 +322,44 @@ sub process_order : Local {
 
     $order = $c->model('Checkout')->process_order;
 
-    $c->model('Cart')->destroy_cart;
+    #$c->model('Cart')->destroy_cart;
 
-        $c->response->redirect(
-                $c->uri_for( $self->action_for('send_email') )
-            . '/' );
+    $c->forward( 'send_email', [$order] );
 
+#        $c->response->redirect(
+#                $c->uri_for( $self->action_for('send_email') )
+#            . '/' );
 
 }
 
 sub send_email : Local {
-    my ( $self, $c ) = @_;
+    my ( $self, $c, $order_id) = @_;
+    my $subject;
 
     # Load items from cart
-    $c->stash->{cart_items} = $c->model('Cart')->get_items_in_cart;
-    $c->stash->{customer}
-        = $c->model('Customer')->get_customer($c->user->username);
-    $c->stash->{cart}
-        = $c->model('Cart')->get_cart;
+    $c->stash(
+        customer    => $c->model('Customer')->get_customer($c->user->id),
+        order_items => $c->model('Order')->get_items_in_order($order_id),
+        order       => $c->model('Order')->get_order({ order_id => $order_id }),
+        amount      => $c->model('Cart')->sum_items_in_cart,
+    );
+
+    $subject = 'Order Confirmation from SaborEspanol.com - Order # '. $order_id;
 
     # Send email
     $c->stash->{email} = {
-            to      => $c->stash->{customer}->{email},
-            bcc      => 'info@saborespanol.com',
-            from    => 'sales@saborespanol.com',
-            subject => 'Order',
-            template => 'order_formation.tt2',
-            content_type => 'multipart/alternative'
+            to          => $c->stash->{customer}->{email},
+            bcc         => 'lesterm@gbrnd.com',
+            from        => 'sales@saborespanol.com',
+            subject     => $subject,
+            template    => 'confirm_order.tt2',
+            #content_type => 'multipart/alternative'
+            content_type => 'text/plain',
         };
         
         $c->forward( $c->view('Email::Template') );
 
-        $c->response->redirect( $c->uri_for( '/' ) );
-
+        #$c->response->redirect( $c->uri_for( '/' ) );
 
 }
 

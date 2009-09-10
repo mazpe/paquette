@@ -19,6 +19,13 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 64,
   },
+  "name",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 0,
+    size => 128,
+  },
   "sku",
   {
     data_type => "VARCHAR",
@@ -54,8 +61,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("order_sku", ["order_sku"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-09 08:43:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pMogzpKV3ka9tudwa6+4Qw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-10 08:14:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:b3ps3MYDsUc+1jIGs9gAiw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

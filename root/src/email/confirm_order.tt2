@@ -1,158 +1,61 @@
-<script language="JavaScript">
-<!--
-function submitForm()
-{
-    document.payment.submit();
-}
+Thank you for your order with SaborEspanol.com
 
-//-->
-</script>
+We are pleased to bring you a step closer to Spain.  We have received your order and it will be processed within one business day.
 
-<form method="post" action="[% c.uri_for(
-    c.controller('Checkout').action_for('process_order') 
-) %]" name='payment'>
+See the bottom of this email for detailed information about shipping and delivery schedules.  Please contact us directly for special handling or very urgent orders.
 
-<table width='540' cellpadding='0' cellspacing='5' valign='top' align='left' border='0' id="customer_info">
-  <tr>
-  <td colspan="2" class='breadcrumbs' align="center">
-    1 CUSTOMER &nbsp;&nbsp;
-    2 SHIPPING &nbsp;&nbsp;
-    3 PAYMENT &nbsp;&nbsp;
-    <font color='#990000'><b>4 CONFIRMATION</b></font>
-  </td>
-  </tr>
-  <tr>
-    <td valign='top'>&nbsp;</td>
-    <td valign='bottom' align="right">
-     <input type='submit' name='submit' value='Process Order'
-        onClick="submitForm()"  >
-    </td>
-  </tr>
-  <tr>
-    <td valign='top' width='50%'>
-            <table cellpadding='0' cellspacing='0' valign='top' align='left' border='0' width='100%'>
-              <tr>
-                <td>
-                  <table border=0 width='100%'>
-                    <tr>
-                      <th>BILL TO:</td>
-                      <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td colspan=2>
-                      [% customer.bill_first_name %], 
-                      [% customer.bill_last_name %]<br />
-                      [% customer.bill_address1 %]<br />
-                      [% customer.bill_address2 %]<br />    
-                      [% customer.bill_city %], [% customer.bill_state %]
-                      [% customer.bill_zip %]<br />
-                      [% customer.bill_country %]<br />
-                      [% customer.bill_phone %]<br />
-                      [% customer.bill_email %]<br />
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>
-                  <table border=0 width='100%'>
-                    <tr>
-                      <th>SHIP TO:</td>
-                      <td align='right' valign='top'>&nbsp; </td>
-                    </tr>
-                      <td colspan=2>
-                      [% customer.ship_first_name %],
-                      [% customer.ship_last_name %]<br />
-                      [% customer.ship_address1 %]<br />
-                      [% customer.ship_address2 %]<br />
-                      [% customer.ship_city %], [% customer.bill_state %]
-                      [% customer.ship_zip %]<br />
-                      [% customer.ship_country %]<br />
-                      [% customer.ship_phone %]<br />
-                      [% customer.ship_email %]<br />
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-    </td>
-  <!-- RIGHT COLUMN -->
+Email: contact@saborespanol.com
 
-  <td valign=top width='50%'>
-  <table cellpadding='0' cellspacing='5' valign='top' align='left' border='0' width='100%'>
-      <!-- CELL: SHIPPING METHOD -->
-      <tr>
-      <th class='summarycell'>
-        PAYMENT
-      </th>
-      </tr>
-      <td>
-[% IF cart.payment_type == 'cc' %]
-<strong> Credit Card </strong>
-<table border=0>
-<tr>
-    <th nowrap>Credit Card # </td>
-    <td valign=top>[% cart.payment_card_number %]</td>
-</tr>
-<tr>
-    <th nowrap>Expiration Date (02/11)</td>
-    <td valign=top>[% cart.payment_expiration %]</td>
-</tr>
-<tr>
-    <th nowrap>CVV Code</td>
-    <td valign=top>[% cart.payment_cvv %] </td>
-</tr>
-</table>
+-------------------------------------------------------------------------------
+ORDER # [% order.id %]
 
-[% END %]
+BILL TO:
+[% customer.bill_first_name %], [% customer.bill_last_name %]
+[% customer.bill_address1 %]
+[% customer.bill_address2 %]
+[% customer.bill_city %], [% customer.bill_state %] - [% customer.bill_zip %]
+[% customer.bill_country %]
+[% customer.bill_phone %]
+[% customer.bill_email %]
 
-[% IF cart.payment_type == 'paypal' %]
+SHIP TO:
+[% customer.ship_first_name %], [% customer.ship_last_name %]
+[% customer.ship_address1 %]
+[% customer.ship_address2 %]
+[% customer.ship_city %], [% customer.bill_state %] - [% customer.ship_zip %]
+[% customer.ship_country %]
+[% customer.ship_phone %]
+[% customer.ship_email %]
 
-<strong>Paypal</strong>
-<table border=0>
-<tr>
-    <th nowrap>Paypal Email </th>
-    <td valign=top>[% cart.payment_paypal_email %]</td>
-</tr>
-<tr>
-    <th nowrap>Paypal Password </th>
-    <td valign=top>***** </td>
-</tr>
-</table>
+SHIPPING METHOD: [% order.shipping_type %]
+SHIPPING AMOUNT: $[% order.shipping_amount %]
 
-[% END %]
+--------------------------------------------------------------------------------
 
+ORDERED ITEMS
+[% INCLUDE cart/order_view.tt2 %]
+SUB TOTAL: $[% amount %]
+TOTAL: $[% amount + order.shipping_amount %]
+-------------------------------------------------------------------------------
 
-      </td>
-    </tr>
-    <tr>
-      <td>
-     <input type='submit' name='submit' value='Process Order'
-        onClick="submitForm()"  >
-      </td>
-    </tr>
-      </td>
-
-      </tr>
-<tr>
-      </tr>       
-  </table>
-  </td>
- </tr>
-<!-- CART -->
-
-<tr>
-  <td class='cartform' colspan="2" align="center">
-[% INCLUDE cart/checkout_view.tt2 %]
-  </td>
-</tr>
-
-</table>
-
-</form>
+IMPORTANT INFORMATION
+ 
+Shipping Time: 
+We pride ourselves on how quickly we process orders. Orders placed by noon EST, Mon-Fri, will be processed and shipped that business day. The only exception would be during extreme weather conditions, or during exceptionally busy times. Please allow 1-2 additional business days for processing during the last three weeks of December, our busiest time of the year. Please Note: Perishable orders placed after noon EST on Wednesday may need to be held to ship the following Monday. If your perishable order cannot be guaranteed to arrive by Saturday with your chosen delivery method, we will hold your order to ship the following Monday to protect the quality of your products. Please contact our Customer Service Office at support@saborespanol.com if you would like to expedite your perishable order.
+ 
+Wine Orders:
+The law requires an adult signature at the time of delivery for orders containing alcohol. Please make sure the delivery address you provide is a location where an adult can receive the order in person. For convenience, we recommend sending such orders to a place of business. We also urge you to treat a fine wine as a perishable product, and not to economize on shipping. In particular, extreme weather is bad for wine. We ship all of our wines in a thick Styrofoam box designed to transport wine. It will protect the bottle from extreme temperatures -- but only for a day or so. 
+ 
+Tracking: 
+After we ship your package you can track it on UPS website.
+ 
+Urgent Orders:
+For extremely urgent orders, or for special shipping arrangements, please contact us by email at contact@saborespanol.com.
+ 
+ Thank you for your support. Be sure to visit us again at SaborEspanol.com to see our new products!
+ 
+SaborEspanol.com
+A step closer to Spain
+http://www.saborespanol.com
+contact@saborespanol.com
 

@@ -1,8 +1,17 @@
 package Paquette::Controller::Admin::Categories;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose;
+BEGIN { extends 'Catalyst::Controller' }
+use Paquette::Form::Admin::Category;
+use Data::Dumper;
+
+has 'category_form' => (
+    isa => 'Paquette::Form::Admin::Category',
+    is => 'ro',
+    lazy => 1,
+    default => sub { Paquette::Form::Admin::Category->new },
+);
+
 
 =head1 NAME
 
@@ -73,7 +82,63 @@ sub load : Chained('base') :PathPart('') :CaptureArgs(1) {
     return;
 }
 
-sub create: Local {
+sub create : Local {
+    my ( $self, $c ) = @_;
+    my $row;
+    my $form;
+
+    # Get a new empty row
+    $row = $c->model('PaquetteDB::Category')->new_result({});
+
+    # Set our template and form to use
+    $c->stash(
+        template    => 'admin/category.tt2',
+        form        => $self->category_form,
+    );
+
+    # Process our form
+    $form =  $self->category_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
+
+    # If the form has been submited sucessfully, then redirect to confirm page
+    if ($form) {
+        $c->res->redirect( $c->uri_for($self->action_for('index')) );
+    }
+
+}
+
+sub edit : Chained('load') : PathPart('edit') : Args(0) {
+    my ( $self, $c ) = @_;
+    my $category_id;
+    my $row;
+    my $form;
+
+    $category_id = $c->stash->{category_id};
+
+    # Get a new empty row
+    $row = $c->model('PaquetteDB::Category')->find_product($category_id);
+
+    # Set our template and form to use
+    $c->stash(
+        template    => 'admin/category.tt2',
+        form        => $self->category_form,
+    );
+
+    # Process our form
+    $form =  $self->category_form->process (
+        item            => $row,
+        params          => $c->req->params,
+    );
+
+    # If the form has been submited sucessfully, then redirect to confirm page
+    if ($form) {
+        $c->res->redirect( $c->uri_for($self->action_for('index')) );
+    }
+}
+
+sub photo_upload: Local {
     my ( $self, $c ) = @_;
     my $photo = 0;
     my $id;
@@ -132,68 +197,6 @@ sub create: Local {
     return;
 }
 
-sub edit : Chained('load') : PathPart('edit') : Args(0) {
-    my ( $self, $c ) = @_;
-    my $photo = 0;
-    my $id;
-    my $category;
-    my $cmd;
-    my $upload;
-    my $categories_photos_path
-      = '/mnt/www/www.saborespanol.com/Paquette/root/static/categories_photos';
-    my $categories_photos_fullpath
-        = $categories_photos_path . '/' . $c->req->param('url_name') . '.jpg';
-
-    $c->log->debug("fullpath ".$categories_photos_fullpath);
-    $c->log->debug("url_name ". $c->req->param('url_name'));
-
-    if ($c->req->param('submit')) {
-
-        $id = $c->stash->{'category_id'};
-        $category = $c->stash->{category};
-
-        # upload photo
-        $upload = $c->request->upload('category_photo');
-        if ($upload) {
-            # copy the photo to our photo gallery
-            $cmd = '/bin/mv '.$upload->tempname.' '.$categories_photos_fullpath;
-            $c->log->debug("cmd ". $cmd);
-            system($cmd);
-
-            $photo = 1;
-        }
-
-        # keep photo value if it already has a photo
-        if ($c->req->param('has_photo')) { $photo = 1 }
-
-        # update category
-        $category->update(
-            {
-                parent_id           => $c->req->param('parent_id'),
-                name                => $c->req->param('name'),
-                url_name            => $c->req->param('url_name'),
-                brief_description   => $c->req->param('brief_description'),
-                description         => $c->controller('Utils')->trailing_spaces(
-                    $c, $c->req->param('description')
-                ),
-                photo               => $photo,
-            }
-        );
-
-        $c->response->redirect(
-            $c->uri_for( $self->action_for('edit'), [ $category->id ] )
-              . '/' );
-
-    } else {
-
-        $c->stash->{categories} = [$c->model('PaquetteDB::Categories')->all];
-        $c->stash->{template} = 'admin/categories/edit.tt2';
-
-    }
-
-    return;
-}
-
 sub delete : Chained('load') : PathPart('delete') : Args(0) {
     my ( $self, $c ) = @_;
     my $cmd;
@@ -202,8 +205,6 @@ sub delete : Chained('load') : PathPart('delete') : Args(0) {
       = '/mnt/www/www.saborespanol.com/Paquette/root/static/categories_photos';
     my $categories_photos_fullpath
         = $categories_photos_path . '/' . $c->stash->{category}->url_name . '.jpg';
-
-
 
     if ($category) {
 

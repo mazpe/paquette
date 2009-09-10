@@ -44,7 +44,7 @@ __PACKAGE__->config(
     default_view    => 'TT',
     'View::Email::Template' => {
         default => {
-            content_type => 'text/html',
+            #content_type => 'text/html',
             charset => 'utf-8',
             view => 'TTEmail',
         },

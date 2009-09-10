@@ -1,0 +1,5 @@
+[% total = 0%] [% subtotal = 0%] [% i = 0 %]
+TOTAL PRICE QTY SKU NAME
+[% FOREACH item IN order_items %] [% subtotal = item.quantity * item.price %] [% total = total + subtotal %] [% i = i + 1 %]
+$[% subtotal | format('%0.2f') %] $[% item.price | format('%0.2f') %] [% item.quantity %] [% item.sku %] [% item.name %]
+[% END %]

@@ -225,7 +225,7 @@ __PACKAGE__->add_columns(
   "status",
   {
     data_type => "VARCHAR",
-    default_value => undef,
+    default_value => "PENDING",
     is_nullable => 0,
     size => 12,
   },
@@ -247,16 +247,14 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-09 08:43:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8LoF0HBTd3vinx/xOf7Oiw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2009-09-10 08:14:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yLYasivTjp14T9qYD5cntg
 __PACKAGE__->add_columns(
     "created",
     { data_type => 'datetime', set_on_create => 1 },
     "updated",
     { data_type => 'datetime', set_on_create => 1, set_on_update => 1 },
 );
-
-
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;

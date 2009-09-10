@@ -19,7 +19,6 @@ sub create_order {
     my ( $self, $args ) = @_;
     my $order;
 
-    print Dumper $args;
     $order = $self->create($args);
 
     return $order;
@@ -35,7 +34,7 @@ sub delete {
 
 }
 
-sub get_order_id {
+sub get_order_by_id {
     my ( $self, $args ) = @_;
     my $order;
 

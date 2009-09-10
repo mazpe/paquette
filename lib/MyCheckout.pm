@@ -75,12 +75,13 @@ sub convert_cart_to_order {
             $order_items{sku}       = $row->sku;
             $order_items{quantity}  = $row->quantity;
             $order_items{price}     = $row->product->price;
+            $order_items{name}      = $row->product->name;
 
             $self->resultset('OrdersItem')->add_item(\%order_items);
         }
     }
     
-    return $order_id;
+    return $order->id;
 
 }
 
