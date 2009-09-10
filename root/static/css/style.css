@@ -18,10 +18,9 @@ body {
     background-image: url(/static/images/main_background.gif);
 }
 
-
 #left_menu {
     float: left;
-    width:134px;
+    width:133px;
 }
 #left_menu_search {
     text-align: center;
@@ -72,7 +71,7 @@ body {
 #center {
     position:relative;
     float: left;
-    width: 546px;
+    width: 547px;
 }
 #center_specials {
     text-align: center; 
@@ -313,8 +312,9 @@ body {
 }
 #specials h4 {
     font-family: Arial, Gadget, sans-serif;
+    font-size: 12pt;
     color: #FF0;
-    text-align:center;
+    text-align: center;
 }
 #special_ads {
     text-align: center;

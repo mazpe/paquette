@@ -320,15 +320,17 @@ sub process_order : Local {
     my ( $self, $c ) = @_;
     my $order;
 
+    # Process the order
     $order = $c->model('Checkout')->process_order;
 
-    #$c->model('Cart')->destroy_cart;
+    if ($order) {
 
-    $c->forward( 'send_email', [$order] );
+        # Destroy the old cart
+        $c->model('Cart')->destroy_cart;
 
-#        $c->response->redirect(
-#                $c->uri_for( $self->action_for('send_email') )
-#            . '/' );
+        # Send email confirmation
+        $c->forward( 'send_email', [$order] );
+    }
 
 }
 
@@ -341,7 +343,7 @@ sub send_email : Local {
         customer    => $c->model('Customer')->get_customer($c->user->id),
         order_items => $c->model('Order')->get_items_in_order($order_id),
         order       => $c->model('Order')->get_order({ order_id => $order_id }),
-        amount      => $c->model('Cart')->sum_items_in_cart,
+        amount      => $c->model('Order')->sum_items_in_order($order_id),
     );
 
     $subject = 'Order Confirmation from SaborEspanol.com - Order # '. $order_id;
@@ -349,7 +351,7 @@ sub send_email : Local {
     # Send email
     $c->stash->{email} = {
             to          => $c->stash->{customer}->{email},
-            bcc         => 'lesterm@gbrnd.com',
+            bcc         => 'info@saborespanol.com',
             from        => 'sales@saborespanol.com',
             subject     => $subject,
             template    => 'confirm_order.tt2',
@@ -359,7 +361,9 @@ sub send_email : Local {
         
         $c->forward( $c->view('Email::Template') );
 
-        #$c->response->redirect( $c->uri_for( '/' ) );
+        $c->flash->{status_msg} = "Order # ". $order_id ." submited";
+
+        $c->response->redirect( $c->uri_for( '/' ) );
 
 }
 

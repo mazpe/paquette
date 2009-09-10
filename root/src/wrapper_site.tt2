@@ -19,8 +19,8 @@
 
     <div id="left_menu">
       <a href="[% c.uri_for('/') %]">
-      <img src="[% c.uri_for('/static/images/sabor_espanol_logo.gif') %]" 
-        width="134" height="125" border="0" alt="" />
+      <img src="[% c.uri_for('/static/images/sabor-espanol-logo.gif') %]" 
+        width="133" height="122" border="0" alt="" />
       </a>
       <div id="left_menu_search">
         <span id="search">SEARCH FOR OUR PRODUCTS</span>
@@ -138,11 +138,12 @@
     
     <div id="specials">
       <div id="shield">
-        <img src="[% c.uri_for('/static/images/espana_escudo.gif') %]" width="119" height="96" hspace="0" vspace="0" border="0" alt="" />
+        <img src="[% c.uri_for('/static/images/escudo-espana.gif') %]" width="120" height="96" hspace="0" vspace="0" border="0" alt="" />
       </div><!-- end of shield -->
       <div id="special_ads">
 
         <h4>SPECIALS</h4>
+
         <div class="special_ad_single">
           <a href="[% c.uri_for('/promotions/opening_special') %]" >
             <img src="[% c.uri_for('/static/images/specials_celebrate.jpg') %]" 

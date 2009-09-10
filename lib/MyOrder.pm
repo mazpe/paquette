@@ -52,8 +52,7 @@ sub get_order {
 }
 
 sub sum_items_in_order {
-    my $self = shift;
-    my $order_id         = get_order_id($self);
+    my ( $self, $order_id ) = @_;
     my $total_amount;
 
     $total_amount

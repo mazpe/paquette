@@ -66,14 +66,10 @@ sub sum_items {
     my $rs;
     my $amount;
 
-    $rs = $self->search(
-        { 'order_id' => $args },
-        { join => 'product', }
-        
-    );
+    $rs = $self->search( { 'order_id' => $args } );
 
     while ( my $item = $rs->next ) {
-        $amount += $item->quantity * $item->product->price;
+        $amount += $item->quantity * $item->price;
     }
     
     return $amount;

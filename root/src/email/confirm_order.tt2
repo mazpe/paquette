@@ -16,7 +16,7 @@ BILL TO:
 [% customer.bill_city %], [% customer.bill_state %] - [% customer.bill_zip %]
 [% customer.bill_country %]
 [% customer.bill_phone %]
-[% customer.bill_email %]
+[% customer.email %]
 
 SHIP TO:
 [% customer.ship_first_name %], [% customer.ship_last_name %]
@@ -25,14 +25,11 @@ SHIP TO:
 [% customer.ship_city %], [% customer.bill_state %] - [% customer.ship_zip %]
 [% customer.ship_country %]
 [% customer.ship_phone %]
-[% customer.ship_email %]
 
 SHIPPING METHOD: [% order.shipping_type %]
 SHIPPING AMOUNT: $[% order.shipping_amount %]
 
 --------------------------------------------------------------------------------
-
-ORDERED ITEMS
 [% INCLUDE cart/order_view.tt2 %]
 SUB TOTAL: $[% amount %]
 TOTAL: $[% amount + order.shipping_amount %]
