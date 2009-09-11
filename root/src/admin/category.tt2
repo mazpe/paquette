@@ -1,0 +1,63 @@
+[% form.render %]
+
+[% IF c.action.name == "edit" %]
+<form method="post"
+      action="[% c.uri_for(c.controller.action_for('photo_upload'),[category.id]) %]"
+      enctype="multipart/form-data"
+>
+
+[% IF category.photo == 1 %]
+    <input type="hidden" name="has_photo" value="1">
+[% END %]
+    <input type="hidden" name="url_name" value="[% category.url_name %]">
+
+<table>
+  <tr>
+    <th>Photo</th>
+    <td>
+        <input type="file" name="category_photo" id="category_photo" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+    [% IF category.photo == 1 %]
+        <img width="150" height="150"
+            src="[% c.uri_for(
+                '/static/categories_photos/' _ category.url_name _ '.jpg
+            ') %]">
+    [% ELSE %]
+        <img width="150" height="150"
+            src="[% c.uri_for('/static/categories_photos/no_photo.jpg') %]">
+    [% END %]
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <input type="submit" name="submit" value="Submit">
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<form method="post"
+      action="[% c.uri_for(c.controller.action_for('delete'),[category.id]) %]"
+>
+<br />
+<table>
+  <tr>
+    <td> Delete the category </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="button" name="delete" value="Delete"
+      onclick="return confirmDelete('[% c.uri_for(
+        c.controller.action_for('delete'), [category.id]) %]');"
+      />
+    </td>
+  </tr>
+</table>
+
+</form>
+[% END %]
