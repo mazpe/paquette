@@ -35,8 +35,6 @@ sub auto : Private {
     $c->stash->{wrapper_admin}  = "1";
 }
 
-
-
 sub index :Chained('base') :Path :Args(0) {
     my ( $self, $c ) = @_;
 
@@ -124,12 +122,32 @@ sub edit : Chained('load') : PathPart('edit') : Args(0) {
     my $product_id;
     my $row;
     my $form;
+    my $cmd;
+    my $item_photos_path
+        = '/mnt/www/www.saborespanol.com/Paquette/root/static/item_photos';
+    my $item_photos_fullpath
+        = $item_photos_path . '/' . $c->req->param('url_name') . '.jpg';
+    my $old_item_photos_fullpath;
 
     $product_id = $c->stash->{product_id};
 
     # Get a new empty row
     $row = $c->model('PaquetteDB::Product')->find_product($product_id);
 
+    # if the form has been submited and the url name of the item has changed
+    # then we are going to rename item photo to match the new url name
+    if ( $c->req->params->{submit} && 
+            ($row->url_name ne $c->req->params->{url_name}) ) {
+
+        $old_item_photos_fullpath
+            = $item_photos_path . '/' . $row->url_name . '.jpg';
+
+        $cmd = "/bin/mv $old_item_photos_fullpath $item_photos_fullpath"; 
+        system($cmd);
+        $c->log->debug("cmd: ". $cmd);
+
+    }
+    
     # Set our template and form to use
     $c->stash(
         template    => 'admin/product.tt2',
@@ -173,6 +191,7 @@ sub photo_upload : Chained('load') : PathPart('photo_upload') : Args(0) {
             # copy the photo to our photo gallery
             $cmd = '/bin/mv '.$upload->tempname.' '.$item_photos_fullpath;
             system($cmd);
+            $c->log->debug("cmd: ". $cmd);
             
             $photo = 1;
         }
@@ -187,9 +206,7 @@ sub photo_upload : Chained('load') : PathPart('photo_upload') : Args(0) {
             }
         );        
 
-       $c->response->redirect(
-            $c->uri_for( $self->action_for('edit'), [ $product->id ] )
-              . '/' );
+        $c->res->redirect( $c->uri_for($self->action_for('index')) );
         
     } else {
     

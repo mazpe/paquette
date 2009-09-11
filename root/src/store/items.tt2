@@ -11,6 +11,11 @@ function submitItemDescForm()
 }
 
 </script>
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/thickbox-compressed.js"></script>
+<link rel="stylesheet" href="/static/css/thickbox.css" type="text/css" media="screen" />
+
 <h2> [% category_name %] :: [% subcategory_name %] </h2>
 <br>
 <div id="content_product">
@@ -18,16 +23,23 @@ function submitItemDescForm()
     <div id="content_item_detail">
             
         <div id="content_item_header">
-            JAMON SERRANO
+            [% items.name %]
         </div>
         <div id="content_item_picture">
-        <img width="200" height="200" alt="[% items.name %]" class="left"
-            src="[% c.uri_for(
+        <a href="[% c.uri_for(
                 '/static/item_photos/' _ items.url_name _ '.jpg
-        ') %]" />
+        ') %]" class="thickbox">
+            <img width="200" height="200" border="0" alt="[% items.name %]" 
+                class="left"
+                src="[% c.uri_for(
+                    '/static/item_photos/' _ items.url_name _ '.jpg
+            ') %]" />
+        </a>
         </div>
         <div id="content_item_detail_text">
-        <a href="#">
+        <a href="[% c.uri_for(
+                '/static/item_photos/' _ items.url_name _ '.jpg
+        ') %]" class="thickbox">
             View Larger
         </a> 
         <br />

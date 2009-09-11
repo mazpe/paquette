@@ -1,5 +1,6 @@
 [% form.render %]
 
+[% IF c.action.name == "edit" %]
 <form method="post"
       action="[% c.uri_for(c.controller.action_for('photo_upload'),[product.id]) %]"
       enctype="multipart/form-data"
@@ -59,3 +60,4 @@
 </table>
 
 </form>
+[% END %]

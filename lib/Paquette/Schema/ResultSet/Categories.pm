@@ -22,6 +22,15 @@ sub get_categories {
 
     return $rows;
 }
+
+sub find_category {
+    my ( $self, $args ) = @_;
+    my $row;
+
+    $row = $self->find($args);
+
+    return $row;
+}
     
 
 

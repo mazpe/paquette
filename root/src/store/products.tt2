@@ -32,7 +32,7 @@
     <a href="[% c.uri_for(
       c.controller.action_for('item'),
       [category_url_name,subcategory_url_name,product.url_name]) %]" >
-    [% product.description FILTER truncate(55) %]
+    [% product.brief_description FILTER truncate(55) %]
     </a>
   </div><!-- end of content_category_desc -->
 <span class="content_category_price">
